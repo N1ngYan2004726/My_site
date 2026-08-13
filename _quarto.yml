@@ -7,35 +7,28 @@ website:
 
   navbar:
     pinned: true
-    background: "#fbfaf7"
-    foreground: "#263238"
     search: true
 
     left:
-      - text: "理论"
-        menu:
-          - href: theory/index.qmd
-            text: "理论总览"
-          - href: theory/mathematics/index.qmd
-            text: "数学机理"
-          - href: theory/deep-learning/index.qmd
-            text: "深度学习模型"
-
-      - text: "实战"
-        menu:
-          - href: practice/index.qmd
-            text: "实战总览"
-          - href: practice/projects/index.qmd
-            text: "项目"
-          - href: practice/experiments/index.qmd
-            text: "实验"
-
+      - href: mathematics/index.qmd
+        text: "数学机理"
+      - href: deep-learning/index.qmd
+        text: "深度学习模型"
+      - href: code/index.qmd
+        text: "代码实战"
+      - href: llm/index.qmd
+        text: "LLM学习"
       - href: about.qmd
         text: "关于"
 
     right:
       - icon: github
         href: "https://github.com/N1ngYan2004726"
+      - icon: circle-half
+        id: theme-toggle
+        href: "#"
+        text: ""
+        aria-label: "切换主题"
 
 
   page-footer:
@@ -48,6 +41,10 @@ format:
 
     theme: cosmo
     css: styles.css
+    
+    include-after-body:
+      - assets/theme-toggle.html
+      - assets/category-enhancer.html
 
     toc: false
 

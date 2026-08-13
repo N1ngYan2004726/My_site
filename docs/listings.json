@@ -1,12 +1,26 @@
 [
   {
-    "listing": "/theory/deep-learning/index.html",
+    "listing": "/mathematics/index.html",
     "items": []
   },
   {
-    "listing": "/theory/mathematics/index.html",
+    "listing": "/index.html",
     "items": [
-      "/theory/mathematics/statistics.html"
+      "/code/Numpy_learning.html"
     ]
+  },
+  {
+    "listing": "/code/index.html",
+    "items": [
+      "/code/Numpy_learning.html"
+    ]
+  },
+  {
+    "listing": "/deep-learning/index.html",
+    "items": []
+  },
+  {
+    "listing": "/llm/index.html",
+    "items": []
   }
 ]

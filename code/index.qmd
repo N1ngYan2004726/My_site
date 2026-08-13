@@ -1,5 +1,5 @@
 ---
-title: "数学机理"
+title: "代码实战"
 
 listing:
   contents:
@@ -19,5 +19,12 @@ listing:
   categories: true
 
   sort-ui: false
-  filter-ui: false
+  filter-ui: true
 ---
+
+<style>
+main.content {
+  --accent: #e65100;
+  --accent-soft: #fff3e0;
+}
+</style>

@@ -1,6 +1,29 @@
 ---
 title: ""
 page-layout: full
+
+listing:
+  contents:
+    - "mathematics/*.ipynb"
+    - "deep-learning/*.ipynb"
+    - "code/*.ipynb"
+    - "llm/*.ipynb"
+
+  sort:
+    - "date desc"
+
+  type: default
+
+  fields:
+    - title
+    - description
+    - date
+    - categories
+
+  max-items: 5
+
+  sort-ui: false
+  filter-ui: false
 ---
 
 <div class="home">
@@ -9,7 +32,7 @@ page-layout: full
 
 <div class="hero-kicker">学习 · 理解 · 实践</div>
 
-# Ning Yan
+<p class="hero-title">Ning Yan</p>
 
 <p class="hero-desc">
 记录数学、机器学习与深度学习中的理解、推导和实验。
@@ -22,80 +45,67 @@ page-layout: full
 
 <div class="section-head">
 <span>01</span>
-<h2>理论</h2>
+<h2>核心板块</h2>
 </div>
 
 <div class="card-grid">
 
-<div class="site-card">
+<div class="site-card theme-math">
 
 <div class="card-number">MATH</div>
 
 <h3>数学机理</h3>
 
 <p>
-线性代数、概率统计、优化等基础理论。
+线性代数、概率统计、优化与信息论等基础理论。
 </p>
 
-<a href="theory/mathematics/index.qmd">进入 →</a>
+<a href="mathematics/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
 
 </div>
 
 
-<div class="site-card">
+<div class="site-card theme-dl">
 
 <div class="card-number">DL</div>
 
 <h3>深度学习模型</h3>
 
 <p>
-神经网络、CNN、Transformer 等模型。
+神经网络、CNN、Transformer、Diffusion 等模型。
 </p>
 
-<a href="theory/deep-learning/index.qmd">进入 →</a>
+<a href="deep-learning/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
 
 </div>
 
-</div>
 
-</section>
+<div class="site-card theme-code">
 
+<div class="card-number">CODE</div>
 
-<section class="home-section">
-
-<div class="section-head">
-<span>02</span>
-<h2>实战</h2>
-</div>
-
-<div class="card-grid">
-
-<div class="site-card">
-
-<div class="card-number">PROJ</div>
-
-<h3>项目</h3>
+<h3>代码实战</h3>
 
 <p>
-完整项目、模型实现和阶段性成果。
+完整项目、模型实现与实验记录。
 </p>
 
-<a href="practice/projects/index.qmd">进入 →</a>
+<a href="code/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
 
 </div>
 
 
-<div class="site-card">
+<div class="site-card theme-llm">
 
-<div class="card-number">EXP</div>
+<div class="card-number">LLM</div>
 
-<h3>实验</h3>
+<h3>LLM学习</h3>
 
 <p>
-Notebook、实验记录和模型探索。
+Prompt、微调、RAG、Agent 与对齐推理。
 </p>
 
-<a href="practice/experiments/index.qmd">进入 →</a>
+<a href="llm/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
 
 </div>
 
@@ -107,14 +117,23 @@ Notebook、实验记录和模型探索。
 <section class="home-section recent">
 
 <div class="section-head">
-<span>03</span>
+<span>02</span>
 <h2>最近记录</h2>
 </div>
 
-<p class="muted">
-这里以后显示最近更新的学习内容。
-</p>
+<p class="muted">各板块的最新笔记会聚合在此。</p>
 
 </section>
 
 </div>
+
+<style>
+main.content > .quarto-listing {
+  width: min(var(--max), calc(100% - 48px));
+  margin: 0 auto 4rem;
+  box-sizing: border-box;
+}
+.home-section.recent {
+  padding-bottom: 1.5rem;
+}
+</style>

@@ -1,5 +1,5 @@
 ---
-title: "深度学习模型"
+title: "数学机理"
 
 listing:
   contents:
@@ -19,5 +19,12 @@ listing:
   categories: true
 
   sort-ui: false
-  filter-ui: false
+  filter-ui: true
 ---
+
+<style>
+main.content {
+  --accent: #4056a1;
+  --accent-soft: #eef1fb;
+}
+</style>

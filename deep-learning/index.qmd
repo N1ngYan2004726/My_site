@@ -1,0 +1,30 @@
+---
+title: "深度学习模型"
+
+listing:
+  contents:
+    - "*.ipynb"
+
+  sort:
+    - "date desc"
+
+  type: default
+
+  fields:
+    - title
+    - description
+    - date
+    - categories
+
+  categories: true
+
+  sort-ui: false
+  filter-ui: true
+---
+
+<style>
+main.content {
+  --accent: #00897b;
+  --accent-soft: #e0f2f1;
+}
+</style>
