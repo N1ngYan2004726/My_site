@@ -1,0 +1,17 @@
+---
+title: "实战"
+---
+
+# 实战
+
+## 项目
+
+完整项目与阶段性成果。
+
+[查看项目 →](projects/index.qmd)
+
+## 实验
+
+Notebook、模型实验和探索记录。
+
+[查看实验 →](experiments/index.qmd)

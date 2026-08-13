@@ -1,8 +1,0 @@
-# Notes
-
-这里记录我的学习笔记。
-
-## D2L 树叶分类 竞赛
-
-[树叶分类 竞赛](notes/competion.ipynb)
-

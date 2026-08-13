@@ -1,0 +1,45 @@
+---
+title: "Theory"
+---
+
+# Theory
+
+这一部分记录我对于数学基础、机器学习理论以及深度学习模型的理解。
+
+内容更关注：
+
+- 为什么一个方法成立
+- 数学机制是什么
+- 模型为什么这样设计
+- 不同方法之间有什么联系
+
+
+## Mathematics
+
+数学基础与机器学习中的数学机制。
+
+涉及：
+
+- Linear Algebra
+- Probability
+- Statistics
+- Optimization
+- Information Theory
+
+[进入 Mathematics →](mathematics/index.qmd)
+
+
+## Deep Learning
+
+深度学习模型的结构、原理与实现。
+
+涉及：
+
+- Neural Networks
+- CNN
+- RNN
+- Attention
+- Transformer
+- Diffusion Models
+
+[进入 Deep Learning →](deep-learning/index.qmd)

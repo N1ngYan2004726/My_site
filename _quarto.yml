@@ -2,29 +2,60 @@ project:
   type: website
 
 website:
-  title: "N1ngYan's Site"
+  title: "Ning Yan"
 
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
+    pinned: true
+    background: "#fbfaf7"
+    foreground: "#263238"
+    search: true
 
-      - href: notes.qmd
-        text: Notes
-      
-      - href: projects.qmd
-        text: Projects
+    left:
+      - text: "理论"
+        menu:
+          - href: theory/index.qmd
+            text: "理论总览"
+          - href: theory/mathematics/index.qmd
+            text: "数学机理"
+          - href: theory/deep-learning/index.qmd
+            text: "深度学习模型"
+
+      - text: "实战"
+        menu:
+          - href: practice/index.qmd
+            text: "实战总览"
+          - href: practice/projects/index.qmd
+            text: "项目"
+          - href: practice/experiments/index.qmd
+            text: "实验"
 
       - href: about.qmd
-        text: About
+        text: "关于"
+
+    right:
+      - icon: github
+        href: "https://github.com/N1ngYan2004726"
+
+
+  page-footer:
+    left: "Ning Yan"
+    right: "个人学习笔记"
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    lang: zh-CN
+
+    theme: cosmo
     css: styles.css
-    toc: true
 
+    toc: false
 
+    smooth-scroll: true
 
+    code-copy: true
+    code-overflow: wrap
+
+    html-math-method: katex
+
+execute:
+  freeze: auto

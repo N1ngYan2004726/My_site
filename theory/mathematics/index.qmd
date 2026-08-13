@@ -1,0 +1,23 @@
+---
+title: "数学机理"
+
+listing:
+  contents:
+    - "*.ipynb"
+
+  sort:
+    - "date desc"
+
+  type: default
+
+  fields:
+    - title
+    - description
+    - date
+    - categories
+
+  categories: true
+
+  sort-ui: false
+  filter-ui: false
+---

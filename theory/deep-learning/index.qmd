@@ -1,0 +1,23 @@
+---
+title: "深度学习模型"
+
+listing:
+  contents:
+    - "*.ipynb"
+
+  sort:
+    - "date desc"
+
+  type: default
+
+  fields:
+    - title
+    - description
+    - date
+    - categories
+
+  categories: true
+
+  sort-ui: false
+  filter-ui: false
+---
