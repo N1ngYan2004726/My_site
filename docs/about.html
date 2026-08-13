@@ -409,9 +409,22 @@ ul.task-list li input[type="checkbox"] {
 
   // ---------- 详情页：分类输入器 ----------
 
+  // 判断当前页面是否应跳过分类输入器（如"关于"页面等非文章内容页）
+  function shouldSkipCategorySelector() {
+    const path = window.location.pathname.toLowerCase();
+    const pageId = getCurrentPageId().toLowerCase();
+    // 排除"关于"页面、首页索引等非文章详情页
+    const skipPages = ['about', 'index'];
+    if (skipPages.includes(pageId)) return true;
+    if (path.endsWith('/about.html') || path.endsWith('/about')) return true;
+    return false;
+  }
+
   function buildPageCategorySelector() {
     // 只在非 listing 页面显示
     if (document.querySelector('.quarto-listing')) return;
+    // 跳过"关于"等非文章详情页
+    if (shouldSkipCategorySelector()) return;
 
     const existing = document.querySelector('.page-category-selector');
     if (existing) existing.remove();
