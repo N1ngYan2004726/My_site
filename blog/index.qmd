@@ -1,0 +1,21 @@
+---
+title: "Blog"
+toc: true
+toc-location: right
+
+listing:
+  contents:
+    - "*.ipynb"
+  sort: "date desc"
+  type: default
+  categories: true
+  fields:
+    - date
+    - title
+    - description
+    - categories
+  sort-ui: false
+  filter-ui: false
+---
+
+Recent blog posts and learning notes.

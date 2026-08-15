@@ -1,0 +1,20 @@
+---
+title: "Publications"
+toc: true
+toc-location: right
+
+listing:
+  contents:
+    - "*.md"
+  sort: "date desc"
+  type: default
+  categories: true
+  fields:
+    - date
+    - title
+    - author
+    - categories
+  sort-ui: false
+  filter-ui: false
+---
+

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="NumPy基础操作、数组运算、广播机制等核心功能的学习记录。">
 
-<title>numpy_learning – Ning Yan</title>
+<title>NumPy学习笔记 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -121,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Ning Yan</span>
+    <span class="navbar-title">N1ngYan</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="搜索"></div>
@@ -131,24 +132,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../mathematics/index.html"> 
-<span class="menu-text">数学机理</span></a>
+    <a class="nav-link" href="../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../deep-learning/index.html"> 
-<span class="menu-text">深度学习模型</span></a>
+    <a class="nav-link" href="../talks/index.html"> 
+<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../code/index.html"> 
-<span class="menu-text">代码实战</span></a>
+    <a class="nav-link" href="../publications/index.html"> 
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../llm/index.html"> 
-<span class="menu-text">LLM学习</span></a>
+    <a class="nav-link" href="../cv/index.html"> 
+<span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">关于</span></a>
+    <a class="nav-link" href="../news/index.html"> 
+<span class="menu-text">News</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -173,22 +174,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">NumPy学习笔记</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> 代码</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">显示所有代码</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">隐藏所有代码</a></li></ul></div></div>
+  <div class="quarto-categories">
+    <div class="quarto-category">code</div>
+    <div class="quarto-category">numpy</div>
+    <div class="quarto-category">python</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    NumPy基础操作、数组运算、广播机制等核心功能的学习记录。
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月14日</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 <p>Numpy学习</p>
 <div id="b971cb5b" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.__version__)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>1.23.5</code></pre>
 </div>
 </div>
 <div id="3ef9693d" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 设定数组</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([</span>
@@ -198,6 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"*"</span><span class="op">*</span><span class="dv">10</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1 2 3]
 **********
@@ -206,33 +247,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="42f15ef5" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置最小维数</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>], ndmin <span class="op">=</span>  <span class="dv">4</span>)  </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a.shape)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[[[1 2 3 4 5]]]]
 (1, 1, 1, 5)</code></pre>
 </div>
 </div>
 <div id="7b5fba53" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dtype参数</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span> <span class="op">+</span> <span class="ot">2j</span>,  <span class="dv">2</span>,  <span class="dv">3</span>], dtype <span class="op">=</span> <span class="bu">complex</span>)  </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1.+2.j 2.+0.j 3.+0.j]</code></pre>
 </div>
 </div>
 <div id="41134d61" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 转换dtype参数</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.dtype(<span class="bu">int</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># int8, int16, int32, int64 可以用字符串'i1', 'i2', 'i4', 'i8'代替</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>int32</code></pre>
 </div>
 </div>
 <div id="f0500db1" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 首先创建结构化数据类型</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>student_dtype<span class="op">=</span>np.dtype(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>[</span>
@@ -253,6 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取某一个类型</span></span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data[<span class="st">'name'</span>])</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[('name', '&lt;U10'), ('age', '&lt;i4'), ('score', '&lt;f4')]
 ********************
@@ -260,26 +313,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="df9f4df0" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ndarray.ndim 查看维度</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">24</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a.ndim)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> a.reshape(<span class="dv">2</span>, <span class="dv">4</span> ,<span class="dv">3</span>) <span class="co"># reshape可以调整数组大小，要求总元素量保持不变</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b.ndim)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>1
 3</code></pre>
 </div>
 </div>
 <div id="73c2e94c" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ndarray.shape 查看形状</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a.shape)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b.shape)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(24,)
 (2, 4, 3)</code></pre>
 </div>
 </div>
 <div id="c053ca48" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ndarray.itemsize 以字节的形式返回数组中每一个元素的大小</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 数组的 dtype 为 int8（一个字节）  </span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], dtype <span class="op">=</span> np.int8)  </span>
@@ -287,15 +348,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 数组的 dtype 现在为 float64（八个字节） </span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], dtype <span class="op">=</span> np.float64)  </span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (y.itemsize)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>1
 8</code></pre>
 </div>
 </div>
 <div id="c07d0b8f" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.empty 创建一个未初始化数组</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.empty([<span class="dv">3</span>,<span class="dv">2</span>], dtype <span class="op">=</span> np.float32) </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (x) <span class="co"># 输出结果为随机值，因为还未初始化</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[0.    1.875]
  [0.    2.   ]
@@ -303,10 +368,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="0c45fb9a" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.zeros 创建指定大小的数组，数组元素以 0 来填充：</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.zeros((<span class="dv">5</span>, <span class="dv">3</span>))     </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.ones 一样的意思</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[0. 0. 0.]
  [0. 0. 0.]
@@ -316,11 +384,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="ac3c5482" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.zeros_like 用于创建一个与给定数组具有相同形状的数组，数组元素以 0 来填充</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">12</span>).reshape(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.zeros_like(a)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b)</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.ones_like 一样的意思</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[[0 0 0]
   [0 0 0]]
@@ -330,6 +401,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="cb8cb572" class="cell" data-execution_count="40">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># np.asarray可以将已有的列表，元组等转为ndarray</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># 列表</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.asarray(x)</span>
@@ -342,6 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span>  [(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),(<span class="dv">4</span>,<span class="dv">5</span>)] <span class="co"># 元组列表</span></span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.asarray(x)  </span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1 2 3]
 ********************
@@ -355,15 +429,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="91564e43" class="cell" data-execution_count="41">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.frombuffer用于实现动态数组</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span>  <span class="st">b'Hello World'</span> </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.frombuffer(s, dtype <span class="op">=</span>  <span class="st">'S1'</span>)  </span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[b'H' b'e' b'l' b'l' b'o' b' ' b'W' b'o' b'r' b'l' b'd']</code></pre>
 </div>
 </div>
 <div id="6e1fba08" class="cell" data-execution_count="42">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.fromiter 方法从可迭代对象中建立 ndarray 对象，返回一维数组。</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 range 函数创建列表对象  </span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span><span class="op">=</span><span class="bu">range</span>(<span class="dv">5</span>)</span>
@@ -372,22 +451,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用迭代器创建 ndarray </span></span>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span>np.fromiter(it, dtype<span class="op">=</span><span class="bu">float</span>)</span>
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0. 1. 2. 3. 4.]</code></pre>
 </div>
 </div>
 <div id="89c8e142" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.arange创建数值范围并返回 ndarray 对象   np.arange(start, end, step, dtype)</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">5</span>)  </span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (x)</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">2</span>)  </span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (x)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0 1 2 3 4]
 [10 12 14 16 18]</code></pre>
 </div>
 </div>
 <div id="1cdf8acb" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.linspace用于创建一个一维数组，数组是一个等差数列构成的  np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.linspace(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">10</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span>
@@ -400,6 +485,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"*"</span><span class="op">*</span><span class="dv">20</span>)</span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.linspace(<span class="dv">10</span>, <span class="dv">20</span>,  <span class="dv">5</span>, endpoint <span class="op">=</span> <span class="va">True</span>, retstep<span class="op">=</span> <span class="va">True</span>)   <span class="co"># retstep= True 可以看到间距</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[ 1.  2.  3.  4.  5.  6.  7.  8.  9. 10.]
 ********************
@@ -411,11 +497,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="65f5d63f" class="cell" data-execution_count="57">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.logspace 函数用于创建一个于等比数列   np.logspace(start, stop, num, endpoint=True, base=10.0, dtype=None)</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.logspace(<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="dv">10</span>)   <span class="co"># 默认底数是10    1.0 = 10, 2.0 = 10^2 = 100</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.logspace(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">10</span>, base<span class="op">=</span><span class="dv">2</span>) <span class="co"># 将对数的底数设置为 2</span></span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[ 10.          12.91549665  16.68100537  21.5443469   27.82559402
   35.93813664  46.41588834  59.94842503  77.42636827 100.        ]
@@ -423,6 +512,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="aba2555b" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># slice 切割出一个新的数组</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">10</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="bu">slice</span>(<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">2</span>)   <span class="co"># 从索引 2 开始到索引 7 停止，间隔为2</span></span>
@@ -445,6 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="co">#切片还可以包括省略号 …，来使选择元组的长度与数组的维度相同。</span></span>
 <span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a[...,<span class="dv">1</span>])   <span class="co"># 第2列元素</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[2 4 6]
 ********************
@@ -461,6 +553,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="c4ed5fc4" class="cell" data-execution_count="66">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 整数数组索引是指使用一个数组来访问另一个数组的元素。这个数组中的每个元素都是目标数组中某个维度上的索引值。</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 以下实例获取数组中 (0,0)，(1,1) 和 (2,0) 位置处的元素。</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([[<span class="dv">1</span>,  <span class="dv">2</span>],  [<span class="dv">3</span>,  <span class="dv">4</span>],  [<span class="dv">5</span>,  <span class="dv">6</span>]]) </span>
@@ -477,6 +571,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x[rows,cols]  </span>
 <span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>  (<span class="st">'这个数组的四个角元素是：'</span>)</span>
 <span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (y)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1 4 5]
 ********************
@@ -493,6 +588,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="15b497ab" class="cell" data-execution_count="67">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 布尔索引</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([[  <span class="dv">0</span>,  <span class="dv">1</span>,  <span class="dv">2</span>],[  <span class="dv">3</span>,  <span class="dv">4</span>,  <span class="dv">5</span>],[  <span class="dv">6</span>,  <span class="dv">7</span>,  <span class="dv">8</span>],[  <span class="dv">9</span>,  <span class="dv">10</span>,  <span class="dv">11</span>]])  </span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'我们的数组是：'</span>)</span>
@@ -501,6 +598,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 现在我们会打印出大于 5 的元素  </span></span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>  (<span class="st">'大于 5 的元素是：'</span>)</span>
 <span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (x[x <span class="op">&gt;</span>  <span class="dv">5</span>])</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>我们的数组是：
 [[ 0  1  2]
@@ -514,6 +612,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="28abb26a" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 花式索引 一维数组</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">9</span>)</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span>
@@ -523,6 +623,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x2) </span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x2[<span class="dv">0</span>])</span>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x2[<span class="dv">1</span>])</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0 1 2 3 4 5 6 7 8]
 -------读取下标对应的元素-------
@@ -532,11 +633,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="c175e73a" class="cell" data-execution_count="69">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span>np.arange(<span class="dv">32</span>).reshape((<span class="dv">8</span>,<span class="dv">4</span>))</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 二维数组读取指定下标对应的行</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"-------读取下标对应的行-------"</span>)</span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (x[[<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">7</span>]])</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[ 0  1  2  3]
  [ 4  5  6  7]
@@ -554,6 +658,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="887a7941" class="cell" data-execution_count="71">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 np.ix_ 传入多个索引数组。np.ix_ 函数就是输入两个数组，产生笛卡尔积的映射关系。</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 例如A={a,b}, B={0,1,2}</span></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">#A×B={(a, 0), (a, 1), (a, 2), (b, 0), (b, 1), (b, 2)}</span></span>
@@ -563,6 +669,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span>
 <span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"*"</span><span class="op">*</span><span class="dv">20</span>)</span>
 <span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (x[np.ix_([<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">2</span>],[<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>])])</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[ 0  1  2  3]
  [ 4  5  6  7]
@@ -580,6 +687,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="7095d027" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 广播机制</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
@@ -591,6 +700,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>])</span>
 <span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a<span class="op">+</span>b)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[ 0  1  2]
  [10 11 12]
@@ -600,6 +710,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="ee1d1241" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 迭代器numpy.nditer</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape(<span class="dv">2</span>,<span class="dv">3</span>)</span>
@@ -617,6 +729,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> <span class="bu">iter</span>(a):</span>
 <span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(x, end<span class="op">=</span><span class="st">", "</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>原始数组是：
 [[0 1 2]
@@ -632,6 +745,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="627bdc60" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.ndarray.flat 是一个数组元素迭代器</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">9</span>).reshape(<span class="dv">3</span>,<span class="dv">3</span>) </span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'原始数组：'</span>)</span>
@@ -642,6 +757,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'迭代后的数组：'</span>)</span>
 <span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> element <span class="kw">in</span> a.flat:</span>
 <span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (element)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>原始数组：
 [0 1 2]
@@ -660,6 +776,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="a0050eeb" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.ndarray.flatten 返回一份数组拷贝，对拷贝所做的修改不会影响原始数组 </span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># order：'C' -- 按行，'F' -- 按列，'A' -- 原顺序，'K' -- 元素在内存中的出现顺序。</span></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">8</span>).reshape(<span class="dv">2</span>,<span class="dv">4</span>)</span>
@@ -675,6 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a.flatten(order <span class="op">=</span> <span class="st">'F'</span>))      </span>
 <span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.ravel 作用一致，但是返回的是数组视图，修改会影响原始数组，即二者内存一致。</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>原数组：
 [[0 1 2 3]
@@ -690,6 +809,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="a1c47609" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.transpose 函数用于对换数组的维度</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">12</span>).reshape(<span class="dv">3</span>,<span class="dv">4</span>)</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -699,6 +820,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'对换数组：'</span>)</span>
 <span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.transpose(a))  <span class="co"># 等价于np.transpose(a) = a.T</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>原数组：
 [[ 0  1  2  3]
@@ -714,6 +836,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="57ae6856" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.rollaxis 函数向后滚动特定的轴到一个特定位置</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">8</span>).reshape(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'原数组：'</span>)</span>
@@ -739,6 +863,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 最后的 0 和 它前面的 1 对换位置</span></span>
 <span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.where(c<span class="op">==</span><span class="dv">6</span>))   </span>
 <span id="cb60-25"><a href="#cb60-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>原数组：
 [[[0 1]
@@ -772,6 +897,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="32ceb47b" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.expand_dims 函数通过在指定位置插入新的轴来扩展数组形状</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array(([<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>]))</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -802,6 +929,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (x.shape, y.shape)</span>
 <span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.squeeze 函数从给定数组的形状中删除一维的条目，函数格式如下：</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>数组 x：
 [[1 2]
@@ -832,6 +960,8 @@ x.shape 和 y.shape：
 </div>
 </div>
 <div id="dbb36495" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.concatenate 函数用于沿指定轴连接相同形状的两个或多个数组</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.concatenate((a1, a2, ...), axis)</span></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -856,6 +986,7 @@ x.shape 和 y.shape：
 <span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.hstack 是 numpy.concatenate 的便捷封装，用于沿着第二轴（axis=1）水平堆叠数组。</span></span>
 <span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.vstack 是 numpy.concatenate 的便捷封装，用于沿着第一轴（axis=0）垂直堆叠数组。</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>第一个数组：
 [[1 2]
@@ -880,6 +1011,8 @@ x.shape 和 y.shape：
 </div>
 </div>
 <div id="ec22c68b" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.split 函数沿特定的轴将数组分割为子数组  numpy.split(ary, indices_or_sections, axis)多维度可以在aixs设置轴</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">9</span>)</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -897,6 +1030,7 @@ x.shape 和 y.shape：
 <span id="cb66-15"><a href="#cb66-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (b)</span>
 <span id="cb66-16"><a href="#cb66-16" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.hsplit 函数用于水平分割数组，通过指定要返回的相同形状的数组数量来拆分原数组。</span></span>
 <span id="cb66-17"><a href="#cb66-17" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.vsplit 沿着垂直轴分割，其分割方式与hsplit用法相同。</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>第一个数组：
 [0 1 2 3 4 5 6 7 8]
@@ -911,6 +1045,8 @@ x.shape 和 y.shape：
 </div>
 </div>
 <div id="62e3a129" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.resize 函数返回指定大小的新数组。</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]])</span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -933,6 +1069,7 @@ x.shape 和 y.shape：
 <span id="cb68-20"><a href="#cb68-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'修改第二个数组的大小：'</span>)</span>
 <span id="cb68-21"><a href="#cb68-21" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.resize(a,(<span class="dv">3</span>,<span class="dv">3</span>))</span>
 <span id="cb68-22"><a href="#cb68-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (b)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>第一个数组：
 [[1 2 3]
@@ -960,6 +1097,8 @@ x.shape 和 y.shape：
 </div>
 </div>
 <div id="f40f4cdb" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.append函数在数组的末尾添加值。 追加操作会分配整个数组，并把原来的数组复制到新数组中。 此外，输入数组的维度必须匹配否则将生成ValueError。</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]])</span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -980,6 +1119,7 @@ x.shape 和 y.shape：
 <span id="cb70-18"><a href="#cb70-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb70-19"><a href="#cb70-19" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.insert 函数在给定索引之前，沿给定轴在输入数组中插入值。 </span></span>
 <span id="cb70-20"><a href="#cb70-20" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.delete 函数返回从输入数组中删除指定子数组的新数组。 这两个函数如果未提供轴参数，则输入数组将展开。</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>第一个数组：
 [[1 2 3]
@@ -1002,6 +1142,8 @@ x.shape 和 y.shape：
 </div>
 </div>
 <div id="3fdf1ed6" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.unique 函数用于去除数组中的重复元素。   numpy.unique(arr, return_index, return_inverse, return_counts)</span></span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co"># arr：输入数组，如果不是一维数组则会展开</span></span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co"># return_index：如果为true，返回新列表元素在旧列表中的位置（下标），并以列表形式储</span></span>
@@ -1036,6 +1178,7 @@ x.shape 和 y.shape：
 <span id="cb72-32"><a href="#cb72-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (indices)</span>
 <span id="cb72-33"><a href="#cb72-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
 <span id="cb72-34"><a href="#cb72-34" aria-hidden="true" tabindex="-1"></a> </span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>第一个数组：
 [5 2 6 2 7 5 6 8 2 9]
@@ -1064,6 +1207,8 @@ x.shape 和 y.shape：
 </div>
 </div>
 <div id="138a605e" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'使用下标重构原数组：'</span>)</span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (u[indices])</span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
@@ -1072,6 +1217,7 @@ x.shape 和 y.shape：
 <span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>u,indices <span class="op">=</span> np.unique(a,return_counts <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (u)</span>
 <span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (indices)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>使用下标重构原数组：
 [5 2 6 2 7 5 6 8 2 9]
@@ -1083,6 +1229,8 @@ x.shape 和 y.shape：
 </div>
 </div>
 <div id="9425d523" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 位运算</span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1110,6 +1258,7 @@ x.shape 和 y.shape：
 <span id="cb76-25"><a href="#cb76-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 右移位运算</span></span>
 <span id="cb76-26"><a href="#cb76-26" aria-hidden="true" tabindex="-1"></a>arr_right_shift <span class="op">=</span> np.right_shift(<span class="dv">10</span>, <span class="dv">1</span>) <span class="co"># 从1010-&gt;0101  从10-&gt;5</span></span>
 <span id="cb76-27"><a href="#cb76-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Right Shift:"</span>, arr_right_shift)  <span class="co"># 5</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>AND: [False False False]
 OR: [ True  True  True]
@@ -1121,6 +1270,8 @@ Right Shift: 5</code></pre>
 </div>
 </div>
 <div id="f79005f5" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.char.add() 函数依次对两个数组的元素进行字符串连接。</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
@@ -1134,6 +1285,7 @@ Right Shift: 5</code></pre>
 <span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.char.multiply() 函数执行多重连接。</span></span>
 <span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.char.multiply(<span class="st">'SBLSR  '</span>, <span class="dv">5</span>))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>连接两个字符串：
 ['hello xyz']
@@ -1145,6 +1297,8 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 </div>
 </div>
 <div id="f75e44cc" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.char.center() 函数用于将字符串居中，并使用指定字符在左侧和右侧进行填充。</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.char.center(<span class="st">'Runoob'</span>, <span class="dv">20</span>,fillchar <span class="op">=</span> <span class="st">'*'</span>))</span>
 <span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.char.capitalize() 函数将字符串的第一个字母转换为大写：</span></span>
@@ -1156,11 +1310,14 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 <span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.char.strip() 函数用于移除开头或结尾处的特定字符。</span></span>
 <span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.char.join() 函数通过指定分隔符来连接数组中的元素或字符串</span></span>
 <span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.char.replace() 函数使用新字符串替换字符串中的所有子字符串。</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>*******Runoob*******</code></pre>
 </div>
 </div>
 <div id="977caa69" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.around() 函数返回指定数字的四舍五入值。</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="fl">1.0</span>,<span class="fl">5.55</span>,  <span class="dv">123</span>,  <span class="fl">0.567</span>,  <span class="fl">25.532</span>])  </span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>  (<span class="st">'原数组：'</span>)</span>
@@ -1170,6 +1327,7 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 <span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.around(a))</span>
 <span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.around(a, decimals <span class="op">=</span>  <span class="dv">1</span>))</span>
 <span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.around(a, decimals <span class="op">=</span>  <span class="op">-</span><span class="dv">1</span>))  <span class="co"># decimals: 舍入的小数位数。 默认值为0。 如果为负，整数将四舍五入到小数点左侧的位置</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>原数组：
 [  1.      5.55  123.      0.567  25.532]
@@ -1182,6 +1340,8 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 </div>
 </div>
 <div id="7297c670" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.floor() 返回小于或者等于指定表达式的最大整数，即向下取整。</span></span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">1.7</span>,  <span class="fl">1.5</span>,  <span class="op">-</span><span class="fl">0.2</span>,  <span class="fl">0.6</span>,  <span class="dv">10</span>])</span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'提供的数组：'</span>)</span>
@@ -1189,6 +1349,7 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 <span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
 <span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'修改后的数组：'</span>)</span>
 <span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.floor(a))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>提供的数组：
 [-1.7  1.5 -0.2  0.6 10. ]
@@ -1199,6 +1360,8 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 </div>
 </div>
 <div id="58c653e7" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.ceil() 返回大于或者等于指定表达式的最小整数，即向上取整。</span></span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">1.7</span>,  <span class="fl">1.5</span>,  <span class="op">-</span><span class="fl">0.2</span>,  <span class="fl">0.6</span>,  <span class="dv">10</span>])  </span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>  (<span class="st">'提供的数组：'</span>)</span>
@@ -1206,6 +1369,7 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 <span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
 <span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'修改后的数组：'</span>)</span>
 <span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.ceil(a))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>提供的数组：
 [-1.7  1.5 -0.2  0.6 10. ]
@@ -1216,6 +1380,8 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 </div>
 </div>
 <div id="32be91e4" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.amin() 用于计算数组中的元素沿指定轴的最小值。</span></span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">5</span>],[<span class="dv">8</span>,<span class="dv">4</span>,<span class="dv">3</span>],[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">9</span>]])  </span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'我们的数组是：'</span>)</span>
@@ -1232,6 +1398,7 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 <span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
 <span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'再次调用 amax() 函数：'</span>)</span>
 <span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.amax(a, axis <span class="op">=</span>  <span class="dv">0</span>))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>我们的数组是：
 [[3 7 5]
@@ -1256,12 +1423,17 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 </div>
 </div>
 <div id="2e04539e" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.argmax() 和 numpy.argmin()函数分别沿给定轴返回最大和最小元素的索引。</span></span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.nonzero() 函数返回输入数组中非零元素的索引。</span></span>
 <span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.where() 函数返回输入数组中满足给定条件的元素的索引。</span></span>
 <span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.extract() 函数根据某个条件从数组中抽取元素，返回满条件的元素。</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div id="7f0c224b" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 简单的赋值不会创建数组对象的副本。 相反，它使用原始数组的相同id()来访问它。 id()返回 Python 对象的通用标识符，类似于 C 中的指针。</span></span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 此外，一个数组的任何变化都反映在另一个数组上。 例如，一个数组的形状改变也会改变另一个数组的形状。</span></span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">6</span>)  </span>
@@ -1279,6 +1451,7 @@ SBLSR  SBLSR  SBLSR  SBLSR  SBLSR  </code></pre>
 <span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (b)</span>
 <span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'a 的形状也修改了：'</span>)</span>
 <span id="cb91-17"><a href="#cb91-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>我们的数组是：
 [0 1 2 3 4 5]
@@ -1299,6 +1472,8 @@ a 的形状也修改了：
 </div>
 </div>
 <div id="50f4d253" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ndarray.view() 方会创建一个新的数组对象，该方法创建的新数组的维数变化不会改变原始数据的维数。</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 最开始 a 是个 3X2 的数组</span></span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape(<span class="dv">3</span>,<span class="dv">2</span>)  </span>
@@ -1319,6 +1494,7 @@ a 的形状也修改了：
 <span id="cb93-18"><a href="#cb93-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'a 的形状：'</span>)</span>
 <span id="cb93-19"><a href="#cb93-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span>
 <span id="cb93-20"><a href="#cb93-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用切片创建视图修改数据会影响到原始数组</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>数组 a：
 [[0 1]
@@ -1343,6 +1519,8 @@ a 的形状：
 </div>
 </div>
 <div id="6560321e" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ndarray.copy() 函数创建一个副本。 对副本数据进行修改，不会影响到原始数据，它们物理内存不在同一位置。</span></span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">10</span>,<span class="dv">10</span>],  [<span class="dv">2</span>,<span class="dv">3</span>],  [<span class="dv">4</span>,<span class="dv">5</span>]])  </span>
 <span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'数组 a：'</span>)</span>
@@ -1360,6 +1538,7 @@ a 的形状：
 <span id="cb95-15"><a href="#cb95-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (b)</span>
 <span id="cb95-16"><a href="#cb95-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">'a 保持不变：'</span>)</span>
 <span id="cb95-17"><a href="#cb95-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (a)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>数组 a：
 [[10 10]
@@ -1384,6 +1563,8 @@ a 保持不变：
 </div>
 </div>
 <div id="234aefe5" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># np.dot()对于两个一维的数组，计算的是这两个数组对应下标元素的乘积和(数学上称之为向量点积)；</span></span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 对于二维数组，计算的是两个数组的矩阵乘积；</span></span>
 <span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 对于多维数组，它的通用计算公式如下，即结果数组中的每个元素都是：数组a的最后一维上的所有元素与数组b的倒数第二位上的所有元素的乘积和：</span></span>
@@ -1391,23 +1572,29 @@ a 保持不变：
 <span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>]])</span>
 <span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([[<span class="dv">11</span>,<span class="dv">12</span>],[<span class="dv">13</span>,<span class="dv">14</span>]])</span>
 <span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.dot(a,b))   <span class="co"># [[1*11+2*13, 1*12+2*14],[3*11+4*13, 3*12+4*14]]</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[37 40]
  [85 92]]</code></pre>
 </div>
 </div>
 <div id="f274e57b" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.vdot() 函数是两个向量的点积。 如果第一个参数是复数，那么它的共轭复数会用于计算。 如果参数是多维数组，它会被展开。</span></span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>]]) </span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([[<span class="dv">11</span>,<span class="dv">12</span>],[<span class="dv">13</span>,<span class="dv">14</span>]]) </span>
 <span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="co"># vdot 将数组展开计算内积</span></span>
 <span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.vdot(a,b))   <span class="co"># 1*11 + 2*12 + 3*13 + 4*14 = 130</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>130</code></pre>
 </div>
 </div>
 <div id="4c23bd7b" class="cell" data-execution_count="35">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.inner() 函数返回一维数组的向量内积。对于更高的维度，它返回最后一个轴上的和的乘积。</span></span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (np.inner(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]),np.array([<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>]))) <span class="co"># 等价于 1*0+2*1+3*0</span></span>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1430,6 +1617,7 @@ a 保持不变：
 <span id="cb101-20"><a href="#cb101-20" aria-hidden="true" tabindex="-1"></a>    ]])</span>
 <span id="cb101-21"><a href="#cb101-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb101-22"><a href="#cb101-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.inner(a, b))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>2
 [[[[  9  11]
@@ -1447,9 +1635,12 @@ a 保持不变：
 </div>
 </div>
 <div id="855632e2" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.matmul 函数返回两个数组的矩阵乘积。</span></span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy.linalg.inv() 函数计算矩阵的乘法逆矩阵</span></span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="co"># numpy 可以运用于保存数据与读取数据</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 
 
@@ -1479,10 +1670,12 @@ a 保持不变：
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
       document.body.classList.add('quarto-dark');
       document.body.classList.remove('quarto-light');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
       document.body.classList.remove('quarto-dark');
       document.body.classList.add('quarto-light');
     }
@@ -1565,632 +1758,150 @@ a 保持不变：
 })();
 </script>
 <script>
-/**
- * 分类功能增强脚本 v2.0
- * 功能包括：
- * 1. 全局分类索引存储，解决分类同步问题
- * 2. 详情页文本输入框自定义分类
- * 3. 列表页动态显示所有已添加的分类
- * 4. 点击分类可筛选对应文章
- * 5. 完整输入验证和成功反馈
- */
+// Listing 年份分组：将 Quarto listing 文章按年份分组，并在侧边栏添加年份导航
 (function() {
   'use strict';
 
-  // 存储键名
-  const CATEGORY_INDEX_KEY = 'site-categories-index';    // { "分类名": ["postId1", ...] }
-  const POST_CATEGORIES_KEY = 'site-post-categories';    // { "postId": ["分类1", ...] }
+  function groupListingByYear() {
+    var listing = document.querySelector('.quarto-listing');
+    if (!listing) return;
 
-  // ---------- 数据层：全局分类索引 ----------
+    var posts = listing.querySelectorAll('.quarto-post');
+    if (posts.length === 0) return;
 
-  // 读取全局分类索引
-  function getCategoryIndex() {
-    return JSON.parse(localStorage.getItem(CATEGORY_INDEX_KEY) || '{}');
-  }
+    // 收集每个文章的年份
+    var yearGroups = {};
+    var postArray = Array.prototype.slice.call(posts);
 
-  // 保存全局分类索引
-  function saveCategoryIndex(index) {
-    localStorage.setItem(CATEGORY_INDEX_KEY, JSON.stringify(index));
-  }
+    postArray.forEach(function(post) {
+      var dateEl = post.querySelector('.listing-date, .date');
+      var dateText = dateEl ? dateEl.textContent.trim() : '';
+      var year = '';
 
-  // 获取某篇文章的分类
-  function getPostCategories(postId) {
-    const all = JSON.parse(localStorage.getItem(POST_CATEGORIES_KEY) || '{}');
-    return all[postId] || [];
-  }
-
-  // 保存某篇文章的分类（同时更新全局索引）
-  function savePostCategories(postId, categories) {
-    // 1. 更新文章->分类映射
-    const allPosts = JSON.parse(localStorage.getItem(POST_CATEGORIES_KEY) || '{}');
-    allPosts[postId] = categories;
-    localStorage.setItem(POST_CATEGORIES_KEY, JSON.stringify(allPosts));
-
-    // 2. 重建全局索引（确保数据一致性）
-    rebuildCategoryIndex();
-
-    // 3. 触发事件
-    document.dispatchEvent(new CustomEvent('post-categories-changed', {
-      detail: { postId, categories }
-    }));
-  }
-
-  // 重建全局分类索引
-  function rebuildCategoryIndex() {
-    const allPosts = JSON.parse(localStorage.getItem(POST_CATEGORIES_KEY) || '{}');
-    const index = {};
-
-    for (const [postId, cats] of Object.entries(allPosts)) {
-      for (const cat of cats) {
-        if (!index[cat]) {
-          index[cat] = [];
-        }
-        if (!index[cat].includes(postId)) {
-          index[cat].push(postId);
+      // 尝试从日期文本中提取年份
+      var match = dateText.match(/(\d{4})/);
+      if (match) {
+        year = match[1];
+      } else {
+        // 尝试从 metadata 属性中获取
+        var meta = post.querySelector('.metadata');
+        if (meta) {
+          var metaMatch = meta.textContent.match(/(\d{4})/);
+          if (metaMatch) year = metaMatch[1];
         }
       }
-    }
 
-    saveCategoryIndex(index);
-  }
+      if (!year) year = '其他';
 
-  // 获取所有分类列表（按使用频率排序）
-  function getAllCategories() {
-    const index = getCategoryIndex();
-    return Object.keys(index).sort((a, b) => {
-      return (index[b] || []).length - (index[a] || []).length;
-    });
-  }
-
-  // 获取属于某个分类的文章ID列表
-  function getPostsByCategory(category) {
-    const index = getCategoryIndex();
-    return index[category] || [];
-  }
-
-  // 获取当前页面的文章列表（用于筛选）
-  function getListedPostIds() {
-    const posts = document.querySelectorAll('.quarto-listing .quarto-post');
-    const ids = [];
-    posts.forEach(post => {
-      const link = post.querySelector('.listing-title a, a[href]');
-      if (link) {
-        const href = link.getAttribute('href') || '';
-        // 从href提取post ID（文件名）
-        const postId = href.split('/').pop()?.replace('.html', '') || '';
-        if (postId) ids.push(postId);
+      if (!yearGroups[year]) {
+        yearGroups[year] = [];
       }
-    });
-    return ids;
-  }
-
-  // ---------- 验证层 ----------
-
-  function validateCategoryInput(input) {
-    const trimmed = input.trim();
-    if (!trimmed) {
-      return { valid: false, message: '分类名称不能为空' };
-    }
-    if (trimmed.length > 30) {
-      return { valid: false, message: '分类名称不能超过30个字符' };
-    }
-    const validPattern = /^[\u4e00-\u9fa5a-zA-Z0-9\s_-]+$/;
-    if (!validPattern.test(trimmed)) {
-      return { valid: false, message: '分类名称只能包含中文、英文、数字、空格、下划线和短横线' };
-    }
-    if (!trimmed.replace(/\s/g, '').length) {
-      return { valid: false, message: '分类名称不能为纯空格' };
-    }
-    return { valid: true, value: trimmed };
-  }
-
-  // ---------- 详情页：分类输入器 ----------
-
-  // 判断当前页面是否应跳过分类输入器（如"关于"页面等非文章内容页）
-  function shouldSkipCategorySelector() {
-    const path = window.location.pathname.toLowerCase();
-    const pageId = getCurrentPageId().toLowerCase();
-    // 排除"关于"页面、首页索引等非文章详情页
-    const skipPages = ['about', 'index'];
-    if (skipPages.includes(pageId)) return true;
-    if (path.endsWith('/about.html') || path.endsWith('/about')) return true;
-    return false;
-  }
-
-  function buildPageCategorySelector() {
-    // 只在非 listing 页面显示
-    if (document.querySelector('.quarto-listing')) return;
-    // 跳过"关于"等非文章详情页
-    if (shouldSkipCategorySelector()) return;
-
-    const existing = document.querySelector('.page-category-selector');
-    if (existing) existing.remove();
-
-    const pageId = getCurrentPageId();
-    const currentCats = getPostCategories(pageId);
-
-    const selector = document.createElement('div');
-    selector.className = 'page-category-selector';
-    selector.innerHTML = `
-      <span class="label">📌 本篇分类：</span>
-      <div class="current-categories">
-        ${renderCatTags(currentCats)}
-      </div>
-      <div class="category-input-wrapper">
-        <input 
-          type="text" 
-          class="category-input" 
-          placeholder="输入自定义分类名称，按回车添加..." 
-          maxlength="30"
-          autocomplete="off"
-        >
-        <button type="button" class="submit-category">
-          <span>＋</span> 添加
-        </button>
-      </div>
-      <div class="category-error" style="display:none;"></div>
-    `;
-
-    const title = document.querySelector('#title-block-header, main.content h1.title');
-    if (title && title.parentNode) {
-      title.parentNode.insertBefore(selector, title.nextSibling);
-    } else {
-      const main = document.querySelector('main.content');
-      if (main) main.prepend(selector);
-    }
-
-    bindSelectorEvents(selector, pageId);
-  }
-
-  function getCurrentPageId() {
-    const pathname = window.location.pathname;
-    // 获取最后一个路径段
-    const lastSegment = pathname.split('/').filter(Boolean).pop() || 'page';
-    // 移除 .html 扩展名
-    return lastSegment.replace(/\.html$/, '');
-  }
-
-  function renderCatTags(categories) {
-    if (!categories || categories.length === 0) {
-      return '<span class="empty-hint">暂无分类，请在下方输入</span>';
-    }
-    return categories.map(cat => `
-      <span class="cat-tag" data-cat="${escapeHtml(cat)}">
-        ${escapeHtml(cat)}
-        <span class="remove" title="移除">×</span>
-      </span>
-    `).join('');
-  }
-
-  function bindSelectorEvents(selector, pageId) {
-    const input = selector.querySelector('.category-input');
-    const submitBtn = selector.querySelector('.submit-category');
-    const errorDiv = selector.querySelector('.category-error');
-    const currentCatsDiv = selector.querySelector('.current-categories');
-
-    // 绑定已有标签的移除事件
-    bindTagRemoveEvents(currentCatsDiv, pageId);
-
-    // 提交分类
-    submitBtn.addEventListener('click', () => submitCategory(input, errorDiv, currentCatsDiv, pageId));
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        submitCategory(input, errorDiv, currentCatsDiv, pageId);
-      }
+      yearGroups[year].push(post);
     });
 
-    // 输入时清除错误
-    input.addEventListener('input', () => {
-      if (input.classList.contains('input-error')) {
-        hideError(errorDiv);
-        input.classList.remove('input-error');
-      }
+    // 按年份降序排序
+    var sortedYears = Object.keys(yearGroups).sort(function(a, b) {
+      return parseInt(b) - parseInt(a);
     });
-  }
 
-  function submitCategory(input, errorDiv, currentCatsDiv, pageId) {
-    const value = input.value;
-    const validation = validateCategoryInput(value);
+    if (sortedYears.length <= 1 && sortedYears[0] === '其他') return;
 
-    if (!validation.valid) {
-      showError(errorDiv, validation.message);
-      input.classList.add('input-error');
-      return;
-    }
+    // 创建年份分组
+    var listingContainer = posts[0].parentElement;
 
-    const newCat = validation.value;
-    const existingCats = getPostCategories(pageId);
+    sortedYears.forEach(function(year) {
+      var yearHeader = document.createElement('h2');
+      yearHeader.className = 'listing-year-header';
+      yearHeader.id = 'year-' + year;
+      yearHeader.textContent = year;
+      yearHeader.style.cssText = 'font-size:1.4rem;font-weight:600;color:var(--text);margin-top:2rem;margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:2px solid var(--accent-soft);';
 
-    if (existingCats.includes(newCat)) {
-      showError(errorDiv, `分类"${newCat}"已存在`);
-      input.classList.add('input-error');
-      return;
-    }
+      // 在该年份的第一个文章前插入标题
+      var firstPost = yearGroups[year][0];
+      listingContainer.insertBefore(yearHeader, firstPost);
 
-    const updatedCats = [...existingCats, newCat];
-    savePostCategories(pageId, updatedCats);
-
-    // 更新UI
-    currentCatsDiv.innerHTML = renderCatTags(updatedCats);
-    bindTagRemoveEvents(currentCatsDiv, pageId);
-
-    // 清空输入
-    input.value = '';
-    hideError(errorDiv);
-    input.classList.remove('input-error');
-
-    // 成功反馈
-    showSuccessToast(`已添加分类："${newCat}"`);
-
-    // 同步更新列表页（如果在另一个标签页打开，通过storage事件）
-    syncToOtherPages();
-  }
-
-  function bindTagRemoveEvents(container, pageId) {
-    container.querySelectorAll('.cat-tag .remove').forEach(r => {
-      r.addEventListener('click', () => {
-        const tag = r.closest('.cat-tag');
-        const cat = tag.dataset.cat;
-        const cats = getPostCategories(pageId).filter(c => c !== cat);
-        savePostCategories(pageId, cats);
-        container.innerHTML = renderCatTags(cats);
-        bindTagRemoveEvents(container, pageId);
-        hideError(container.parentElement.querySelector('.category-error'));
+      // 为该年份的所有文章添加 data-year 属性
+      yearGroups[year].forEach(function(post) {
+        post.setAttribute('data-year', year);
       });
     });
-  }
 
-  // ---------- 列表页：动态分类同步 ----------
+    // 在侧边栏添加年份导航
+    var sidebar = document.querySelector('#quarto-margin-sidebar, .margin-sidebar');
+    if (sidebar) {
+      var yearNav = document.createElement('nav');
+      yearNav.className = 'listing-year-nav';
+      yearNav.innerHTML = '<h3 class="listing-year-title" style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:0.4rem;margin-bottom:0.6rem;">Years</h3>';
 
-  function syncListPageCategories() {
-    // 只在 listing 页面执行
-    if (!document.querySelector('.quarto-listing')) return;
+      var yearList = document.createElement('ul');
+      yearList.style.cssText = 'list-style:none;padding-left:0;';
 
-    const categories = getAllCategories();
-    if (categories.length === 0) return;
-
-    // 找到 Quarto 原生的分类容器
-    const categoryContainer = document.querySelector('.quarto-listing-category');
-    if (!categoryContainer) return;
-
-    // 获取已存在的分类按钮
-    const existingButtons = categoryContainer.querySelectorAll('.category');
-    const existingCats = new Set();
-    existingButtons.forEach(btn => {
-      const cat = btn.getAttribute('data-category');
-      if (cat) existingCats.add(cat);
-    });
-
-    // 添加缺失的分类
-    categories.forEach(cat => {
-      if (!existingCats.has(cat)) {
-        addCategoryButton(categoryContainer, cat);
-      }
-    });
-
-    // 更新"全部"按钮的计数
-    updateCategoryCounts(categoryContainer);
-  }
-
-  function addCategoryButton(container, category) {
-    const button = document.createElement('div');
-    button.className = 'category';
-    button.setAttribute('data-category', escapeHtml(category));
-    button.innerHTML = `${escapeHtml(category)} <span class="quarto-category-count">(0)</span>`;
-
-    // 添加点击事件（动态筛选）
-    button.addEventListener('click', (e) => {
-      e.stopPropagation();
-      filterPostsByCategory(category, button);
-    });
-
-    container.appendChild(button);
-  }
-
-  function updateCategoryCounts(container) {
-    const posts = document.querySelectorAll('.quarto-listing .quarto-post');
-    const totalPosts = posts.length;
-
-    // "全部"按钮显示总数
-    const allBtn = container.querySelector('.category[data-category=""]');
-    if (allBtn) {
-      const countSpan = allBtn.querySelector('.quarto-category-count');
-      if (countSpan) countSpan.textContent = `(${totalPosts})`;
-    }
-
-    // 更新每个分类的计数
-    const postIds = getListedPostIds();
-    const index = getCategoryIndex();
-
-    container.querySelectorAll('.category').forEach(btn => {
-      const cat = btn.getAttribute('data-category');
-      if (!cat) return; // 跳过"全部"按钮
-
-      const countSpan = btn.querySelector('.quarto-category-count');
-      if (!countSpan) return;
-
-      // 计算当前列表中属于该分类的文章数
-      const postIdsForCat = index[cat] || [];
-      const matchCount = postIds.filter(id => postIdsForCat.some(pid => pid.includes(id) || id.includes(pid))).length;
-      countSpan.textContent = `(${matchCount})`;
-    });
-  }
-
-  function filterPostsByCategory(category, clickedBtn) {
-    const posts = document.querySelectorAll('.quarto-listing .quarto-post');
-    const postIds = getListedPostIds();
-    const index = getCategoryIndex();
-    const matchedPostIds = new Set(index[category] || []);
-
-    // 高亮选中的分类按钮
-    const container = clickedBtn.parentElement;
-    container.querySelectorAll('.category').forEach(btn => {
-      btn.classList.remove('active');
-      btn.removeAttribute('data-active');
-    });
-
-    // 如果点击的是已选中的分类或"全部"，则显示所有
-    if (clickedBtn.classList.contains('active') || category === '') {
-      posts.forEach(post => {
-        post.style.display = '';
+      sortedYears.forEach(function(year) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#year-' + year;
+        a.textContent = year;
+        a.style.cssText = 'color:var(--muted);text-decoration:none;font-size:0.85rem;display:block;padding:0.2rem 0.5rem;border-radius:4px;transition:all 0.2s ease;';
+        a.addEventListener('mouseenter', function() {
+          a.style.color = 'var(--accent)';
+          a.style.background = 'var(--accent-soft)';
+        });
+        a.addEventListener('mouseleave', function() {
+          a.style.color = 'var(--muted)';
+          a.style.background = 'transparent';
+        });
+        li.appendChild(a);
+        yearList.appendChild(li);
       });
-      if (category === '') {
-        clickedBtn.classList.add('active');
-        clickedBtn.setAttribute('data-active', 'true');
-      }
-      showNoMatching(posts.length === 0);
-      return;
-    }
 
-    // 高亮当前按钮
-    clickedBtn.classList.add('active');
-    clickedBtn.setAttribute('data-active', 'true');
+      yearNav.appendChild(yearList);
 
-    // 根据分类筛选文章
-    let visibleCount = 0;
-    posts.forEach((post, idx) => {
-      const postId = postIds[idx] || '';
-      // 检查文章ID是否匹配
-      const isMatch = matchedPostIds.has(postId) ||
-                      Array.from(matchedPostIds).some(id => postId.includes(id) || id.includes(postId));
-      post.style.display = isMatch ? '' : 'none';
-      if (isMatch) visibleCount++;
-    });
-
-    showNoMatching(visibleCount === 0);
-  }
-
-  function showNoMatching(show) {
-    const noMatch = document.querySelector('.listing-no-matching');
-    if (noMatch) {
-      noMatch.classList.toggle('d-none', !show);
-    }
-  }
-
-  // ---------- 成功反馈 ----------
-
-  function showSuccessToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'category-toast-success';
-    toast.innerHTML = `
-      <span class="toast-icon">✓</span>
-      <span class="toast-msg">${escapeHtml(message)}</span>
-    `;
-    document.body.appendChild(toast);
-
-    // 动画进入
-    requestAnimationFrame(() => {
-      toast.classList.add('show');
-    });
-
-    // 自动消失
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 2500);
-  }
-
-  // ---------- 错误提示 ----------
-
-  function showError(errorDiv, message) {
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-  }
-
-  function hideError(errorDiv) {
-    if (errorDiv) {
-      errorDiv.style.display = 'none';
-      errorDiv.textContent = '';
-    }
-  }
-
-  // ---------- 跨页面同步 ----------
-
-  function syncToOtherPages() {
-    // 通过 storage 事件实现跨标签页同步
-    localStorage.setItem('site-categories-sync', Date.now().toString());
-  }
-
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'site-categories-sync' || 
-        e.key === POST_CATEGORIES_KEY || 
-        e.key === CATEGORY_INDEX_KEY) {
-      // 重新同步列表页分类
-      if (document.querySelector('.quarto-listing')) {
-        syncListPageCategories();
+      // 插入到侧边栏顶部（在分类筛选之前）
+      var firstChild = sidebar.firstElementChild;
+      if (firstChild) {
+        sidebar.insertBefore(yearNav, firstChild);
+      } else {
+        sidebar.appendChild(yearNav);
       }
     }
-  });
-
-  // 监听自定义事件
-  document.addEventListener('post-categories-changed', () => {
-    if (document.querySelector('.quarto-listing')) {
-      syncListPageCategories();
-    }
-  });
-
-  // ---------- 工具函数 ----------
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = String(str);
-    return div.innerHTML;
   }
 
-  // ---------- 初始化 ----------
-
+  // 等待 Quarto listing 渲染完成后执行
   function init() {
-    // 确保分类索引是最新的
-    rebuildCategoryIndex();
-
-    if (document.querySelector('.quarto-listing')) {
-      // 列表页：等待listing渲染完成后再同步分类
-      waitForListingReady().then(() => {
-        syncListPageCategories();
-      });
-
-      // 监听原生分类按钮点击
-      document.addEventListener('click', (e) => {
-        const catBtn = e.target.closest('.quarto-listing-category .category');
-        if (catBtn) {
-          const category = catBtn.getAttribute('data-category') || '';
-          filterPostsByCategory(category, catBtn);
-        }
-      }, true);
-    } else {
-      // 详情页：构建分类输入器
-      buildPageCategorySelector();
+    // 立即尝试
+    if (document.querySelector('.quarto-post')) {
+      groupListingByYear();
+      return;
     }
-  }
 
-  // 等待Quarto listing完全渲染
-  function waitForListingReady() {
-    return new Promise((resolve) => {
-      // 检查listing是否已经初始化
-      const checkInterval = setInterval(() => {
-        const listing = document.querySelector('.quarto-listing');
-        const posts = document.querySelectorAll('.quarto-post');
-        const categoryContainer = document.querySelector('.quarto-listing-category');
-        
-        if (listing && posts.length > 0 && categoryContainer) {
-          clearInterval(checkInterval);
-          resolve();
-        }
-      }, 100);
-
-      // 超时设置（5秒）
-      setTimeout(() => {
-        clearInterval(checkInterval);
-        resolve(); // 即使超时也继续执行
-      }, 5000);
+    // 使用 MutationObserver 等待 listing 渲染
+    var observer = new MutationObserver(function(mutations, obs) {
+      if (document.querySelector('.quarto-post')) {
+        groupListingByYear();
+        obs.disconnect();
+      }
     });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    // 超时后停止观察
+    setTimeout(function() {
+      observer.disconnect();
+      if (document.querySelector('.quarto-post') && !document.querySelector('.listing-year-header')) {
+        groupListingByYear();
+      }
+    }, 5000);
   }
-
-  // ---------- 成功提示样式注入 ----------
-
-  function injectToastStyles() {
-    if (document.getElementById('category-toast-styles')) return;
-    
-    const style = document.createElement('style');
-    style.id = 'category-toast-styles';
-    style.textContent = `
-      .category-toast-success {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%) translateY(20px);
-        background: var(--accent);
-        color: #fff;
-        padding: 0.75rem 1.2rem;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        opacity: 0;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        pointer-events: none;
-      }
-      .category-toast-success.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-      .category-toast-success .toast-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 20px;
-        height: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        font-size: 0.8rem;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // 成功提示样式注入
-  injectToastStyles();
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(init, 200));
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    setTimeout(init, 200);
+    init();
   }
-
-  // 页面导航变化时重新初始化
-  document.addEventListener('page:navigate', () => {
-    setTimeout(init, 300);
-  });
-
-  // 监听分类容器变化，确保自定义分类不被覆盖
-  let syncTimeout = null;
-  const categoryObserver = new MutationObserver((mutations) => {
-    // 检查是否是分类容器的变化
-    const categoryContainer = document.querySelector('.quarto-listing-category');
-    if (!categoryContainer) return;
-
-    // 检查变化是否发生在分类容器内
-    const isCategoryChange = mutations.some(m => 
-      m.target.classList && m.target.classList.contains('quarto-listing-category')
-    );
-
-    if (isCategoryChange || (document.querySelector('.quarto-listing') && document.querySelector('.quarto-post'))) {
-      // 防抖处理
-      if (syncTimeout) clearTimeout(syncTimeout);
-      syncTimeout = setTimeout(() => {
-        syncListPageCategories();
-      }, 200);
-    }
-  });
-
-  // 监听整个body，但只在关键变化时触发
-  categoryObserver.observe(document.body, { 
-    childList: true, 
-    subtree: true 
-  });
-
-  // 额外监听：直接监听分类容器
-  const startCategoryContainerObserver = () => {
-    const categoryContainer = document.querySelector('.quarto-listing-category');
-    if (categoryContainer) {
-      new MutationObserver(() => {
-        // 当分类容器被修改时，重新同步
-        if (syncTimeout) clearTimeout(syncTimeout);
-        syncTimeout = setTimeout(() => {
-          syncListPageCategories();
-        }, 100);
-      }).observe(categoryContainer, { childList: true, subtree: true });
-    }
-  };
-
-  // 页面加载后启动容器监听
-  setTimeout(startCategoryContainerObserver, 1000);
-}());
+})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -2262,6 +1973,57 @@ a 保持不变：
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -2596,13 +2358,13 @@ a 保持不变：
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Ning Yan</p>
+<p>© 2024–2026 Ning Yan</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
+<p>个人学习笔记站点</p>
+</div>
     <div class="nav-footer-right">
-<p>个人学习笔记</p>
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
 </div>
   </div>
 </footer>

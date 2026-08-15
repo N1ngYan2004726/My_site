@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="线性代数与几何的进阶内容。">
 
-<title>(2)几何与线性代数 – Ning Yan</title>
+<title>(2)几何与线性代数 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -121,7 +122,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -129,7 +130,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Ning Yan</span>
+    <span class="navbar-title">N1ngYan</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="搜索"></div>
@@ -139,24 +140,24 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../mathematics/index.html"> 
-<span class="menu-text">数学机理</span></a>
+    <a class="nav-link" href="../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../deep-learning/index.html"> 
-<span class="menu-text">深度学习模型</span></a>
+    <a class="nav-link" href="../talks/index.html"> 
+<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../code/index.html"> 
-<span class="menu-text">代码实战</span></a>
+    <a class="nav-link" href="../publications/index.html"> 
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../llm/index.html"> 
-<span class="menu-text">LLM学习</span></a>
+    <a class="nav-link" href="../cv/index.html"> 
+<span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">关于</span></a>
+    <a class="nav-link" href="../news/index.html"> 
+<span class="menu-text">News</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -181,20 +182,48 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#线性变换的几何" id="toc-线性变换的几何" class="nav-link active" data-scroll-target="#线性变换的几何">线性变换的几何</a></li>
+  <li><a href="#线性相关" id="toc-线性相关" class="nav-link" data-scroll-target="#线性相关">线性相关</a></li>
+  <li><a href="#矩阵的秩" id="toc-矩阵的秩" class="nav-link" data-scroll-target="#矩阵的秩">矩阵的秩</a></li>
+  <li><a href="#可逆性" id="toc-可逆性" class="nav-link" data-scroll-target="#可逆性">可逆性</a></li>
+  <li><a href="#行列式" id="toc-行列式" class="nav-link" data-scroll-target="#行列式">行列式</a></li>
+  <li><a href="#一些常见操作" id="toc-一些常见操作" class="nav-link" data-scroll-target="#一些常见操作">一些常见操作</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">(2)几何与线性代数</h1>
-</div>
+  <div class="quarto-categories">
+    <div class="quarto-category">mathematics</div>
+    <div class="quarto-category">linear-algebra</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    线性代数与几何的进阶内容。
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月14日</p>
+    </div>
+  </div>
   
     
   </div>
@@ -204,7 +233,6 @@ window.Quarto = {
 </header>
 
 
-<p>针对几何与线性代数的理解做一些记录。</p>
 <section id="线性变换的几何" class="level2">
 <h2 class="anchored" data-anchor-id="线性变换的几何">线性变换的几何</h2>
 <p>首先，我们先理解一下Basis(基)：<br>
@@ -361,10 +389,12 @@ c_{21} &amp; c_{22}
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
       document.body.classList.add('quarto-dark');
       document.body.classList.remove('quarto-light');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
       document.body.classList.remove('quarto-dark');
       document.body.classList.add('quarto-light');
     }
@@ -447,632 +477,150 @@ c_{21} &amp; c_{22}
 })();
 </script>
 <script>
-/**
- * 分类功能增强脚本 v2.0
- * 功能包括：
- * 1. 全局分类索引存储，解决分类同步问题
- * 2. 详情页文本输入框自定义分类
- * 3. 列表页动态显示所有已添加的分类
- * 4. 点击分类可筛选对应文章
- * 5. 完整输入验证和成功反馈
- */
+// Listing 年份分组：将 Quarto listing 文章按年份分组，并在侧边栏添加年份导航
 (function() {
   'use strict';
 
-  // 存储键名
-  const CATEGORY_INDEX_KEY = 'site-categories-index';    // { "分类名": ["postId1", ...] }
-  const POST_CATEGORIES_KEY = 'site-post-categories';    // { "postId": ["分类1", ...] }
+  function groupListingByYear() {
+    var listing = document.querySelector('.quarto-listing');
+    if (!listing) return;
 
-  // ---------- 数据层：全局分类索引 ----------
+    var posts = listing.querySelectorAll('.quarto-post');
+    if (posts.length === 0) return;
 
-  // 读取全局分类索引
-  function getCategoryIndex() {
-    return JSON.parse(localStorage.getItem(CATEGORY_INDEX_KEY) || '{}');
-  }
+    // 收集每个文章的年份
+    var yearGroups = {};
+    var postArray = Array.prototype.slice.call(posts);
 
-  // 保存全局分类索引
-  function saveCategoryIndex(index) {
-    localStorage.setItem(CATEGORY_INDEX_KEY, JSON.stringify(index));
-  }
+    postArray.forEach(function(post) {
+      var dateEl = post.querySelector('.listing-date, .date');
+      var dateText = dateEl ? dateEl.textContent.trim() : '';
+      var year = '';
 
-  // 获取某篇文章的分类
-  function getPostCategories(postId) {
-    const all = JSON.parse(localStorage.getItem(POST_CATEGORIES_KEY) || '{}');
-    return all[postId] || [];
-  }
-
-  // 保存某篇文章的分类（同时更新全局索引）
-  function savePostCategories(postId, categories) {
-    // 1. 更新文章->分类映射
-    const allPosts = JSON.parse(localStorage.getItem(POST_CATEGORIES_KEY) || '{}');
-    allPosts[postId] = categories;
-    localStorage.setItem(POST_CATEGORIES_KEY, JSON.stringify(allPosts));
-
-    // 2. 重建全局索引（确保数据一致性）
-    rebuildCategoryIndex();
-
-    // 3. 触发事件
-    document.dispatchEvent(new CustomEvent('post-categories-changed', {
-      detail: { postId, categories }
-    }));
-  }
-
-  // 重建全局分类索引
-  function rebuildCategoryIndex() {
-    const allPosts = JSON.parse(localStorage.getItem(POST_CATEGORIES_KEY) || '{}');
-    const index = {};
-
-    for (const [postId, cats] of Object.entries(allPosts)) {
-      for (const cat of cats) {
-        if (!index[cat]) {
-          index[cat] = [];
-        }
-        if (!index[cat].includes(postId)) {
-          index[cat].push(postId);
+      // 尝试从日期文本中提取年份
+      var match = dateText.match(/(\d{4})/);
+      if (match) {
+        year = match[1];
+      } else {
+        // 尝试从 metadata 属性中获取
+        var meta = post.querySelector('.metadata');
+        if (meta) {
+          var metaMatch = meta.textContent.match(/(\d{4})/);
+          if (metaMatch) year = metaMatch[1];
         }
       }
-    }
 
-    saveCategoryIndex(index);
-  }
+      if (!year) year = '其他';
 
-  // 获取所有分类列表（按使用频率排序）
-  function getAllCategories() {
-    const index = getCategoryIndex();
-    return Object.keys(index).sort((a, b) => {
-      return (index[b] || []).length - (index[a] || []).length;
-    });
-  }
-
-  // 获取属于某个分类的文章ID列表
-  function getPostsByCategory(category) {
-    const index = getCategoryIndex();
-    return index[category] || [];
-  }
-
-  // 获取当前页面的文章列表（用于筛选）
-  function getListedPostIds() {
-    const posts = document.querySelectorAll('.quarto-listing .quarto-post');
-    const ids = [];
-    posts.forEach(post => {
-      const link = post.querySelector('.listing-title a, a[href]');
-      if (link) {
-        const href = link.getAttribute('href') || '';
-        // 从href提取post ID（文件名）
-        const postId = href.split('/').pop()?.replace('.html', '') || '';
-        if (postId) ids.push(postId);
+      if (!yearGroups[year]) {
+        yearGroups[year] = [];
       }
-    });
-    return ids;
-  }
-
-  // ---------- 验证层 ----------
-
-  function validateCategoryInput(input) {
-    const trimmed = input.trim();
-    if (!trimmed) {
-      return { valid: false, message: '分类名称不能为空' };
-    }
-    if (trimmed.length > 30) {
-      return { valid: false, message: '分类名称不能超过30个字符' };
-    }
-    const validPattern = /^[\u4e00-\u9fa5a-zA-Z0-9\s_-]+$/;
-    if (!validPattern.test(trimmed)) {
-      return { valid: false, message: '分类名称只能包含中文、英文、数字、空格、下划线和短横线' };
-    }
-    if (!trimmed.replace(/\s/g, '').length) {
-      return { valid: false, message: '分类名称不能为纯空格' };
-    }
-    return { valid: true, value: trimmed };
-  }
-
-  // ---------- 详情页：分类输入器 ----------
-
-  // 判断当前页面是否应跳过分类输入器（如"关于"页面等非文章内容页）
-  function shouldSkipCategorySelector() {
-    const path = window.location.pathname.toLowerCase();
-    const pageId = getCurrentPageId().toLowerCase();
-    // 排除"关于"页面、首页索引等非文章详情页
-    const skipPages = ['about', 'index'];
-    if (skipPages.includes(pageId)) return true;
-    if (path.endsWith('/about.html') || path.endsWith('/about')) return true;
-    return false;
-  }
-
-  function buildPageCategorySelector() {
-    // 只在非 listing 页面显示
-    if (document.querySelector('.quarto-listing')) return;
-    // 跳过"关于"等非文章详情页
-    if (shouldSkipCategorySelector()) return;
-
-    const existing = document.querySelector('.page-category-selector');
-    if (existing) existing.remove();
-
-    const pageId = getCurrentPageId();
-    const currentCats = getPostCategories(pageId);
-
-    const selector = document.createElement('div');
-    selector.className = 'page-category-selector';
-    selector.innerHTML = `
-      <span class="label">📌 本篇分类：</span>
-      <div class="current-categories">
-        ${renderCatTags(currentCats)}
-      </div>
-      <div class="category-input-wrapper">
-        <input 
-          type="text" 
-          class="category-input" 
-          placeholder="输入自定义分类名称，按回车添加..." 
-          maxlength="30"
-          autocomplete="off"
-        >
-        <button type="button" class="submit-category">
-          <span>＋</span> 添加
-        </button>
-      </div>
-      <div class="category-error" style="display:none;"></div>
-    `;
-
-    const title = document.querySelector('#title-block-header, main.content h1.title');
-    if (title && title.parentNode) {
-      title.parentNode.insertBefore(selector, title.nextSibling);
-    } else {
-      const main = document.querySelector('main.content');
-      if (main) main.prepend(selector);
-    }
-
-    bindSelectorEvents(selector, pageId);
-  }
-
-  function getCurrentPageId() {
-    const pathname = window.location.pathname;
-    // 获取最后一个路径段
-    const lastSegment = pathname.split('/').filter(Boolean).pop() || 'page';
-    // 移除 .html 扩展名
-    return lastSegment.replace(/\.html$/, '');
-  }
-
-  function renderCatTags(categories) {
-    if (!categories || categories.length === 0) {
-      return '<span class="empty-hint">暂无分类，请在下方输入</span>';
-    }
-    return categories.map(cat => `
-      <span class="cat-tag" data-cat="${escapeHtml(cat)}">
-        ${escapeHtml(cat)}
-        <span class="remove" title="移除">×</span>
-      </span>
-    `).join('');
-  }
-
-  function bindSelectorEvents(selector, pageId) {
-    const input = selector.querySelector('.category-input');
-    const submitBtn = selector.querySelector('.submit-category');
-    const errorDiv = selector.querySelector('.category-error');
-    const currentCatsDiv = selector.querySelector('.current-categories');
-
-    // 绑定已有标签的移除事件
-    bindTagRemoveEvents(currentCatsDiv, pageId);
-
-    // 提交分类
-    submitBtn.addEventListener('click', () => submitCategory(input, errorDiv, currentCatsDiv, pageId));
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        submitCategory(input, errorDiv, currentCatsDiv, pageId);
-      }
+      yearGroups[year].push(post);
     });
 
-    // 输入时清除错误
-    input.addEventListener('input', () => {
-      if (input.classList.contains('input-error')) {
-        hideError(errorDiv);
-        input.classList.remove('input-error');
-      }
+    // 按年份降序排序
+    var sortedYears = Object.keys(yearGroups).sort(function(a, b) {
+      return parseInt(b) - parseInt(a);
     });
-  }
 
-  function submitCategory(input, errorDiv, currentCatsDiv, pageId) {
-    const value = input.value;
-    const validation = validateCategoryInput(value);
+    if (sortedYears.length <= 1 && sortedYears[0] === '其他') return;
 
-    if (!validation.valid) {
-      showError(errorDiv, validation.message);
-      input.classList.add('input-error');
-      return;
-    }
+    // 创建年份分组
+    var listingContainer = posts[0].parentElement;
 
-    const newCat = validation.value;
-    const existingCats = getPostCategories(pageId);
+    sortedYears.forEach(function(year) {
+      var yearHeader = document.createElement('h2');
+      yearHeader.className = 'listing-year-header';
+      yearHeader.id = 'year-' + year;
+      yearHeader.textContent = year;
+      yearHeader.style.cssText = 'font-size:1.4rem;font-weight:600;color:var(--text);margin-top:2rem;margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:2px solid var(--accent-soft);';
 
-    if (existingCats.includes(newCat)) {
-      showError(errorDiv, `分类"${newCat}"已存在`);
-      input.classList.add('input-error');
-      return;
-    }
+      // 在该年份的第一个文章前插入标题
+      var firstPost = yearGroups[year][0];
+      listingContainer.insertBefore(yearHeader, firstPost);
 
-    const updatedCats = [...existingCats, newCat];
-    savePostCategories(pageId, updatedCats);
-
-    // 更新UI
-    currentCatsDiv.innerHTML = renderCatTags(updatedCats);
-    bindTagRemoveEvents(currentCatsDiv, pageId);
-
-    // 清空输入
-    input.value = '';
-    hideError(errorDiv);
-    input.classList.remove('input-error');
-
-    // 成功反馈
-    showSuccessToast(`已添加分类："${newCat}"`);
-
-    // 同步更新列表页（如果在另一个标签页打开，通过storage事件）
-    syncToOtherPages();
-  }
-
-  function bindTagRemoveEvents(container, pageId) {
-    container.querySelectorAll('.cat-tag .remove').forEach(r => {
-      r.addEventListener('click', () => {
-        const tag = r.closest('.cat-tag');
-        const cat = tag.dataset.cat;
-        const cats = getPostCategories(pageId).filter(c => c !== cat);
-        savePostCategories(pageId, cats);
-        container.innerHTML = renderCatTags(cats);
-        bindTagRemoveEvents(container, pageId);
-        hideError(container.parentElement.querySelector('.category-error'));
+      // 为该年份的所有文章添加 data-year 属性
+      yearGroups[year].forEach(function(post) {
+        post.setAttribute('data-year', year);
       });
     });
-  }
 
-  // ---------- 列表页：动态分类同步 ----------
+    // 在侧边栏添加年份导航
+    var sidebar = document.querySelector('#quarto-margin-sidebar, .margin-sidebar');
+    if (sidebar) {
+      var yearNav = document.createElement('nav');
+      yearNav.className = 'listing-year-nav';
+      yearNav.innerHTML = '<h3 class="listing-year-title" style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:0.4rem;margin-bottom:0.6rem;">Years</h3>';
 
-  function syncListPageCategories() {
-    // 只在 listing 页面执行
-    if (!document.querySelector('.quarto-listing')) return;
+      var yearList = document.createElement('ul');
+      yearList.style.cssText = 'list-style:none;padding-left:0;';
 
-    const categories = getAllCategories();
-    if (categories.length === 0) return;
-
-    // 找到 Quarto 原生的分类容器
-    const categoryContainer = document.querySelector('.quarto-listing-category');
-    if (!categoryContainer) return;
-
-    // 获取已存在的分类按钮
-    const existingButtons = categoryContainer.querySelectorAll('.category');
-    const existingCats = new Set();
-    existingButtons.forEach(btn => {
-      const cat = btn.getAttribute('data-category');
-      if (cat) existingCats.add(cat);
-    });
-
-    // 添加缺失的分类
-    categories.forEach(cat => {
-      if (!existingCats.has(cat)) {
-        addCategoryButton(categoryContainer, cat);
-      }
-    });
-
-    // 更新"全部"按钮的计数
-    updateCategoryCounts(categoryContainer);
-  }
-
-  function addCategoryButton(container, category) {
-    const button = document.createElement('div');
-    button.className = 'category';
-    button.setAttribute('data-category', escapeHtml(category));
-    button.innerHTML = `${escapeHtml(category)} <span class="quarto-category-count">(0)</span>`;
-
-    // 添加点击事件（动态筛选）
-    button.addEventListener('click', (e) => {
-      e.stopPropagation();
-      filterPostsByCategory(category, button);
-    });
-
-    container.appendChild(button);
-  }
-
-  function updateCategoryCounts(container) {
-    const posts = document.querySelectorAll('.quarto-listing .quarto-post');
-    const totalPosts = posts.length;
-
-    // "全部"按钮显示总数
-    const allBtn = container.querySelector('.category[data-category=""]');
-    if (allBtn) {
-      const countSpan = allBtn.querySelector('.quarto-category-count');
-      if (countSpan) countSpan.textContent = `(${totalPosts})`;
-    }
-
-    // 更新每个分类的计数
-    const postIds = getListedPostIds();
-    const index = getCategoryIndex();
-
-    container.querySelectorAll('.category').forEach(btn => {
-      const cat = btn.getAttribute('data-category');
-      if (!cat) return; // 跳过"全部"按钮
-
-      const countSpan = btn.querySelector('.quarto-category-count');
-      if (!countSpan) return;
-
-      // 计算当前列表中属于该分类的文章数
-      const postIdsForCat = index[cat] || [];
-      const matchCount = postIds.filter(id => postIdsForCat.some(pid => pid.includes(id) || id.includes(pid))).length;
-      countSpan.textContent = `(${matchCount})`;
-    });
-  }
-
-  function filterPostsByCategory(category, clickedBtn) {
-    const posts = document.querySelectorAll('.quarto-listing .quarto-post');
-    const postIds = getListedPostIds();
-    const index = getCategoryIndex();
-    const matchedPostIds = new Set(index[category] || []);
-
-    // 高亮选中的分类按钮
-    const container = clickedBtn.parentElement;
-    container.querySelectorAll('.category').forEach(btn => {
-      btn.classList.remove('active');
-      btn.removeAttribute('data-active');
-    });
-
-    // 如果点击的是已选中的分类或"全部"，则显示所有
-    if (clickedBtn.classList.contains('active') || category === '') {
-      posts.forEach(post => {
-        post.style.display = '';
+      sortedYears.forEach(function(year) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#year-' + year;
+        a.textContent = year;
+        a.style.cssText = 'color:var(--muted);text-decoration:none;font-size:0.85rem;display:block;padding:0.2rem 0.5rem;border-radius:4px;transition:all 0.2s ease;';
+        a.addEventListener('mouseenter', function() {
+          a.style.color = 'var(--accent)';
+          a.style.background = 'var(--accent-soft)';
+        });
+        a.addEventListener('mouseleave', function() {
+          a.style.color = 'var(--muted)';
+          a.style.background = 'transparent';
+        });
+        li.appendChild(a);
+        yearList.appendChild(li);
       });
-      if (category === '') {
-        clickedBtn.classList.add('active');
-        clickedBtn.setAttribute('data-active', 'true');
-      }
-      showNoMatching(posts.length === 0);
-      return;
-    }
 
-    // 高亮当前按钮
-    clickedBtn.classList.add('active');
-    clickedBtn.setAttribute('data-active', 'true');
+      yearNav.appendChild(yearList);
 
-    // 根据分类筛选文章
-    let visibleCount = 0;
-    posts.forEach((post, idx) => {
-      const postId = postIds[idx] || '';
-      // 检查文章ID是否匹配
-      const isMatch = matchedPostIds.has(postId) ||
-                      Array.from(matchedPostIds).some(id => postId.includes(id) || id.includes(postId));
-      post.style.display = isMatch ? '' : 'none';
-      if (isMatch) visibleCount++;
-    });
-
-    showNoMatching(visibleCount === 0);
-  }
-
-  function showNoMatching(show) {
-    const noMatch = document.querySelector('.listing-no-matching');
-    if (noMatch) {
-      noMatch.classList.toggle('d-none', !show);
-    }
-  }
-
-  // ---------- 成功反馈 ----------
-
-  function showSuccessToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'category-toast-success';
-    toast.innerHTML = `
-      <span class="toast-icon">✓</span>
-      <span class="toast-msg">${escapeHtml(message)}</span>
-    `;
-    document.body.appendChild(toast);
-
-    // 动画进入
-    requestAnimationFrame(() => {
-      toast.classList.add('show');
-    });
-
-    // 自动消失
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 2500);
-  }
-
-  // ---------- 错误提示 ----------
-
-  function showError(errorDiv, message) {
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-  }
-
-  function hideError(errorDiv) {
-    if (errorDiv) {
-      errorDiv.style.display = 'none';
-      errorDiv.textContent = '';
-    }
-  }
-
-  // ---------- 跨页面同步 ----------
-
-  function syncToOtherPages() {
-    // 通过 storage 事件实现跨标签页同步
-    localStorage.setItem('site-categories-sync', Date.now().toString());
-  }
-
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'site-categories-sync' || 
-        e.key === POST_CATEGORIES_KEY || 
-        e.key === CATEGORY_INDEX_KEY) {
-      // 重新同步列表页分类
-      if (document.querySelector('.quarto-listing')) {
-        syncListPageCategories();
+      // 插入到侧边栏顶部（在分类筛选之前）
+      var firstChild = sidebar.firstElementChild;
+      if (firstChild) {
+        sidebar.insertBefore(yearNav, firstChild);
+      } else {
+        sidebar.appendChild(yearNav);
       }
     }
-  });
-
-  // 监听自定义事件
-  document.addEventListener('post-categories-changed', () => {
-    if (document.querySelector('.quarto-listing')) {
-      syncListPageCategories();
-    }
-  });
-
-  // ---------- 工具函数 ----------
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = String(str);
-    return div.innerHTML;
   }
 
-  // ---------- 初始化 ----------
-
+  // 等待 Quarto listing 渲染完成后执行
   function init() {
-    // 确保分类索引是最新的
-    rebuildCategoryIndex();
-
-    if (document.querySelector('.quarto-listing')) {
-      // 列表页：等待listing渲染完成后再同步分类
-      waitForListingReady().then(() => {
-        syncListPageCategories();
-      });
-
-      // 监听原生分类按钮点击
-      document.addEventListener('click', (e) => {
-        const catBtn = e.target.closest('.quarto-listing-category .category');
-        if (catBtn) {
-          const category = catBtn.getAttribute('data-category') || '';
-          filterPostsByCategory(category, catBtn);
-        }
-      }, true);
-    } else {
-      // 详情页：构建分类输入器
-      buildPageCategorySelector();
+    // 立即尝试
+    if (document.querySelector('.quarto-post')) {
+      groupListingByYear();
+      return;
     }
-  }
 
-  // 等待Quarto listing完全渲染
-  function waitForListingReady() {
-    return new Promise((resolve) => {
-      // 检查listing是否已经初始化
-      const checkInterval = setInterval(() => {
-        const listing = document.querySelector('.quarto-listing');
-        const posts = document.querySelectorAll('.quarto-post');
-        const categoryContainer = document.querySelector('.quarto-listing-category');
-        
-        if (listing && posts.length > 0 && categoryContainer) {
-          clearInterval(checkInterval);
-          resolve();
-        }
-      }, 100);
-
-      // 超时设置（5秒）
-      setTimeout(() => {
-        clearInterval(checkInterval);
-        resolve(); // 即使超时也继续执行
-      }, 5000);
+    // 使用 MutationObserver 等待 listing 渲染
+    var observer = new MutationObserver(function(mutations, obs) {
+      if (document.querySelector('.quarto-post')) {
+        groupListingByYear();
+        obs.disconnect();
+      }
     });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    // 超时后停止观察
+    setTimeout(function() {
+      observer.disconnect();
+      if (document.querySelector('.quarto-post') && !document.querySelector('.listing-year-header')) {
+        groupListingByYear();
+      }
+    }, 5000);
   }
-
-  // ---------- 成功提示样式注入 ----------
-
-  function injectToastStyles() {
-    if (document.getElementById('category-toast-styles')) return;
-    
-    const style = document.createElement('style');
-    style.id = 'category-toast-styles';
-    style.textContent = `
-      .category-toast-success {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%) translateY(20px);
-        background: var(--accent);
-        color: #fff;
-        padding: 0.75rem 1.2rem;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        z-index: 10000;
-        opacity: 0;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        pointer-events: none;
-      }
-      .category-toast-success.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-      .category-toast-success .toast-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 20px;
-        height: 20px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        font-size: 0.8rem;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // 成功提示样式注入
-  injectToastStyles();
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(init, 200));
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    setTimeout(init, 200);
+    init();
   }
-
-  // 页面导航变化时重新初始化
-  document.addEventListener('page:navigate', () => {
-    setTimeout(init, 300);
-  });
-
-  // 监听分类容器变化，确保自定义分类不被覆盖
-  let syncTimeout = null;
-  const categoryObserver = new MutationObserver((mutations) => {
-    // 检查是否是分类容器的变化
-    const categoryContainer = document.querySelector('.quarto-listing-category');
-    if (!categoryContainer) return;
-
-    // 检查变化是否发生在分类容器内
-    const isCategoryChange = mutations.some(m => 
-      m.target.classList && m.target.classList.contains('quarto-listing-category')
-    );
-
-    if (isCategoryChange || (document.querySelector('.quarto-listing') && document.querySelector('.quarto-post'))) {
-      // 防抖处理
-      if (syncTimeout) clearTimeout(syncTimeout);
-      syncTimeout = setTimeout(() => {
-        syncListPageCategories();
-      }, 200);
-    }
-  });
-
-  // 监听整个body，但只在关键变化时触发
-  categoryObserver.observe(document.body, { 
-    childList: true, 
-    subtree: true 
-  });
-
-  // 额外监听：直接监听分类容器
-  const startCategoryContainerObserver = () => {
-    const categoryContainer = document.querySelector('.quarto-listing-category');
-    if (categoryContainer) {
-      new MutationObserver(() => {
-        // 当分类容器被修改时，重新同步
-        if (syncTimeout) clearTimeout(syncTimeout);
-        syncTimeout = setTimeout(() => {
-          syncListPageCategories();
-        }, 100);
-      }).observe(categoryContainer, { childList: true, subtree: true });
-    }
-  };
-
-  // 页面加载后启动容器监听
-  setTimeout(startCategoryContainerObserver, 1000);
-}());
+})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1144,6 +692,57 @@ c_{21} &amp; c_{22}
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1478,13 +1077,13 @@ c_{21} &amp; c_{22}
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>Ning Yan</p>
+<p>© 2024–2026 Ning Yan</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    </div>
+<p>个人学习笔记站点</p>
+</div>
     <div class="nav-footer-right">
-<p>个人学习笔记</p>
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
 </div>
   </div>
 </footer>

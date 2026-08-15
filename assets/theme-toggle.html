@@ -22,10 +22,12 @@
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
       document.body.classList.add('quarto-dark');
       document.body.classList.remove('quarto-light');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
       document.body.classList.remove('quarto-dark');
       document.body.classList.add('quarto-light');
     }

@@ -1,139 +1,42 @@
 ---
-title: ""
+title: "Ning Yan"
 page-layout: full
-
-listing:
-  contents:
-    - "mathematics/*.ipynb"
-    - "deep-learning/*.ipynb"
-    - "code/*.ipynb"
-    - "llm/*.ipynb"
-
-  sort:
-    - "date desc"
-
-  type: default
-
-  fields:
-    - title
-    - description
-    - date
-    - categories
-
-  max-items: 5
-
-  sort-ui: false
-  filter-ui: false
 ---
 
-<div class="home">
+<div class="home-grid">
 
-<section class="hero">
+<div class="home-photo-col">
 
-<div class="hero-kicker">学习 · 理解 · 实践</div>
-
-<p class="hero-title">Ning Yan</p>
-
-<p class="hero-desc">
-记录数学、机器学习与深度学习中的理解、推导和实验。
-</p>
-
-</section>
-
-
-<section class="home-section">
-
-<div class="section-head">
-<span>01</span>
-<h2>核心板块</h2>
-</div>
-
-<div class="card-grid">
-
-<div class="site-card theme-math">
-
-<div class="card-number">MATH</div>
-
-<h3>数学机理</h3>
-
-<p>
-线性代数、概率统计、优化与信息论等基础理论。
-</p>
-
-<a href="mathematics/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
+<img src="assets/images/avatar.jpg" class="home-photo" alt="Ning Yan">
 
 </div>
 
+<div class="home-intro-col">
 
-<div class="site-card theme-dl">
+# Ning Yan { .home-name }
 
-<div class="card-number">DL</div>
+<p class="home-tagline">学习 · 理解 · 实践</p>
 
-<h3>深度学习模型</h3>
+Welcome! I am Ning Yan, a learner documenting the math, models, and code behind modern machine learning. This site serves as my personal knowledge base.
 
-<p>
-神经网络、CNN、Transformer、Diffusion 等模型。
-</p>
+## Connect { .home-section-title }
 
-<a href="deep-learning/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
-
-</div>
-
-
-<div class="site-card theme-code">
-
-<div class="card-number">CODE</div>
-
-<h3>代码实战</h3>
-
-<p>
-完整项目、模型实现与实验记录。
-</p>
-
-<a href="code/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
+- GitHub: [N1ngYan2004726](https://github.com/N1ngYan2004726)
+- Email: zzj040726@tongji.edu.cn
 
 </div>
-
-
-<div class="site-card theme-llm">
-
-<div class="card-number">LLM</div>
-
-<h3>LLM学习</h3>
-
-<p>
-Prompt、微调、RAG、Agent 与对齐推理。
-</p>
-
-<a href="llm/index.qmd" class="card-link">进入 <span class="arrow">→</span></a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section class="home-section recent">
-
-<div class="section-head">
-<span>02</span>
-<h2>最近记录</h2>
-</div>
-
-<p class="muted">各板块的最新笔记会聚合在此。</p>
-
-</section>
 
 </div>
 
 <style>
-main.content > .quarto-listing {
-  width: min(var(--max), calc(100% - 48px));
-  margin: 0 auto 4rem;
-  box-sizing: border-box;
-}
-.home-section.recent {
-  padding-bottom: 1.5rem;
+#title-block-header { display: none; }
+#quarto-content { padding-top: 0; }
+.home-photo-col img.home-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--paper);
+  box-shadow: var(--shadow-md);
 }
 </style>

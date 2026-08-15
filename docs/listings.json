@@ -1,31 +1,18 @@
 [
   {
-    "listing": "/mathematics/index.html",
-    "items": [
-      "/mathematics/Linear_algebra_and_geometry_1.html",
-      "/mathematics/Linear_algebra_and_geometry_2.html"
-    ]
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/mathematics/Linear_algebra_and_geometry_1.html",
-      "/mathematics/Linear_algebra_and_geometry_2.html",
-      "/code/Numpy_learning.html"
-    ]
-  },
-  {
-    "listing": "/code/index.html",
-    "items": [
-      "/code/Numpy_learning.html"
-    ]
-  },
-  {
-    "listing": "/deep-learning/index.html",
+    "listing": "/talks/index.html",
     "items": []
   },
   {
-    "listing": "/llm/index.html",
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/Linear_algebra_and_geometry_1.html",
+      "/blog/Linear_algebra_and_geometry_2.html",
+      "/blog/Numpy_learning.html"
+    ]
+  },
+  {
+    "listing": "/publications/index.html",
     "items": []
   }
 ]

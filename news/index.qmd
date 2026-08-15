@@ -1,0 +1,45 @@
+---
+title: "News"
+page-layout: full
+---
+
+<div class="news-timeline">
+
+## 2026 {#news-2026}
+
+- **2026-08-14** — 网站上线，开始系统记录学习笔记。
+
+</div>
+
+<style>
+.news-timeline {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+.news-timeline h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent-soft);
+  padding-bottom: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.news-timeline ul {
+  list-style: none;
+  padding-left: 0;
+}
+.news-timeline li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  line-height: 1.6;
+}
+.news-timeline li strong {
+  color: var(--accent);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+</style>
