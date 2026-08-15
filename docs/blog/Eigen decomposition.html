@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD">
 
-<title>Blog – N1ngYan</title>
+<title>特征分解 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -35,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -74,35 +73,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "搜索"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
@@ -170,7 +140,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../blog/index.html" aria-current="page"> 
+    <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -213,21 +183,49 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">分类</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">全部 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWlnZW4lMjBkZWNvbXBvc2l0aW9u">Eigen decomposition <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGluZWFyLWFsZ2VicmE=">linear-algebra <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWF0aGVtYXRpY3M=">mathematics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="bnVtcHk=">numpy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#寻找特征值" id="toc-寻找特征值" class="nav-link active" data-scroll-target="#寻找特征值">寻找特征值</a></li>
+  <li><a href="#矩阵分解" id="toc-矩阵分解" class="nav-link" data-scroll-target="#矩阵分解">矩阵分解</a>
+  <ul class="collapse">
+  <li><a href="#对特征分解进行运算" id="toc-对特征分解进行运算" class="nav-link" data-scroll-target="#对特征分解进行运算">对特征分解进行运算</a></li>
+  <li><a href="#对称矩阵分解" id="toc-对称矩阵分解" class="nav-link" data-scroll-target="#对称矩阵分解">对称矩阵分解</a></li>
+  <li><a href="#gershgorin-圆盘定理" id="toc-gershgorin-圆盘定理" class="nav-link" data-scroll-target="#gershgorin-圆盘定理">Gershgorin 圆盘定理</a></li>
+  <li><a href="#奇异值分解svd" id="toc-奇异值分解svd" class="nav-link" data-scroll-target="#奇异值分解svd">奇异值分解(SVD)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
+<h1 class="title">特征分解</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">mathematics</div>
+    <div class="quarto-category">Eigen decomposition</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月14日</p>
+    </div>
+  </div>
   
     
   </div>
@@ -237,114 +235,187 @@ window.Quarto = {
 </header>
 
 
-<p>Recent blog posts and learning notes.</p>
+<p>设有矩阵<span class="math inline">A=
+\begin{bmatrix}
+2 &amp; 0\\
+0 &amp; -1
+\end{bmatrix}</span>, <span class="math inline">v=
+\begin{bmatrix}
+x\\
+y
+\end{bmatrix}</span>,则我们可以得出：<span class="math inline">Av=\begin{bmatrix}
+2x\\
+-y
+\end{bmatrix}</span></p>
+<p>现在我们做以下定义，对于某些向量<span class="math inline">v</span>，经过矩阵<span class="math inline">A</span>处理后，其向量方向保持不变，仅仅是长度发生变化，这种向量被称为矩阵<span class="math inline">A</span>的特征向量，即： <span class="math display">Av=\lambda v</span></p>
+<p>如在前例中，我们可以设得： 1. <span class="math inline">v=
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix}</span>，可以得到，<span class="math inline">Av=\begin{bmatrix}
+2\\
+0
+\end{bmatrix}=2v</span>,即<span class="math inline">\lambda=2</span></p>
+<ol start="2" type="1">
+<li><span class="math inline">v=
+\begin{bmatrix}
+0\\
+1
+\end{bmatrix}</span>，可以得到，<span class="math inline">Av=\begin{bmatrix}
+0\\
+-1
+\end{bmatrix}=-v</span>,即<span class="math inline">\lambda=-1</span></li>
+</ol>
+<p>矩阵本质上是一个“空间变换器”，而特征向量就是找到了这个变换器中“不改变方向的特殊方向”。一旦找到这些特殊方向，矩阵对空间的作用就可以被拆解成沿这些方向分别拉伸、压缩或翻转。</p>
+<p>如何理解呢？假设在一个二维空间中，一个向量可以由两个方向组合： <span class="math display">x = av_1+bv_2</span> 如果，<span class="math inline">v_1, v_2</span>正好是两个特征向量，那么<span class="math inline">Ax=A(av_1+bv_2)</span>利用前面的公式，可以得到： <span class="math display">Ax=aAv_1+bAv_2</span> <span class="math display">=a\lambda_1v_1+b\lambda_2v_2</span> 可以看出来，矩阵就只是在<span class="math inline">v_1, v_2</span>方向进行一些伸缩和翻转。</p>
+<p>因此，对于一个大型矩阵<span class="math inline">A</span>，如果能找到某个<span class="math inline">v_i</span>，满足<span class="math inline">Av_i=\lambda_iv_i</span>，我们就可以拆解矩阵，分解其拉伸压缩，翻转的功能。</p>
+<section id="寻找特征值" class="level2">
+<h2 class="anchored" data-anchor-id="寻找特征值">寻找特征值</h2>
+<p>根据前言，<span class="math inline">Av=\lambda v</span>，我们可以得到<span class="math inline">(A-\lambda I)v=0</span>,其中的<span class="math inline">v</span>肯定不是零向量，故<span class="math inline">A-\lambda I</span>必须把某方向压缩为0，即<span class="math inline">det(A-\lambda I)=0</span></p>
+<p>我们利用一个例子来简单讲解一下<span class="math inline">\lambda</span>的求解过程： <img src="./imgs/9.png" class="img-fluid"></p>
+<p>可以得到以下结论： 1. 特征向量就是在矩阵作用下，保持方向的特殊方向。 2. 特征值，就是这个方向被矩阵伸缩的倍数，如果为负值，即反向(翻转)</p>
+</section>
+<section id="矩阵分解" class="level1">
+<h1>矩阵分解</h1>
+延续”寻找特征值”部分的例子，其中<span class="math inline">A=\begin{bmatrix}
+2 &amp; 1\\
+2 &amp; 3
+\end{bmatrix}</span>,两个特征值与向量为：$
+<span class="math display">\begin{cases}
+\lambda_1=1, &amp; v_1=\begin{bmatrix} 1\\ -1 \end{bmatrix} \\
+\lambda_2=4, &amp; v_2=\begin{bmatrix} 1\\ 2 \end{bmatrix}
+\end{cases}</span>
+<p>$</p>
+<p>在这我们设两个矩阵： 1. 构造矩阵：其列向量为<span class="math inline">A</span>的特征向量，即： <span class="math display">W=[v_1, v_2]=\begin{bmatrix} 1 &amp; 1\\ -1 &amp; 2 \end{bmatrix}</span></p>
+<ol start="2" type="1">
+<li>构造特征值矩阵：其对角线元素为<span class="math inline">W</span>对应的特征值： <span class="math display">\Sigma = \begin{bmatrix} 1 &amp; 0\\ 0 &amp; 4 \end{bmatrix}</span></li>
+</ol>
+<p>根据前面的推理： <span class="math display">AW=A[v_1, v_2]=[\lambda_1v_1, \lambda_2v_2]=W\Sigma</span> 可以得到： <span class="math display">A=W \Sigma W^{-1}</span></p>
+<p>怎么理解呢？ 1. 对于<span class="math inline">W^{-1}</span>: 作用是改变坐标，把普通坐标系，转化到特征向量坐标系； 2. 对于<span class="math inline">\Sigma</span>: 作用是沿着特征向量方向进行缩放； 3. 对于<span class="math inline">W</span>:作用是转化回原本的坐标</p>
+<p><img src="./imgs/10.png" class="img-fluid"></p>
+<section id="对特征分解进行运算" class="level2">
+<h2 class="anchored" data-anchor-id="对特征分解进行运算">对特征分解进行运算</h2>
+<p>矩阵的幂：<br>
+<span class="math inline">A^n=A·A···A</span>，如<span class="math inline">A^2=AA=(W \Sigma W^{-1})(W \Sigma W^{-1})=W \Sigma^2 W^{-1}</span>所以： <span class="math display">A^n=W \Sigma^n W^{-1}</span> 而<span class="math inline">\Sigma ^n=
+\begin{bmatrix}
+\lambda_1^n &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \lambda_2^n &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \lambda_m^n
+\end{bmatrix}</span></p>
+<p>矩阵求逆：<br>
+<span class="math inline">A^{-1}=W \Sigma^{-1} W^{-1}</span>,而<span class="math inline">\Sigma ^{-1}=
+\begin{bmatrix}
+\lambda_1^{-1} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \lambda_2^{-1} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \lambda_m^{-1}
+\end{bmatrix}</span>, 所以我们可以得到，当矩阵可逆的时候，其所有特征值一定是非零的。</p>
+<p>行列式：<br>
+<span class="math inline">det(A)=\lambda_1 ···\lambda_n</span></p>
+<p>秩：<br>
+<span class="math inline">rank(A)=非零特征值的数量</span></p>
+</section>
+<section id="对称矩阵分解" class="level2">
+<h2 class="anchored" data-anchor-id="对称矩阵分解">对称矩阵分解</h2>
+<p>对于没有足够特征向量的矩阵，如<span class="math inline">A=
+\begin{bmatrix}
+1 &amp; 1\\
+0 &amp; 1
+\end{bmatrix}</span>,其只有一个<span class="math inline">\lambda = 1</span>,无法分解，这种情况下我们可以使用Jordan分解或者SVD(奇异值分解)</p>
+<p>接下来我们定义以下对称矩阵： <span class="math inline">A=A^T</span>, 可以得到结果：$ A=W W^{-1}=W W^T $</p>
+<p>对于实对称矩阵: 1. 足够多的特征向量； 2. 所有特征值都是实数； 3. 特征向量可以正交。</p>
+<p>针对第三点，我们可以从<span class="math inline">WW^{-1}=I</span>得到，<span class="math inline">WW^T=I</span>，这样可以说明，两个各不相同的特征向量进行点积运算的时候，其结果为0，即正交。</p>
+<p>得到以下结论，<span class="math inline">W^{-1}=W^T</span>的时候，我们可以说各特征向量相互正交。</p>
+</section>
+<section id="gershgorin-圆盘定理" class="level2">
+<h2 class="anchored" data-anchor-id="gershgorin-圆盘定理">Gershgorin 圆盘定理</h2>
+<p>对于一个规模很大的矩阵，特征值往往很难求出，针对这种情况，我们只需要知道大概的数值即可。 具体内容见下图：</p>
+<p><img src="./imgs/11.png" class="img-fluid"></p>
+<p>值得注意的是，这种方法仅仅适用于对角元素明显大于其他部分元素的情景。</p>
+<p>我们有一些小结论：</p>
+<ol type="1">
+<li>对于一个大型的随机矩阵<span class="math inline">A</span>, 其中元素相互独立，且<span class="math inline">a_{ij}~N(0, 1)</span>，其<span class="math inline">\lambda_{max}=\sqrt n</span></li>
+</ol>
+</section>
+<section id="奇异值分解svd" class="level2">
+<h2 class="anchored" data-anchor-id="奇异值分解svd">奇异值分解(SVD)</h2>
+<p>下面我们会简要的介绍一下SVD。</p>
+<p>由于特征值分解仅仅适用于方阵，但是实际应用中，大多数数据对应的矩阵都不是方阵，矩阵可能是有很多的0的稀疏矩阵，存储量极大且浪费空间，这时候就需要提取主要特征。奇异值分解 是将任意较复杂的矩阵用更小、更简单的 3个子矩阵的相乘表示 ，用这3个小矩阵来描述大矩 阵重要的特性。这一点于特征值分解一致。</p>
+<p>即设<span class="math inline">A \in C^{m×n}</span>，存在酉矩阵<span class="math inline">U \in C^{m×m}, V \in C^{n×n}</span>，使得<span class="math inline">A=U \Sigma V^H</span></p>
+<p>其中<span class="math inline">H</span>表示为复共轭转置，即<span class="math inline">U^HU=UU^H=I</span></p>
+<p>设 $ A^{mn},(A)=r, $ 设 <span class="math inline">A^H A</span>的特征值为 <span class="math display">
+\lambda_1\geq\lambda_2\geq\cdots\geq\lambda_r&gt;0,
+\qquad
+\lambda_{r+1}=\lambda_{r+2}=\cdots=0,
+</span> 则矩阵 <span class="math inline">A</span> 的奇异值为 <span class="math display">
+\sigma_i=\sqrt{\lambda_i},
+\qquad i=1,2,\ldots,r.
+</span></p>
+<p>因此，矩阵 <span class="math inline">A</span> 的奇异值分解为 <span class="math display">
+A
+=
+U
+\begin{bmatrix}
+\sigma_1 &amp;        &amp;        &amp;        &amp; 0\\
+         &amp; \sigma_2 &amp;      &amp;        &amp; \vdots\\
+         &amp;        &amp; \ddots &amp;        &amp; \\
+         &amp;        &amp;        &amp; \sigma_r &amp; \\
+0        &amp; \cdots &amp;        &amp; 0      &amp; 0
+\end{bmatrix}
+V^H.
+</span></p>
+<p>可能对于复线性空间有点难理解，那么对实数矩阵<span class="math inline">A_{m×n}</span>, 我们不能求其特征值，但对于<span class="math inline">A^TA</span>和<span class="math inline">AA^T</span>分别为n阶和m阶对称方阵，他们的秩<span class="math inline">R(A^TA)=R(AA^T)=R(A)</span>, 且两个对称矩阵的非零特值相同，对称矩阵的特征址矩阵是正交矩阵，特征值均为正实数，因此可求出特征值的平方根–奇异值</p>
+<p><span class="math display">
+\boxed{\sigma_i=\sqrt{\lambda_i\left(A^H A\right)}=\sqrt{\lambda_i\left(A  A^H\right)}}
+</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>矩阵</th>
+<th>别称</th>
+<th>维度</th>
+<th>计算方式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">U</span> 矩阵</td>
+<td><span class="math inline">A</span> 的左奇异矩阵</td>
+<td><span class="math inline">m</span> 行 <span class="math inline">m</span> 列</td>
+<td>列由 <span class="math inline">AA^T</span> 的特征向量组成，且特征向量为单位向量</td>
+<td>包含了有关行的所有信息（代表自己的观点）</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\Sigma</span> 矩阵</td>
+<td><span class="math inline">A</span> 的奇异值矩阵</td>
+<td><span class="math inline">m</span> 行 <span class="math inline">n</span> 列</td>
+<td>对角元素为 <span class="math inline">\sigma_i=\sqrt{\lambda_i}</span>，其中 <span class="math inline">\lambda_i</span> 为 <span class="math inline">AA^T</span> 或 <span class="math inline">A^TA</span> 的特征值，并按降序排列，值越大可以理解为越重要</td>
+<td>记录 SVD 过程（一种日志）</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">V</span> 矩阵</td>
+<td><span class="math inline">A</span> 的右奇异矩阵</td>
+<td><span class="math inline">n</span> 行 <span class="math inline">n</span> 列</td>
+<td>列由 <span class="math inline">A^TA</span> 的特征向量组成，且特征向量为单位向量</td>
+<td>包含了有关列的所有信息（代表自己的特征）</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bWF0aGVtYXRpY3MlMkNFaWdlbiUyMGRlY29tcG9zaXRpb24=" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786811739990" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="384">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Eigen decomposition.html" class="no-external">特征分解</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RWlnZW4lMjBkZWNvbXBvc2l0aW9u'); return false;">Eigen decomposition</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Eigen decomposition.html" class="no-external">
-<p>进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Eigen decomposition.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782136368" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="77">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">(1)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<p>线性代数与几何的基础概念，包括向量、矩阵、线性变换等。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782148330" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="184">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">(2)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<p>线性代数与几何的进阶内容。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Y29kZSUyQ251bXB5JTJDcHl0aG9u" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786780561762" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Numpy_learning.html" class="no-external">NumPy学习笔记</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bnVtcHk='); return false;">numpy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Numpy_learning.html" class="no-external">
-<p>NumPy基础操作、数组运算、广播机制等核心功能的学习记录。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Numpy_learning.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">无匹配项</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script>
 // 主题切换逻辑
 (function() {
@@ -672,6 +743,57 @@ window.Quarto = {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
