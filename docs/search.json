@@ -1,17 +1,66 @@
 [
   {
+    "objectID": "mathematics/Linear_algebra_and_geometry_2.html",
+    "href": "mathematics/Linear_algebra_and_geometry_2.html",
+    "title": "(2)几何与线性代数",
+    "section": "",
+    "text": "针对几何与线性代数的理解做一些记录。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_2.html#线性变换的几何",
+    "href": "mathematics/Linear_algebra_and_geometry_2.html#线性变换的几何",
+    "title": "(2)几何与线性代数",
+    "section": "线性变换的几何",
+    "text": "线性变换的几何\n首先，我们先理解一下Basis(基)：\n例如(1, 0), (0, 1)，这两个向量可以生成整个二维空间，但是，同一个空间，可以有不同的basis。\n假设有一个矩阵： $ A =\n\\begin{bmatrix}\na & b \\\\\nc & d\n\\end{bmatrix}\n$ 且有一个向量$v^T =\n\\begin{bmatrix}\nx & y\n\\end{bmatrix}\n$\n可以得出： Av = \\begin{bmatrix}a & b \\\\ c & d\\end{bmatrix}\n\\begin{bmatrix}x\\\\ y \\end{bmatrix} = \\begin{bmatrix}ax+by\\\\ cx+dy \\end{bmatrix} =x\\begin{bmatrix}a\\\\ c \\end{bmatrix}+y\\begin{bmatrix}b\\\\ d \\end{bmatrix} =x{A\\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix}}+y{A\\begin{bmatrix} 0 \\\\ 1 \\end{bmatrix}} 从这我们可以看出，一个矩阵可以变换为任意新矩阵或向量\n我们再用一个具体的例子来说明：\n\n可以看出，矩阵本质上是把基向量进行了转化，本例中的基向量(1, 0)➡(1, -1), (0, 1)➡(2, 3)\n具体情况如图：\n\n我们可以得到以下结论，矩阵对空间进行了倾斜，旋转，缩放，但是只能做线性变换！\n但是，有的矩阵，如$ B =\n\\begin{bmatrix}\n2 & -1 \\\\\n4 & -2\n\\end{bmatrix}\n，其转化后的两个向量为\n\\begin{bmatrix}\n2\\\\\n4\n\\end{bmatrix}\n,\n\\begin{bmatrix}\n-1\\\\\n-2\n\\end{bmatrix}\n$ 这两个向量是反向的，坐标轴从平面变成了一条直线，这就导致了信息丢失了，维度缺少了。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_2.html#线性相关",
+    "href": "mathematics/Linear_algebra_and_geometry_2.html#线性相关",
+    "title": "(2)几何与线性代数",
+    "section": "线性相关",
+    "text": "线性相关\n前一部分的最后一部分，可以看出其转换后的基向量，呈倍数关系，显然有一个向量是多余的。\n定义：存在不全为0的系数a，使得: a_1v_1+a_2v_2+a_3v_3+...+a_kv_k=0 就叫线性相关,反之，只有全为零系数，才满足该公式的，称为线性无关。\n线性相关与无关是针对于向量集合而言的，每个向量都需要进行考虑。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_2.html#矩阵的秩",
+    "href": "mathematics/Linear_algebra_and_geometry_2.html#矩阵的秩",
+    "title": "(2)几何与线性代数",
+    "section": "矩阵的秩",
+    "text": "矩阵的秩\n如果我们有一个n×m大小的矩阵，有个问题，这个矩阵最终把向量映射到一个几维的空间去？\n在线性相关部分我们可以看出，如果矩阵的列向量之间存在线性相关，代表有的向量就是无意义的，那么矩阵实际上把空间压缩到了更低维度。\n因此，我们可以利用”有没有压缩”，来定义矩阵的秩：\n$ rank(A) = 最大线性无关列数 $\nrank就是有多少个真正不同的方向。\n下面我们用几个例子来解释其具体含义。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_2.html#可逆性",
+    "href": "mathematics/Linear_algebra_and_geometry_2.html#可逆性",
+    "title": "(2)几何与线性代数",
+    "section": "可逆性",
+    "text": "可逆性\n我们前面学习到，如果一个矩阵的列向量之间存在线性相关的关系，那么这个矩阵的乘法是无法被逆转的，所以说不存在一个逆操作。\n反之，对于一个满秩矩阵，如A \\in \\mathbb{R}^{n \\times n}, 且rank(A)=n，那么我们可以找到一个逆矩阵，逆转其原本的线性转化。\n在此之前，我们先介绍一下单位矩阵，其是一个与A同样形状大小的矩阵，且只有主对角线元素为1，其余元素均为0，即： \nI_n =\n\\begin{bmatrix}\n1 & 0 & \\cdots & 0 \\\\\n0 & 1 & \\cdots & 0 \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\n0 & 0 & \\cdots & 1\n\\end{bmatrix}\n 对于任意矩阵：AI=A\n根据前文我们可以知道，逆矩阵就是为了撤销A做的事，寻找A^{-1}, 其满足:A^{-1}A=AA^{-1}=I\n只要行列式det(A)≠0，我们就说矩阵A一定可逆。实际计算中，我们通常不会直接求逆，使用高斯消元会更好一些。即构造一个(A,I)的矩阵，将其化简为(I,B),这时候，B就是A^{-1}\n我们讨论一下其数值稳定性问题： 1. 低秩矩阵会导致不稳定，如例如显式计算时，要除以行列式，如\\frac{1}{0.00001} = 100000，而如果我们加一点误差，\\frac{1}{0.000011} = 90909可以看出来差别巨大。 2. 矩阵也一样，如果有$ A =\n\\begin{bmatrix}\n1 & 1 \\\\\n1 & 1.0001\n\\end{bmatrix}\n$ 与$ B =\n\\begin{bmatrix}\n1 & 1 \\\\\n1 & 1\n\\end{bmatrix}\n，二者之间明明就差一点，但是rank(A)=2, rank(B)=1$\n并且，一般来说，稀疏矩阵的逆矩阵基本都是非零元素，这对我们的内存消耗巨大。\n因此，在工程实际中，我们常用更稳定的方法求解，而不是使用显式公式计算A^{-1}"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_2.html#行列式",
+    "href": "mathematics/Linear_algebra_and_geometry_2.html#行列式",
+    "title": "(2)几何与线性代数",
+    "section": "行列式",
+    "text": "行列式\n行列式的物理意义就是，面积的变化比例\n回到矩阵线性变化的那部分内容，我们利用矩阵A，转化了基向量。其面积会发生什么变化呢？\n如图：  我们可以看出来，原本是一个单位正方形，S = 1,\n变换后，是一个平行四边形S' = \\lvert ad-bc \\rvert = 5\n即矩阵A把空间扩大了五倍。\n故有以下总结：\n\n因此我们可以得出，det(A)=0的时候，其rank&lt;n，且是不可逆的。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_2.html#一些常见操作",
+    "href": "mathematics/Linear_algebra_and_geometry_2.html#一些常见操作",
+    "title": "(2)几何与线性代数",
+    "section": "一些常见操作",
+    "text": "一些常见操作\n矩阵乘法：\n有 $ A =\n\\begin{bmatrix}\na_{11} & a_{12} \\\\\na_{21} & a_{22}\n\\end{bmatrix}\n$， $ B =\n\\begin{bmatrix}\nb_{11} & b_{12} \\\\\nb_{21} & b_{22}\n\\end{bmatrix}\n$， $ C =\n\\begin{bmatrix}\nc_{11} & c_{12} \\\\\nc_{21} & c_{22}\n\\end{bmatrix}\n三个矩阵，假设C=AB$\n我们是如何从AB变换到C的呢？其实只要以下一个公式即可： c_{ij}=\\sum_{k}a_{ik}b_{kj}, 如c_{12}=a_{11}b_{12}+a_{12}b_{22} 即，在C矩阵的i行j列的这个元素，是由A矩阵的i行与B矩阵的j列各个元素相乘后累加得到的。\nTensor Contraction:\n对于高维张量，我们要明确，哪些下标进行了处理？不然会有误解。\n例如y_{il}=\\sum_{jk}x_{ijk}a_{jk} 可能会有点难理解\n可以理解为，X张量的形状为(2, 3, 4), A张量的形状为(3, 4)，我们上面的公式就是，对于其第一个维度，即2，拆成了两个(3, 4)的矩阵X'_1,X'_2，然后让X'_1,X'_2与A分别做矩阵内积，最后就可以得到结果了。\nEinstein Notation 爱因斯坦求和约定：\n求和自动发生在重复出现的指标上，如： y_{il}=x_{ijk}a_{jk} 与前文中的公式，差距就是不用写求和符号了。\n以下有一些常用的公式定义：\n\n矩阵的迹 trac : tr(A)=\\sum_i a_{ij}\n范数：常见的有L_1, L_2 ,以及P-范数，F-范数等等： L_1 Norm = \\sum \\lvert x_i \\rvert L_2 Norm = \\sqrt{\\sum x^2_i } P-Norm = (\\sum \\lvert x_i \\rvert^p)^{1/p} F-Norm = \\sqrt{\\sum \\sum \\lvert x_{ij} \\rvert^2}\n\n第一章就先结束吧 讲了一些最常见的线性代数的基础知识，张量是什么，向量怎么理解，点积与向量方向，超平面，矩阵是怎么作用的，矩阵的秩，线性相关，逆矩阵，行列式。"
+  },
+  {
     "objectID": "mathematics/index.html",
     "href": "mathematics/index.html",
     "title": "数学机理",
     "section": "",
-    "text": "无匹配项"
+    "text": "(1)几何与线性代数\n\n\n\n\n\n\n\n\n\n\n\n\n\n(2)几何与线性代数\n\n\n\n\n\n\n\n\n\n\n\n无匹配项"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Ning Yan",
     "section": "",
-    "text": "学习 · 理解 · 实践\n\n\nNing Yan\n\n\n记录数学、机器学习与深度学习中的理解、推导和实验。\n\n\n\n\n01\n\n核心板块\n\n\n\n\n\nMATH\n\n\n数学机理\n\n\n线性代数、概率统计、优化与信息论等基础理论。\n\n进入 →\n\n\n\nDL\n\n\n深度学习模型\n\n\n神经网络、CNN、Transformer、Diffusion 等模型。\n\n进入 →\n\n\n\nCODE\n\n\n代码实战\n\n\n完整项目、模型实现与实验记录。\n\n进入 →\n\n\n\nLLM\n\n\nLLM学习\n\n\nPrompt、微调、RAG、Agent 与对齐推理。\n\n进入 →\n\n\n\n\n\n02\n\n最近记录\n\n\n\n各板块的最新笔记会聚合在此。\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n无匹配项"
+    "text": "学习 · 理解 · 实践\n\n\nNing Yan\n\n\n记录数学、机器学习与深度学习中的理解、推导和实验。\n\n\n\n\n01\n\n核心板块\n\n\n\n\n\nMATH\n\n\n数学机理\n\n\n线性代数、概率统计、优化与信息论等基础理论。\n\n进入 →\n\n\n\nDL\n\n\n深度学习模型\n\n\n神经网络、CNN、Transformer、Diffusion 等模型。\n\n进入 →\n\n\n\nCODE\n\n\n代码实战\n\n\n完整项目、模型实现与实验记录。\n\n进入 →\n\n\n\nLLM\n\n\nLLM学习\n\n\nPrompt、微调、RAG、Agent 与对齐推理。\n\n进入 →\n\n\n\n\n\n02\n\n最近记录\n\n\n\n各板块的最新笔记会聚合在此。\n\n\n\n\n\n\n\n\n\n\n\n\n\n(1)几何与线性代数\n\n\n\n\n\n\n\n\n\n\n\n\n\n(2)几何与线性代数\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n无匹配项"
   },
   {
     "objectID": "code/Numpy_learning.html",
@@ -54,5 +103,40 @@
     "title": "LLM学习",
     "section": "",
     "text": "无匹配项"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_1.html",
+    "href": "mathematics/Linear_algebra_and_geometry_1.html",
+    "title": "(1)几何与线性代数",
+    "section": "",
+    "text": "针对几何与线性代数的理解做一些记录。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_1.html#张量的初步理解",
+    "href": "mathematics/Linear_algebra_and_geometry_1.html#张量的初步理解",
+    "title": "(1)几何与线性代数",
+    "section": "张量的初步理解",
+    "text": "张量的初步理解\n此部分，我们讨论最基础的张量的知识。\n首先，我们先思考一个问题，深度学习中，我们是在对什么东西进行处理分析？\n根据一些常识，可能是图片，视频，文本，最常见的是一些特征组合，利用深度学习得到我们想要的东西。\n实际上，以上的一些内容我们都可以用张量来表示，接下来，我们先简单理解一下，我们在深度学习中使用的张量是怎么样的？\n\n\n\n张量介绍\n\n\n可以看出来，N维张量，其实都是N-1维张量的一个列表，即堆砌N-1维张量，就成为了一个N维张量了。\n根据图片中的一些介绍我们可以看出，我们原本需要处理的内容，都可以转换为一个个张量，如一张彩色图片，可以看作一个3-d张量，一段文本，一段token也可以组成张量。\n所以我们可以理解为：神经网络实质上是对张量进行一些表示，变换，比较，压缩等处理，最终得到想要的新的张量结果。 线性代数研究的，恰恰就是”如何表示对象，以及如何对这些表示进行结构化变换”。\n实际上，N维度张量的形状本身并没有意义，我们要研究的，是每个轴的语义是什么，例如一个2-d张量，其形状为(32, 128)，这到底是32个样本 * 128个特征，还是32个时间步 * 128个隐藏维度，我们仅仅看形状是无法判断的，因此我们需要更深层次的理解。\n而我们需要设置的N为多少呢？这要看我们的数据需要有多少个独立索引的自然结果，如我们原本一张RGB图片，其如果每次都是只输入一张，我们可以设置其输入为(C, H, W)，但如果我们想设置他每次都放入32张RGB图片时候，显然需要多一个维度来表示32这个数字，显然就是Batch，所以我们新的输入形状为(B, C, H, W)了。\n通过以上介绍，我们可以初步理解张量在未来工作中有着很重要的作用，理解其基础形态是非常有意义的。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_1.html#向量的理解",
+    "href": "mathematics/Linear_algebra_and_geometry_1.html#向量的理解",
+    "title": "(1)几何与线性代数",
+    "section": "向量的理解",
+    "text": "向量的理解\n我们从最常用的一个2-d张量开始说起，即向量。\n向量可以被认为是空间中的点或方向，从本质上来说，向量就是一个最简单的列表，列表其中的元素是一个个的标量。在数学家的眼中，向量常常表示为两种形态，即：\n列向量： x =\\begin{bmatrix}1 \\\\7 \\\\0 \\\\1\\end{bmatrix} 行向量： x =\\begin{bmatrix}1 & 7 & 0 & 1\\end{bmatrix} 在深度学习中，这常常是灵活的，对于一个单向量，我们往往是设定它为列向量，而对于一个样本特征矩阵，我们设定一个样本为一个行向量，一个特征为一个列向量。\n这些向量有什么具体含义呢？\n(1)可以看作是一个点的坐标，往往这都是相对于原点而言的：\n\n\n\n坐标\n\n\n图中有向量(1, 2), (3, 1), (-2, -2)，只是二维向量这样好表示一些，可以往更高维度发展。对于分类问题，我们可以简单的看做是看成把点进行几簇的分类，有时候一开始混杂在一起，需要进行一些坐标轴转化才可以分开，这就是深度学习的作用了。\n(2)可以看作是一个有方向和长度的箭头：\n\n\n\n箭头\n\n\n根据图可以看出，向量(3, 2)可以看作是一个向右3格，向上2格。图中的所有向量都是(3, 2)，其都是等价的，可以得出向量的平移不变性质，这对我们理解向量加减非常有意义。\n(3)回归到最实际的理解，一个向量可以表达为一个数据对象：\n例如一个人的特征可以看作是： x =\\begin{bmatrix}年龄,& 身高,& 体重,& 收入\\end{bmatrix}\n几何向量和机器学习中的特征向量，本质上可以用同一套数学语言处理。\n对于向量的加减运算：\n其公式为： (a_1, b_1)+(a_2, b_2) = (a_1+a_2, b_1+b_2) 实际上就是逐元素进行运算，下图可以帮助理解：\n\n图中可以看出，两个向量相加可以看作是将a，b向量其中一个的头部与另一个的尾部相接，然后链接剩余的尾部至头部，这就是简单的向量加减理解了。\n如果是一个标量n与向量相乘，实际上就是把向量拉长至原本的n倍大小罢了。"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_1.html#点积与角度",
+    "href": "mathematics/Linear_algebra_and_geometry_1.html#点积与角度",
+    "title": "(1)几何与线性代数",
+    "section": "点积与角度",
+    "text": "点积与角度\n(1)向量的长度：\n我们先思考一下，一个向量(a, b)，其可以代表为从原点(0, 0)指向(a, b)的一个箭头，请问其长度为多少呢？\n根据勾股定理，我们可以得出，其长度为\\sqrt{(a-0)^2+(b-0)^2}\n这就是向量的 Norm(范数)，最常见的公式为： L_2Norm: \\sqrt{x_1^2+x_2^2+\\cdots+x_n^2} 其代表了，向量从原点出发，在空间中延伸了多远。\n(2)点积计算： 取两个列向量u,v，起点积公式为： u^Tv = v^Tu = u \\cdot v = \\sum_i u_iv_i 点积又要如何理解呢？\n根据前文的定义，向量除了长度，还具有方向这个特性，我们认为这两个性质都十分重要，甚至方向会更重要一些。\n实际上，点积就是为了来衡量，两个向量在方向上的相似度有多高。\n我们假设两个向量，一为v=(r, 0)，表示为一个长度为r，方向与x轴正轴同向的向量；二为w=(s*cos\\theta, s*sin\\theta)，代表了一个长度为s，与x正轴成\\theta角度的向量，我们可以看出，这两个向量的夹角其实就是\\theta\n根据点积公式： v \\cdot w = rs*cos\\theta = \\|v\\|\\|w\\|cos(\\theta) 就是v在w上投影的长度与w的长度相乘，表明了一个向量在另一个向量中，包含了多少分量？\n由此可以得到角度公式： \\theta = \\arccos\\left(\\frac{v \\cdot w}{\\|v\\|\\|w\\|}\\right) 这个公式对大多数情况都适用，可用于更高的维度。\n根据公式，当且仅当v \\perp w，有v \\cdot w = 0，它意味着两个方向彼此独立地描述空间。这两个方向没有相互混合。以上所有的公式都可以往更高维度推广\n我们对这部分更进一步，为什么要计算角度呢？\n因为对于我们的深度学习，我们希望很多数据，它对于整体数据的放大缩小是不敏感的。\n如一个猫的图片，对其所有像素都乘以0.1，这两个图片之间的距离会很大，但实际上，对于我们的任务而言，没有任何差别，猫还是猫，只是亮暗差别罢了。\n因此，我们一般更喜欢用方向来反映内容，利用余弦相似性(Cosine Similarity)来关注两个向量的方向是否一致。\n对于高维度的，采样均值为0的随机向量，其余弦相似性通常靠近0，这是因为，在高维空间，两个随机方向几乎必然接近正交。可以从点积的期望来看： E[x_iy_i]=E[x_i]E[y_i]=0"
+  },
+  {
+    "objectID": "mathematics/Linear_algebra_and_geometry_1.html#超平面",
+    "href": "mathematics/Linear_algebra_and_geometry_1.html#超平面",
+    "title": "(1)几何与线性代数",
+    "section": "超平面",
+    "text": "超平面\n简单的理解一下什么是空间。空间就是所有可能坐标组成的集合：\\mathbb{R}^2，\\mathbb{R}^3，\\mathbb{R}^n\n在d维向量空间，一个超平面具有d-1维，其将空间划分为两半\n我们从低维空间开始说起。\n对于平面直角坐标系，我们一般可以获得两个变量(x, y)，我们可以任意的组合其线性关系： ax+by=c 根据我们的常识，这是一条直线。 对于一个3d空间而言，我们的变量变为了三个(x, y, z)，同样进行任意的组合： ax+by+cz=d 可以看出，组合出来的是一个平面。\n在深度学习中，最常见的一个处理就是： w^Tx+b 可以看出，他与我们前面写的一样，就是把空间中的所有变量乘以一个系数，再加上一个常数，这样就是一个超平面了。\n在超平面两侧的，即w^Tx+b&gt;0与w^Tx+b&lt;0。所以，一个神经元，几何上可以理解成一个超平面加一个非线性激活。"
   }
 ]

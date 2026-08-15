@@ -1,11 +1,16 @@
 [
   {
     "listing": "/mathematics/index.html",
-    "items": []
+    "items": [
+      "/mathematics/Linear_algebra_and_geometry_1.html",
+      "/mathematics/Linear_algebra_and_geometry_2.html"
+    ]
   },
   {
     "listing": "/index.html",
     "items": [
+      "/mathematics/Linear_algebra_and_geometry_1.html",
+      "/mathematics/Linear_algebra_and_geometry_2.html",
       "/code/Numpy_learning.html"
     ]
   },
