@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD">
+<meta name="description" content="Deepseek Harness 安装教程 + 插件安装方法">
 
-<title>特征分解 – N1ngYan</title>
+<title>Deepseek Harness 安装教程 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -75,49 +110,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -187,13 +179,12 @@ window.Quarto = {
     <h2 id="toc-title">该页面内容</h2>
    
   <ul>
-  <li><a href="#寻找特征值" id="toc-寻找特征值" class="nav-link active" data-scroll-target="#寻找特征值">寻找特征值</a></li>
-  <li><a href="#矩阵分解" id="toc-矩阵分解" class="nav-link" data-scroll-target="#矩阵分解">矩阵分解</a>
+  <li><a href="#deepseek-harness-安装" id="toc-deepseek-harness-安装" class="nav-link active" data-scroll-target="#deepseek-harness-安装">Deepseek Harness 安装</a>
   <ul class="collapse">
-  <li><a href="#对特征分解进行运算" id="toc-对特征分解进行运算" class="nav-link" data-scroll-target="#对特征分解进行运算">对特征分解进行运算</a></li>
-  <li><a href="#对称矩阵分解" id="toc-对称矩阵分解" class="nav-link" data-scroll-target="#对称矩阵分解">对称矩阵分解</a></li>
-  <li><a href="#gershgorin-圆盘定理" id="toc-gershgorin-圆盘定理" class="nav-link" data-scroll-target="#gershgorin-圆盘定理">Gershgorin 圆盘定理</a></li>
-  <li><a href="#奇异值分解svd" id="toc-奇异值分解svd" class="nav-link" data-scroll-target="#奇异值分解svd">奇异值分解(SVD)</a></li>
+  <li><a href="#node.js-环境准备" id="toc-node.js-环境准备" class="nav-link" data-scroll-target="#node.js-环境准备">1. Node.js 环境准备</a></li>
+  <li><a href="#deepseek-harness-安装-1" id="toc-deepseek-harness-安装-1" class="nav-link" data-scroll-target="#deepseek-harness-安装-1">2. DeepSeek Harness 安装</a></li>
+  <li><a href="#deepseek-harness-使用配置" id="toc-deepseek-harness-使用配置" class="nav-link" data-scroll-target="#deepseek-harness-使用配置">3. Deepseek Harness 使用配置</a></li>
+  <li><a href="#插件安装讲解" id="toc-插件安装讲解" class="nav-link" data-scroll-target="#插件安装讲解">4. 插件安装讲解</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -203,16 +194,15 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">特征分解</h1>
+<h1 class="title">Deepseek Harness 安装教程</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">mathematics</div>
-    <div class="quarto-category">Eigen decomposition</div>
+    <div class="quarto-category">Harness</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD
+    Deepseek Harness 安装教程 + 插件安装方法
   </div>
 </div>
 
@@ -223,7 +213,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">发布于</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026年8月15日</p>
+      <p class="date">2026年8月16日</p>
     </div>
   </div>
   
@@ -235,181 +225,98 @@ window.Quarto = {
 </header>
 
 
-<p>设有矩阵<span class="math inline">A=
-\begin{bmatrix}
-2 &amp; 0\\
-0 &amp; -1
-\end{bmatrix}</span>, <span class="math inline">v=
-\begin{bmatrix}
-x\\
-y
-\end{bmatrix}</span>,则我们可以得出：<span class="math inline">Av=\begin{bmatrix}
-2x\\
--y
-\end{bmatrix}</span></p>
-<p>现在我们做以下定义，对于某些向量<span class="math inline">v</span>，经过矩阵<span class="math inline">A</span>处理后，其向量方向保持不变，仅仅是长度发生变化，这种向量被称为矩阵<span class="math inline">A</span>的特征向量，即： <span class="math display">Av=\lambda v</span></p>
-<p>如在前例中，我们可以设得： 1. <span class="math inline">v=
-\begin{bmatrix}
-1\\
-0
-\end{bmatrix}</span>，可以得到，<span class="math inline">Av=\begin{bmatrix}
-2\\
-0
-\end{bmatrix}=2v</span>,即<span class="math inline">\lambda=2</span></p>
-<ol start="2" type="1">
-<li><span class="math inline">v=
-\begin{bmatrix}
-0\\
-1
-\end{bmatrix}</span>，可以得到，<span class="math inline">Av=\begin{bmatrix}
-0\\
--1
-\end{bmatrix}=-v</span>,即<span class="math inline">\lambda=-1</span></li>
-</ol>
-<p>矩阵本质上是一个“空间变换器”，而特征向量就是找到了这个变换器中“不改变方向的特殊方向”。一旦找到这些特殊方向，矩阵对空间的作用就可以被拆解成沿这些方向分别拉伸、压缩或翻转。</p>
-<p>如何理解呢？假设在一个二维空间中，一个向量可以由两个方向组合： <span class="math display">x = av_1+bv_2</span> 如果，<span class="math inline">v_1, v_2</span>正好是两个特征向量，那么<span class="math inline">Ax=A(av_1+bv_2)</span>利用前面的公式，可以得到： <span class="math display">Ax=aAv_1+bAv_2</span> <span class="math display">=a\lambda_1v_1+b\lambda_2v_2</span> 可以看出来，矩阵就只是在<span class="math inline">v_1, v_2</span>方向进行一些伸缩和翻转。</p>
-<p>因此，对于一个大型矩阵<span class="math inline">A</span>，如果能找到某个<span class="math inline">v_i</span>，满足<span class="math inline">Av_i=\lambda_iv_i</span>，我们就可以拆解矩阵，分解其拉伸压缩，翻转的功能。</p>
-<section id="寻找特征值" class="level2">
-<h2 class="anchored" data-anchor-id="寻找特征值">寻找特征值</h2>
-<p>根据前言，<span class="math inline">Av=\lambda v</span>，我们可以得到<span class="math inline">(A-\lambda I)v=0</span>,其中的<span class="math inline">v</span>肯定不是零向量，故<span class="math inline">A-\lambda I</span>必须把某方向压缩为0，即<span class="math inline">det(A-\lambda I)=0</span></p>
-<p>我们利用一个例子来简单讲解一下<span class="math inline">\lambda</span>的求解过程： <img src="./imgs/9.png" class="img-fluid"></p>
-<p>可以得到以下结论： 1. 特征向量就是在矩阵作用下，保持方向的特殊方向。 2. 特征值，就是这个方向被矩阵伸缩的倍数，如果为负值，即反向(翻转)</p>
+<section id="deepseek-harness-安装" class="level2">
+<h2 class="anchored" data-anchor-id="deepseek-harness-安装">Deepseek Harness 安装</h2>
+<section id="node.js-环境准备" class="level3">
+<h3 class="anchored" data-anchor-id="node.js-环境准备">1. Node.js 环境准备</h3>
+<p>安装 DeepSeek Harness 之前，需要先安装 Node.js 运行环境。Node.js 是 Harness 的底层依赖，提供了必要的运行时支持。前往：https://nodejs.org/zh-cn/download <img src="./imgs/d-1.png" class="img-fluid"> 红框是确定好自己的设备型号，我们选择箭头处的MSI安装方法即可，一路按照默认通过即可(担心内存问题可以自己改一下路径)</p>
+<p>我们按Win+R打开”运行”，然后打开cmd或者powershell都可以，如图：</p>
+<p><img src="./imgs/d-2.png" class="img-fluid"></p>
+<p>在里面输入：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>node <span class="at">-v</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>npm <span class="at">-v</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>只要输出版本号，就说明了Node.js安装成功。</p>
+<p><img src="./imgs/d-3.png" class="img-fluid"></p>
 </section>
-<section id="矩阵分解" class="level1">
-<h1>矩阵分解</h1>
-延续”寻找特征值”部分的例子，其中<span class="math inline">A=\begin{bmatrix}
-2 &amp; 1\\
-2 &amp; 3
-\end{bmatrix}</span>,两个特征值与向量为：$
-<span class="math display">\begin{cases}
-\lambda_1=1, &amp; v_1=\begin{bmatrix} 1\\ -1 \end{bmatrix} \\
-\lambda_2=4, &amp; v_2=\begin{bmatrix} 1\\ 2 \end{bmatrix}
-\end{cases}</span>
-<p>$</p>
-<p>在这我们设两个矩阵： 1. 构造矩阵：其列向量为<span class="math inline">A</span>的特征向量，即： <span class="math display">W=[v_1, v_2]=\begin{bmatrix} 1 &amp; 1\\ -1 &amp; 2 \end{bmatrix}</span></p>
-<ol start="2" type="1">
-<li>构造特征值矩阵：其对角线元素为<span class="math inline">W</span>对应的特征值： <span class="math display">\Sigma = \begin{bmatrix} 1 &amp; 0\\ 0 &amp; 4 \end{bmatrix}</span></li>
-</ol>
-<p>根据前面的推理： <span class="math display">AW=A[v_1, v_2]=[\lambda_1v_1, \lambda_2v_2]=W\Sigma</span> 可以得到： <span class="math display">A=W \Sigma W^{-1}</span></p>
-<p>怎么理解呢？ 1. 对于<span class="math inline">W^{-1}</span>: 作用是改变坐标，把普通坐标系，转化到特征向量坐标系； 2. 对于<span class="math inline">\Sigma</span>: 作用是沿着特征向量方向进行缩放； 3. 对于<span class="math inline">W</span>:作用是转化回原本的坐标</p>
-<p><img src="./imgs/10.png" class="img-fluid"></p>
-<section id="对特征分解进行运算" class="level2">
-<h2 class="anchored" data-anchor-id="对特征分解进行运算">对特征分解进行运算</h2>
-<p>矩阵的幂：<br>
-<span class="math inline">A^n=A·A···A</span>，如<span class="math inline">A^2=AA=(W \Sigma W^{-1})(W \Sigma W^{-1})=W \Sigma^2 W^{-1}</span>所以： <span class="math display">A^n=W \Sigma^n W^{-1}</span> 而<span class="math inline">\Sigma ^n=
-\begin{bmatrix}
-\lambda_1^n &amp; 0 &amp; \cdots &amp; 0 \\
-0 &amp; \lambda_2^n &amp; \cdots &amp; 0 \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-0 &amp; 0 &amp; \cdots &amp; \lambda_m^n
-\end{bmatrix}</span></p>
-<p>矩阵求逆：<br>
-<span class="math inline">A^{-1}=W \Sigma^{-1} W^{-1}</span>,而<span class="math inline">\Sigma ^{-1}=
-\begin{bmatrix}
-\lambda_1^{-1} &amp; 0 &amp; \cdots &amp; 0 \\
-0 &amp; \lambda_2^{-1} &amp; \cdots &amp; 0 \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-0 &amp; 0 &amp; \cdots &amp; \lambda_m^{-1}
-\end{bmatrix}</span>, 所以我们可以得到，当矩阵可逆的时候，其所有特征值一定是非零的。</p>
-<p>行列式：<br>
-<span class="math inline">det(A)=\lambda_1 ···\lambda_n</span></p>
-<p>秩：<br>
-<span class="math inline">rank(A)=非零特征值的数量</span></p>
+<section id="deepseek-harness-安装-1" class="level3">
+<h3 class="anchored" data-anchor-id="deepseek-harness-安装-1">2. DeepSeek Harness 安装</h3>
+<p>Node.js 安装完成后，就可以安装 DeepSeek Harness 了。Harness 通过 npm 包管理器分发，使用 npx 命令可以直接运行而无需全局安装。</p>
+<p>在命令行中输入以下命令：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>npx @deepseek<span class="at">-ai/dsh</span> web</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./imgs/d-4.png" class="img-fluid"></p>
+<p>这表明 Harness 已成功启动，并监听在 3080 端口。我们直接在浏览器中搜索这个网址即可(每次使用Deepseek Harness都要保证终端开着)</p>
+<p>每次使用的时候，都是打开cmd 然后输入</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>npx @deepseek<span class="at">-ai/dsh</span> web</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>就可以打开网站了，如果觉得太长的话，可以使用</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>npm install <span class="at">-g</span> @deepseek<span class="at">-ai/dsh</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>把dsh安装到全局，这样之后可以直接使用dsh web 打开网站。</p>
+<p>打开以后，会要求我们填入API，这时候我们直接去Deepseek的官方购买即可。https://platform.deepseek.com/usage</p>
+<p><img src="./imgs/d-5.png" class="img-fluid"></p>
+<p>API页：</p>
+<p><img src="./imgs/d-6.png" class="img-fluid"></p>
+<p>后面回到Deepseek Harness中填入API即可开始使用。</p>
 </section>
-<section id="对称矩阵分解" class="level2">
-<h2 class="anchored" data-anchor-id="对称矩阵分解">对称矩阵分解</h2>
-<p>对于没有足够特征向量的矩阵，如<span class="math inline">A=
-\begin{bmatrix}
-1 &amp; 1\\
-0 &amp; 1
-\end{bmatrix}</span>,其只有一个<span class="math inline">\lambda = 1</span>,无法分解，这种情况下我们可以使用Jordan分解或者SVD(奇异值分解)</p>
-<p>接下来我们定义以下对称矩阵： <span class="math inline">A=A^T</span>, 可以得到结果：$ A=W W^{-1}=W W^T $</p>
-<p>对于实对称矩阵: 1. 足够多的特征向量； 2. 所有特征值都是实数； 3. 特征向量可以正交。</p>
-<p>针对第三点，我们可以从<span class="math inline">WW^{-1}=I</span>得到，<span class="math inline">WW^T=I</span>，这样可以说明，两个各不相同的特征向量进行点积运算的时候，其结果为0，即正交。</p>
-<p>得到以下结论，<span class="math inline">W^{-1}=W^T</span>的时候，我们可以说各特征向量相互正交。</p>
+<section id="deepseek-harness-使用配置" class="level3">
+<h3 class="anchored" data-anchor-id="deepseek-harness-使用配置">3. Deepseek Harness 使用配置</h3>
+<p>我们可以自己选择文件夹，作为工作区来使用，且拥有四种预设模式：标准模式、PTC模式、极简模式、创造模式，各个模式的适用范围自己探索吧。</p>
+<p>对于配置API，也可以打开”C:.dsh.yaml”这个文件，然后直接把以下内容复制粘贴到原文件内容的下面：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span><span class="kw">:</span><span class="at"> llm-deepseek</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">'@deepseek-ai/dsh-llm-deepseek'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">config</span><span class="kw">:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apiKeyEnv</span><span class="kw">:</span><span class="at"> DEEPSEEK_API_KEY</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">baseURL</span><span class="kw">:</span><span class="at"> https://api.deepseek.com</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">thinking</span><span class="kw">:</span><span class="at"> enabled</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reasoningEffort</span><span class="kw">:</span><span class="at"> high</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">maxTokens</span><span class="kw">:</span><span class="at"> </span><span class="dv">256000</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">streamIdleTimeoutMs</span><span class="kw">:</span><span class="at"> </span><span class="dv">300000</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">retryPolicy</span><span class="kw">:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> always</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">backoff</span><span class="kw">:</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">initialDelayMs</span><span class="kw">:</span><span class="at"> </span><span class="dv">500</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">maxDelayMs</span><span class="kw">:</span><span class="at"> </span><span class="dv">10000</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">jitterRatio</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">defaultContextWindow</span><span class="kw">:</span><span class="at"> </span><span class="dv">1000000</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">models</span><span class="kw">:</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> deepseek-v4-flash</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> DeepSeek-V4-Flash</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> private-reasoner</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Company-hosted reasoning model</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">contextWindow</span><span class="kw">:</span><span class="at"> </span><span class="dv">512000</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>配置完Yaml文件后，还需要设置系统环境变量。在 Windows 系统中，打开”系统属性”→“环境变量”，在系统变量中新建一个变量,变量名为DEEPSEEK_API_KEY，变量值为你在 DeepSeek 官网获取的 API Key：</p>
+<p><img src="./imgs/d-7.png" class="img-fluid"></p>
+<p>设置完成后，重启 Harness 服务使配置生效。</p>
 </section>
-<section id="gershgorin-圆盘定理" class="level2">
-<h2 class="anchored" data-anchor-id="gershgorin-圆盘定理">Gershgorin 圆盘定理</h2>
-<p>对于一个规模很大的矩阵，特征值往往很难求出，针对这种情况，我们只需要知道大概的数值即可。 具体内容见下图：</p>
-<p><img src="./imgs/11.png" class="img-fluid"></p>
-<p>值得注意的是，这种方法仅仅适用于对角元素明显大于其他部分元素的情景。</p>
-<p>我们有一些小结论：</p>
-<ol type="1">
-<li>对于一个大型的随机矩阵<span class="math inline">A</span>, 其中元素相互独立，且<span class="math inline">a_{ij}~N(0, 1)</span>，其<span class="math inline">\lambda_{max}=\sqrt n</span></li>
-</ol>
-</section>
-<section id="奇异值分解svd" class="level2">
-<h2 class="anchored" data-anchor-id="奇异值分解svd">奇异值分解(SVD)</h2>
-<p>下面我们会简要的介绍一下SVD。</p>
-<p>由于特征值分解仅仅适用于方阵，但是实际应用中，大多数数据对应的矩阵都不是方阵，矩阵可能是有很多的0的稀疏矩阵，存储量极大且浪费空间，这时候就需要提取主要特征。奇异值分解 是将任意较复杂的矩阵用更小、更简单的 3个子矩阵的相乘表示 ，用这3个小矩阵来描述大矩 阵重要的特性。这一点于特征值分解一致。</p>
-<p>即设<span class="math inline">A \in C^{m×n}</span>，存在酉矩阵<span class="math inline">U \in C^{m×m}, V \in C^{n×n}</span>，使得<span class="math inline">A=U \Sigma V^H</span></p>
-<p>其中<span class="math inline">H</span>表示为复共轭转置，即<span class="math inline">U^HU=UU^H=I</span></p>
-<p>设 $ A^{mn},(A)=r, $ 设 <span class="math inline">A^H A</span>的特征值为 <span class="math display">
-\lambda_1\geq\lambda_2\geq\cdots\geq\lambda_r&gt;0,
-\qquad
-\lambda_{r+1}=\lambda_{r+2}=\cdots=0,
-</span> 则矩阵 <span class="math inline">A</span> 的奇异值为 <span class="math display">
-\sigma_i=\sqrt{\lambda_i},
-\qquad i=1,2,\ldots,r.
-</span></p>
-<p>因此，矩阵 <span class="math inline">A</span> 的奇异值分解为 <span class="math display">
-A
-=
-U
-\begin{bmatrix}
-\sigma_1 &amp;        &amp;        &amp;        &amp; 0\\
-         &amp; \sigma_2 &amp;      &amp;        &amp; \vdots\\
-         &amp;        &amp; \ddots &amp;        &amp; \\
-         &amp;        &amp;        &amp; \sigma_r &amp; \\
-0        &amp; \cdots &amp;        &amp; 0      &amp; 0
-\end{bmatrix}
-V^H.
-</span></p>
-<p>可能对于复线性空间有点难理解，那么对实数矩阵<span class="math inline">A_{m×n}</span>, 我们不能求其特征值，但对于<span class="math inline">A^TA</span>和<span class="math inline">AA^T</span>分别为n阶和m阶对称方阵，他们的秩<span class="math inline">R(A^TA)=R(AA^T)=R(A)</span>, 且两个对称矩阵的非零特值相同，对称矩阵的特征址矩阵是正交矩阵，特征值均为正实数，因此可求出特征值的平方根–奇异值</p>
-<p><span class="math display">
-\boxed{\sigma_i=\sqrt{\lambda_i\left(A^H A\right)}=\sqrt{\lambda_i\left(A  A^H\right)}}
-</span></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>矩阵</th>
-<th>别称</th>
-<th>维度</th>
-<th>计算方式</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">U</span> 矩阵</td>
-<td><span class="math inline">A</span> 的左奇异矩阵</td>
-<td><span class="math inline">m</span> 行 <span class="math inline">m</span> 列</td>
-<td>列由 <span class="math inline">AA^T</span> 的特征向量组成，且特征向量为单位向量</td>
-<td>包含了有关行的所有信息（代表自己的观点）</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\Sigma</span> 矩阵</td>
-<td><span class="math inline">A</span> 的奇异值矩阵</td>
-<td><span class="math inline">m</span> 行 <span class="math inline">n</span> 列</td>
-<td>对角元素为 <span class="math inline">\sigma_i=\sqrt{\lambda_i}</span>，其中 <span class="math inline">\lambda_i</span> 为 <span class="math inline">AA^T</span> 或 <span class="math inline">A^TA</span> 的特征值，并按降序排列，值越大可以理解为越重要</td>
-<td>记录 SVD 过程（一种日志）</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">V</span> 矩阵</td>
-<td><span class="math inline">A</span> 的右奇异矩阵</td>
-<td><span class="math inline">n</span> 行 <span class="math inline">n</span> 列</td>
-<td>列由 <span class="math inline">A^TA</span> 的特征向量组成，且特征向量为单位向量</td>
-<td>包含了有关列的所有信息（代表自己的特征）</td>
-</tr>
-</tbody>
-</table>
+<section id="插件安装讲解" class="level3">
+<h3 class="anchored" data-anchor-id="插件安装讲解">4. 插件安装讲解</h3>
+<p>一般来说，我们需要加入一些插件来优化我们的使用体验，而我们一般是使用Github</p>
+<p>可以使用：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dsh</span> plugin <span class="at">--profile</span> web add <span class="st">"github:用户名/仓库名#path:/子目录"</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>后面那个直接从code中复制出来即可。</p>
+<p>首次安装会自动初始化 profile。 以 web profile 为例，安装后会在 profile 的 package.json 中自动追加 dsh.profile.bundles 列表：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"dsh-profile-web"</span><span class="fu">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"private"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"dependencies"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"@deepseek-ai/dsh-base"</span><span class="fu">:</span> <span class="st">"版本号"</span><span class="fu">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"你的插件名"</span><span class="fu">:</span> <span class="st">"link:/本地路径"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"dsh"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"profile"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"bundles"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"@deepseek-ai/dsh-base"</span><span class="ot">,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"你的插件名"</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>移除插件可以使用：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dsh</span> plugin <span class="at">--profile</span> web remove 插件包名</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>这会同时移除 dependencies 依赖和 bundles 列表中的对应层。</p>
+<p>注：有的插件要求pnpm，可以直接使用以下指令：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>npm install <span class="at">-g</span> pnpm</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>查看版本同样的指令：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pnpm -<span class="at">-version</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>实际上，每次下载插件可以点开其github主页看看readme,一般都会指导你怎么安装<sub></sub></p>
 
 
 </section>
