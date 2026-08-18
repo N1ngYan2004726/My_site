@@ -1,0 +1,22 @@
+[
+  {
+    "listing": "/talks/index.html",
+    "items": []
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/Multivariable_Calculus.html",
+      "/blog/Single_Variable_Calculus.html",
+      "/blog/Deepseek_Harness.html",
+      "/blog/Eigen decomposition.html",
+      "/blog/Linear_algebra_and_geometry_1.html",
+      "/blog/Linear_algebra_and_geometry_2.html",
+      "/blog/Numpy_learning.html"
+    ]
+  },
+  {
+    "listing": "/publications/index.html",
+    "items": []
+  }
+]
