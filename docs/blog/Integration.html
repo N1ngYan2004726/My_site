@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="介绍了多变量情形下的链式法则，Hessian矩阵的详细介绍以及矩阵求导的方法。">
+<meta name="description" content="本部分介绍了常见的积分方式，重点还有换元法的使用">
 
-<title>多元微积分(2) – N1ngYan</title>
+<title>积分微分学 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -187,10 +187,16 @@ window.Quarto = {
     <h2 id="toc-title">该页面内容</h2>
    
   <ul>
-  <li><a href="#多变量链式法则" id="toc-多变量链式法则" class="nav-link active" data-scroll-target="#多变量链式法则">多变量链式法则</a></li>
-  <li><a href="#反向传播算法" id="toc-反向传播算法" class="nav-link" data-scroll-target="#反向传播算法">反向传播算法</a></li>
-  <li><a href="#hessian矩阵与二阶方法" id="toc-hessian矩阵与二阶方法" class="nav-link" data-scroll-target="#hessian矩阵与二阶方法">Hessian矩阵与二阶方法</a></li>
-  <li><a href="#矩阵微积分深度学习的核心语言" id="toc-矩阵微积分深度学习的核心语言" class="nav-link" data-scroll-target="#矩阵微积分深度学习的核心语言">矩阵微积分：深度学习的核心语言</a></li>
+  <li><a href="#定积分的几何解释" id="toc-定积分的几何解释" class="nav-link active" data-scroll-target="#定积分的几何解释">定积分的几何解释</a></li>
+  <li><a href="#微积分基本定理" id="toc-微积分基本定理" class="nav-link" data-scroll-target="#微积分基本定理">微积分基本定理</a>
+  <ul class="collapse">
+  <li><a href="#第一基本定理fx-fx" id="toc-第一基本定理fx-fx" class="nav-link" data-scroll-target="#第一基本定理fx-fx">第一基本定理：<span class="math inline">F'(x) = f(x)</span></a></li>
+  <li><a href="#第二基本定理牛顿莱布尼茨公式" id="toc-第二基本定理牛顿莱布尼茨公式" class="nav-link" data-scroll-target="#第二基本定理牛顿莱布尼茨公式">第二基本定理：牛顿—莱布尼茨公式</a></li>
+  </ul></li>
+  <li><a href="#换元法" id="toc-换元法" class="nav-link" data-scroll-target="#换元法">换元法</a></li>
+  <li><a href="#积分符号约定" id="toc-积分符号约定" class="nav-link" data-scroll-target="#积分符号约定">积分符号约定</a></li>
+  <li><a href="#多重积分" id="toc-多重积分" class="nav-link" data-scroll-target="#多重积分">多重积分</a></li>
+  <li><a href="#多重积分中的变量替换" id="toc-多重积分中的变量替换" class="nav-link" data-scroll-target="#多重积分中的变量替换">多重积分中的变量替换</a></li>
   </ul>
 </nav>
     </div>
@@ -199,7 +205,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">多元微积分(2)</h1>
+<h1 class="title">积分微分学</h1>
   <div class="quarto-categories">
     <div class="quarto-category">mathematics</div>
     <div class="quarto-category">Calculus</div>
@@ -208,7 +214,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    介绍了多变量情形下的链式法则，Hessian矩阵的详细介绍以及矩阵求导的方法。
+    本部分介绍了常见的积分方式，重点还有换元法的使用
   </div>
 </div>
 
@@ -231,123 +237,266 @@ window.Quarto = {
 </header>
 
 
-<section id="多变量链式法则" class="level2">
-<h2 class="anchored" data-anchor-id="多变量链式法则">多变量链式法则</h2>
-<p>此部分我们主要是介绍一下，在神经网络中，梯度是如何计算。这非常重要，对于我们理解数值稳定性问题很有帮助。</p>
-我们先来观察一个简单的计算图过程：
-<div data-align="center">
-<p><img src="./imgs/18.png" width="400" height="300"></p>
-</div>
-<div data-align="center">
-<p><img src="./imgs/19.png" width="1200" height="400"></p>
-</div>
-<p>一个变量对最终输出的影响，需要把所有路径的贡献加起来。</p>
-<p>因此： <span class="math display">\frac{\partial f}{\partial w} = \frac{\partial f}{\partial u}\frac{\partial u}{\partial a}\frac{\partial a}{\partial w} + \frac{\partial f}{\partial v}\frac{\partial v}{\partial a}\frac{\partial a}{\partial w} + \frac{\partial f}{\partial u}\frac{\partial u}{\partial b}\frac{\partial b}{\partial w} + \frac{\partial f}{\partial v}\frac{\partial v}{\partial b}\frac{\partial b}{\partial w}</span></p>
-<p>这正是多变量链式法则的路径版本。对于更一般的计算图，若变量 <span class="math inline">y</span> 通过多条路径影响 <span class="math inline">f</span>，则：</p>
-<p><span class="math display">\frac{\partial f}{\partial y} = \sum_{\text{路径 } p: y \to f} \frac{\partial f}{\partial p}</span></p>
-</section>
-<section id="反向传播算法" class="level2">
-<h2 class="anchored" data-anchor-id="反向传播算法">反向传播算法</h2>
-<p>继续上一节的例子，我们可以显式计算各局部偏导数：</p>
-<p><span class="math display">\frac{\partial f}{\partial u} = 2(u+v), \quad \frac{\partial f}{\partial v} = 2(u+v)</span></p>
-<p><span class="math display">\frac{\partial u}{\partial a} = 2(a+b), \quad \frac{\partial u}{\partial b} = 2(a+b)</span></p>
-<p><span class="math display">\frac{\partial v}{\partial a} = 2(a-b), \quad \frac{\partial v}{\partial b} = -2(a-b)</span></p>
-<p><span class="math display">\frac{\partial a}{\partial w} = 2(w+x+y+z), \quad \frac{\partial b}{\partial w} = 2(w+x-y-z)</span></p>
-<p>将这些值代入链式法则，即可求得 <span class="math inline">\frac{\partial f}{\partial w}</span>。</p>
-<p>在神经网络中也是如此：我们不需要将复合函数完全展开，而是逐层计算自己的梯度，再乘起来。这种方法称为<strong>自动微分</strong>（Automatic Differentiation）。</p>
-<p>为什么要”反向”？</p>
-<p>如果简单地从输入层到输出层逐层计算梯度并展开，效率极低。因此引入了<strong>反向传播</strong>（Backpropagation）：梯度计算不从输入算到输出，而是<strong>从输出算到输入</strong>。</p>
-<p>因为正向的时候，每计算一个参数，就要重新算一遍，有大量的中间量被重复计算，而反向传播只做了一次遍历，把中间结果是存下来复用的。故反向传播在参数较多的情况下非常适用。</p>
-<p><strong>最终目的只有一个</strong>：计算损失 <span class="math inline">L</span> 对每个权重 <span class="math inline">\mathbf{w}</span> 的梯度 <span class="math inline">\frac{\partial L}{\partial \mathbf{w}}</span>。</p>
-<p>所以我们可以再优化一下我们的训练流程：</p>
+<p>本部分建立对积分的完整认知——它不仅是求面积的工具，更是微分的逆运算，是高维空间中体积累积与坐标变换的核心语言。我们将从几何直观出发，严格推导微积分基本定理，再自然过渡到换元法、多重积分与雅可比行列式。</p>
+<section id="定积分的几何解释" class="level2">
+<h2 class="anchored" data-anchor-id="定积分的几何解释">定积分的几何解释</h2>
+<p>假设有一个在区间 <span class="math inline">[a,b]</span> 上非负的连续函数 <span class="math inline">f(x) \geq 0</span>。一个古老的问题是：<strong>函数图像 <span class="math inline">y=f(x)</span> 与 <span class="math inline">x</span> 轴之间，从 <span class="math inline">x=a</span> 到 <span class="math inline">x=b</span> 所围成的区域面积是多少？</strong></p>
+<p>例如，对于著名的高斯函数（钟形曲线）：</p>
+<p><span class="math display">f(x) = e^{-x^2}</span></p>
+<p>我们想求它在 <span class="math inline">[-2, 2]</span> 上与 <span class="math inline">x</span> 轴围成的面积：</p>
+<p><span class="math display">\text{Area} = \int_{-2}^{2} e^{-x^2}\, dx</span></p>
+<p>这个符号 <span class="math inline">\displaystyle \int_a^b f(x)\,dx</span> 就是<strong>定积分</strong>（Definite Integral）。</p>
+<p>由于边缘是弯曲的，我们无法直接用初等几何公式。核心思想是<strong>分割—近似—求和—取极限</strong>：</p>
 <ol type="1">
-<li>前向传播(Forward propagation): 输入<span class="math inline">x\rightarrow</span> 计算输出<span class="math inline">y</span></li>
-<li>计算损失(Loss): 比较预测值<span class="math inline">y_hat</span>与真实值<span class="math inline">y_true</span>,得到<span class="math inline">L</span></li>
-<li>反向传播(Backward Propagation): 计算梯度<span class="math inline">\frac{\partial L}{\partial w}</span></li>
-<li>参数更新(Parameter Update):使用梯度下降法来更新<span class="math inline">\pmb{w}\leftarrow\pmb{w}-\eta\frac{\partial L}{\partial w}</span></li>
-<li>重复步骤1到4即可.</li>
+<li><p><strong>分割</strong>：将区间 <span class="math inline">[a,b]</span> 切成 <span class="math inline">N</span> 个小区间，每个宽度为 <span class="math inline">\Delta x = \frac{b-a}{N}</span>。</p></li>
+<li><p><strong>近似</strong>：在第 <span class="math inline">i</span> 个小区间内任取一点 <span class="math inline">x_i</span>，以 <span class="math inline">f(x_i)</span> 为高、<span class="math inline">\Delta x</span> 为宽作矩形，其面积为 <span class="math inline">f(x_i)\Delta x</span>。</p></li>
+<li><p><strong>求和</strong>：所有矩形面积之和（称为<strong>黎曼和</strong>）近似总面积：</p>
+<p><span class="math display">A \approx \sum_{i=1}^{N} f(x_i)\,\Delta x</span></p></li>
+<li><p><strong>取极限</strong>：当分割越来越细（<span class="math inline">N\to\infty</span>，即 <span class="math inline">\Delta x \to 0</span>），矩形条带的顶部越来越贴合曲线，误差趋于零。</p></li>
 </ol>
+<p>于是得到定积分的严格定义：</p>
+<p><span class="math display">\boxed{\int_a^b f(x)\,dx = \lim_{\Delta x \to 0} \sum_{i=1}^{N} f(x_i)\,\Delta x}</span></p>
+具体情况如图所示：
+<div data-align="center">
+<p><img src="./imgs/21.png" width="400" height="300"></p>
+</div>
+<blockquote class="blockquote">
+<p><strong>积分，就是把连续变化的东西拆成无限小的部分，再全部累积起来。</strong></p>
+</blockquote>
+<p>这里的 <span class="math inline">dx</span> 象征着那个”无限小的宽度”，<span class="math inline">f(x)\,dx</span> 象征着”无限小的面积微元”。</p>
 </section>
-<section id="hessian矩阵与二阶方法" class="level2">
-<h2 class="anchored" data-anchor-id="hessian矩阵与二阶方法">Hessian矩阵与二阶方法</h2>
-<p>我们在前面部分已经初步探讨了Hessian矩阵,这个地方我们会更详细一些.</p>
-<p>梯度只包含一阶信息。为了描述损失函数在某点附近的<strong>弯曲程度</strong>（曲率），我们需要二阶偏导数，它们组织成 <strong>Hessian 矩阵</strong>：</p>
-<p><span class="math display">\mathbf{H}_f = \nabla^2 f = \begin{bmatrix}
-\frac{\partial^2 f}{\partial x_1^2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_1 \partial x_n} \\
+<section id="微积分基本定理" class="level2">
+<h2 class="anchored" data-anchor-id="微积分基本定理">微积分基本定理</h2>
+<p>如果每次积分都要算极限求和，那将极其繁琐。微积分基本定理（Fundamental Theorem of Calculus, FTC）告诉我们：<strong>积分可以通过”找原函数”来计算</strong>，从而把困难的极限问题转化为相对容易的代数问题。</p>
+<p>固定下限（例如 <span class="math inline">0</span>），让上限动起来，定义一个关于 <span class="math inline">x</span> 的函数：</p>
+<p><span class="math display">F(x) = \int_0^x f(y)\,dy</span></p>
+<p>几何上，<span class="math inline">F(x)</span> 表示从 <span class="math inline">0</span> 到 <span class="math inline">x</span> 的”累积面积”，因此也称为<strong>面积函数</strong>。</p>
+<section id="第一基本定理fx-fx" class="level3">
+<h3 class="anchored" data-anchor-id="第一基本定理fx-fx">第一基本定理：<span class="math inline">F'(x) = f(x)</span></h3>
+<p><strong>定理</strong>：若 <span class="math inline">f</span> 在包含 <span class="math inline">[0,x]</span> 的区间上连续，则 <span class="math inline">F(x)</span> 可导，且</p>
+<p><span class="math display">F'(x) = f(x)</span></p>
+<p>即<strong>面积函数的导数，恰好是被积函数</strong>。</p>
+<p>以下为一个小的证明过程：</p>
+<p>给 <span class="math inline">x</span> 一个极小增量 <span class="math inline">\varepsilon</span>，考察 <span class="math inline">F(x+\varepsilon) - F(x)</span>：</p>
+<p><span class="math display">
+\begin{cases}
+F(x) = \displaystyle\int_0^x f(y)\,dy \\[10pt]
+F(x+\varepsilon) = \displaystyle\int_0^{x+\varepsilon} f(y)\,dy
+\end{cases}
+</span></p>
+<p>两式相减：</p>
+<p><span class="math display">F(x+\varepsilon) - F(x) = \int_x^{x+\varepsilon} f(y)\,dy</span></p>
+<p>当 <span class="math inline">\varepsilon</span> 极小时，区间 <span class="math inline">[x, x+\varepsilon]</span> 上的 <span class="math inline">f(y)</span> 几乎不变，近似等于 <span class="math inline">f(x)</span>。于是该积分近似于一个矩形的面积：</p>
+<p><span class="math display">\int_x^{x+\varepsilon} f(y)\,dy \approx \varepsilon \cdot f(x)</span></p>
+<p>两边同除以 <span class="math inline">\varepsilon</span> 并令 <span class="math inline">\varepsilon \to 0</span>：</p>
+<p><span class="math display">\lim_{\varepsilon \to 0} \frac{F(x+\varepsilon) - F(x)}{\varepsilon} = f(x) \quad \Longrightarrow \quad F'(x) = f(x)</span></p>
+<p>这也写作：</p>
+<p><span class="math display">\frac{d}{dx}\int_0^x f(y)\,dy = f(x)</span></p>
+<hr>
+<p><strong>关键洞察</strong>：微分是”看瞬时变化率”，而积分是”看累积总量”。面积函数在 <span class="math inline">x</span> 处的瞬时变化率，正好等于该点处曲线的高度 <span class="math inline">f(x)</span>。</p>
+</section>
+<section id="第二基本定理牛顿莱布尼茨公式" class="level3">
+<h3 class="anchored" data-anchor-id="第二基本定理牛顿莱布尼茨公式">第二基本定理：牛顿—莱布尼茨公式</h3>
+<p>既然 <span class="math inline">F'(x) = f(x)</span>，我们称 <span class="math inline">F</span> 是 <span class="math inline">f</span> 的一个<strong>原函数</strong>（Antiderivative）。若 <span class="math inline">F</span> 是 <span class="math inline">f</span> 的任意一个原函数，则：</p>
+<p><span class="math display">\boxed{\int_a^b f(x)\,dx = F(b) - F(a)}</span></p>
+<p><strong>注意</strong>：定积分计算时，原函数中的任意常数 <span class="math inline">C</span> 会被抵消：</p>
+<span class="math display">\left[F(x)+C\right]_a^b = \bigl(F(b)+C\bigr) - \bigl(F(a)+C\bigr) = F(b) - F(a)</span> 如下图所示：
+<div data-align="center">
+<p><img src="./imgs/22.png" width="900" height="300"></p>
+</div>
+<p>Eg:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>被积函数</th>
+<th>原函数</th>
+<th>定积分结果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">n y^{n-1}</span></td>
+<td><span class="math inline">y^n + C</span></td>
+<td><span class="math inline">\displaystyle\int_0^x n y^{n-1}\,dy = x^n</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">e^y</span></td>
+<td><span class="math inline">e^y + C</span></td>
+<td><span class="math inline">\displaystyle\int_0^x e^y\,dy = e^x - 1</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>结论</strong>：<strong>微分 <span class="math inline">\Longleftrightarrow</span> 积分</strong>，二者互为逆运算(在相差一个常数的意义下，因为常数求导为0)。</p>
+</blockquote>
+</section>
+</section>
+<section id="换元法" class="level2">
+<h2 class="anchored" data-anchor-id="换元法">换元法</h2>
+<p>与求导一样，积分中也有一套对应的运算规则：</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>微分</th>
+<th>积分</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>乘法法则</td>
+<td>分部积分</td>
+</tr>
+<tr class="even">
+<td><strong>链式法则</strong></td>
+<td><strong>换元法</strong></td>
+</tr>
+<tr class="odd">
+<td>线性性质</td>
+<td>积分线性性</td>
+</tr>
+</tbody>
+</table>
+<p>其中，<strong>换元法</strong>（Substitution Rule）是处理复合函数积分的核心工具，它本质上是微分链式法则的逆运算。</p>
+<p>我们先简单介绍一下分部积分与积分线性性，对于分部积分，主要源自于微分的<span class="math inline">(uv)'=u'v+uv'</span>对两边做积分处理，我们可以得到： <span class="math display">\int u dv=uv-\int vdu</span> 积分线性性就更简单理解了，即： <span class="math display">\int_a^b[k_1f(x)+k_2g(x)]dx=k_1\int_a^bf(x)+k_2\int_a^bg(x)</span></p>
+<p>其中，<strong>换元法</strong>（Substitution Rule）是处理复合函数积分的核心工具，它本质上是微分链式法则的逆运算。</p>
+<p>从不定积分说起,复合函数的积分:</p>
+<p>首先定义一个积分函数：</p>
+<p><span class="math display">F(x) = \int_0^x f(y)\,dy</span></p>
+<p>现在考虑：如果在 <span class="math inline">F(\cdot)</span> 中，输入的不是 <span class="math inline">x</span> 而是 <span class="math inline">u(x)</span>，即 <span class="math inline">F(u(x))</span>，它怎么变化？</p>
+<p>由链式法则：</p>
+<p><span class="math display">\frac{d}{dx}F(u(x)) = \frac{dF}{du} \cdot \frac{du}{dx}</span></p>
+<p>因为 <span class="math inline">\displaystyle \frac{dF}{du} = f(u)</span>，所以：</p>
+<p><span class="math display">\frac{d}{dx}F(u(x)) = f(u(x)) \cdot u'(x)</span></p>
+<p>两边对 <span class="math inline">x</span> 积分（从 <span class="math inline">0</span> 到 <span class="math inline">x</span>）：</p>
+<p><span class="math display">F(u(x)) - F(u(0)) = \int_0^x f(u(y))\,u'(y)\,dy</span></p>
+<p>左边根据定义就是 <span class="math inline">\displaystyle \int_{u(0)}^{u(x)} f(y)\,dy</span>，因此：</p>
+<p><span class="math display">\int_{u(0)}^{u(x)} f(y)\,dy = \int_0^x f(u(y))\,u'(y)\,dy</span></p>
+<p>将积分变量 <span class="math inline">x</span> 的上下限改为一般形式 <span class="math inline">[a,b]</span>，得到<strong>定积分换元公式</strong>：</p>
+<p><span class="math display">\boxed{\int_{u(a)}^{u(b)} f(y)\,dy = \int_a^b f(u(x))\,u'(x)\,dx = \int_a^b f(u(x))\,du(x)}  </span></p>
+<p>直观理解：为什么多出一个 <span class="math inline">u'(x)</span>？</p>
+<p>形式上看，令 <span class="math inline">y = u(x)</span>，则 <span class="math inline">dy = u'(x)\,dx</span>，代入即得：</p>
+<p><span class="math display">\int f(y)\,dy = \int f(u(x))\,u'(x)\,dx</span></p>
+<p><strong>几何解释——面积微元的伸缩</strong>：</p>
+<ul>
+<li><strong>原坐标下</strong>：面积微元是 <span class="math inline">f(y)\,dy</span></li>
+<li><strong>换到新坐标</strong> <span class="math inline">y = u(x)</span>：则 <span class="math inline">dy = u'(x)\,dx</span></li>
+<li><strong>新坐标下的面积微元</strong>：<span class="math inline">f(u(x)) \cdot u'(x)\,dx</span></li>
+</ul>
+<p><span class="math inline">u'(x)</span> 描述了坐标变换时，<strong>长度微元的伸缩比例</strong>。如果 <span class="math inline">u'(x) &gt; 1</span>，说明新坐标被”拉伸”了，同样的函数值需要乘以更大的宽度因子来保持面积不变。且积分上下限也要跟着变动。</p>
+我们可以如图简单理解一下：
+<div data-align="center">
+<p><img src="./imgs/23.png" width="600" height="250"></p>
+</div>
+<p><strong>例</strong>：设 <span class="math inline">f(y) = 1</span>，<span class="math inline">u(x) = e^{-x^2}</span>，验证换元公式。</p>
+<p><strong>步骤 1</strong>：求导 <span class="math display">\frac{du}{dx} = -2x e^{-x^2}</span></p>
+<p><strong>步骤 2</strong>：代入公式 <span class="math display">\int f(u(x))\,u'(x)\,dx = \int f(y)\,dy</span></p>
+<p>因为 <span class="math inline">f(y) = 1</span>，右边为 <span class="math inline">\displaystyle\int 1\,dy</span>。</p>
+<p>左边具体计算（从 <span class="math inline">0</span> 到 <span class="math inline">1</span>）： <span class="math display">\int_0^1 (-2x e^{-x^2})\,dx = \int_1^{e^{-1}} 1\,dy = e^{-1} - 1</span></p>
+<p><strong>步骤 3</strong>：反向验证 若要求 <span class="math inline">\displaystyle\int_0^1 x e^{-x^2}\,dx</span>，利用上述结果： <span class="math display">\int_0^1 x e^{-x^2}\,dx = -\frac{1}{2}\int_0^1 (-2x e^{-x^2})\,dx = -\frac{1}{2}(e^{-1}-1) = \frac{1-e^{-1}}{2}</span></p>
+<p>本节最重要的公式如下：</p>
+<p><strong>定积分换元公式</strong>：</p>
+<p><span class="math display">\boxed{\int_{u(a)}^{u(b)} f(y)\,dy = \int_a^b f(u(x))\,u'(x)\,dx}</span></p>
+<p><strong>不定积分换元公式</strong>：</p>
+<p><span class="math display">\int f(u(x))\,u'(x)\,dx = \int f(u)\,du = F(u) + C</span></p>
+</section>
+<section id="积分符号约定" class="level2">
+<h2 class="anchored" data-anchor-id="积分符号约定">积分符号约定</h2>
+<p>定积分不仅仅是”几何面积”，它是一种<strong>带方向的累积量</strong>。理解这一点，对后续学习曲线积分、曲面积分以及物理学中的”功”等概念至关重要。</p>
+<ol type="1">
+<li>积分可以为负的两种情形</li>
+</ol>
+<p>情形一：积分方向反转</p>
+<p>当积分下限大于上限时（即从右往左积分），积分值为负：</p>
+<p><span class="math display">\int_a^b f(x)\,dx = -\int_b^a f(x)\,dx</span></p>
+<p><strong>例子</strong>：</p>
+<p><span class="math display">\int_{e^0}^{e^{-1}} 1\,dy = e^{-1} - 1 &lt; 0</span></p>
+<p>这里 <span class="math inline">e^0 = 1</span>，<span class="math inline">e^{-1} \approx 0.368</span>，积分是从 <span class="math inline">1</span> 到 <span class="math inline">0.368</span>（从大到小），因此结果为负。<strong>这是由于积分方向改变导致的</strong>。</p>
+<p>情形二：函数值位于 <span class="math inline">x</span> 轴下方</p>
+<p>当 <span class="math inline">f(x) &lt; 0</span> 时，即使积分方向正常（从小到大），积分值也为负：</p>
+<p><span class="math display">\int_0^1 (-1)\,dx = -1 &lt; 0</span></p>
+<p><strong>这是由于函数的值小于 0 导致的</strong>。</p>
+<p>如果我们的目标是求函数图像与 <span class="math inline">x</span> 轴所围成的<strong>纯粹几何面积</strong>（总为正数），则需要对被积函数取绝对值：</p>
+<p><span class="math display">\boxed{A = \int_a^b |f(x)|\,dx}</span></p>
+<p>这样，无论函数在轴上方还是下方，无论积分方向如何，最终得到的都是非负的实际面积。</p>
+<p>定积分的这种”可正可负”的特性，说明它并非单纯的几何度量，而是一种<strong>有向测度</strong>（Oriented Measure）。</p>
+<blockquote class="blockquote">
+<p><strong>类比</strong>：这与<strong>行列式</strong>的性质类似——行列式表示的是”有向体积”，交换两行会变号；积分交换上下限也会变号。二者都体现了”方向”在数学度量中的重要性。</p>
+</blockquote>
+</section>
+<section id="多重积分" class="level2">
+<h2 class="anchored" data-anchor-id="多重积分">多重积分</h2>
+<p>现在将视野从一元函数推广到二元函数。考虑定义在矩形区域 <span class="math inline">R = [a,b] \times [c,d]</span> 上的连续函数 <span class="math inline">f(x,y)</span>。</p>
+<p>若将 <span class="math inline">z = f(x,y)</span> 视为点 <span class="math inline">(x,y)</span> 处的”高度”，则二重积分：</p>
+<p><span class="math display">\iint_R f(x,y)\,dA = \int_a^b\int_c^d f(x,y)\,dy\,dx</span></p>
+<p>表示的是<strong>以曲面 <span class="math inline">z=f(x,y)</span> 为顶、以矩形区域 <span class="math inline">R</span> 为底的曲顶柱体的体积</strong>。</p>
+<p><strong>直观理解</strong>：可理解为将区域 <span class="math inline">R</span> 切成无数根竖直的小方柱，每根柱子的体积为 <span class="math inline">f(x,y)\,dx\,dy</span>，然后将所有小柱子的体积累加起来。</p>
+<p>计算二重积分时，可以把它拆成两次一元积分，由内向外逐层计算，这称为<strong>累次积分</strong>（Iterated Integral）：</p>
+<p><span class="math display">\int_a^b \left(\int_c^d f(x,y)\,dy\right) dx</span></p>
+<p>先固定 <span class="math inline">x</span>，计算内层积分 <span class="math inline">\displaystyle\int_c^d f(x,y)\,dy</span>（得到关于 <span class="math inline">x</span> 的函数），再对 <span class="math inline">x</span> 计算外层积分。</p>
+<p><strong>Fubini 定理</strong>指出：若 <span class="math inline">f</span> 在闭矩形 <span class="math inline">R</span> 上连续，则积分顺序可以交换：</p>
+<p><span class="math display">\boxed{\iint_R f(x,y)\,dx\,dy = \iint_R f(x,y)\,dy\,dx}</span></p>
+<p>即：</p>
+<p><span class="math display">\int_a^b \int_c^d f(x,y)\,dy\,dx = \int_c^d \int_a^b f(x,y)\,dx\,dy</span></p>
+<p><strong>几何直观</strong>：无论先把体积分割成沿 <span class="math inline">x</span> 方向的”薄片”再沿 <span class="math inline">y</span> 方向堆叠，还是沿 <span class="math inline">y</span> 方向的”薄片”再沿 <span class="math inline">x</span> 方向堆叠，最终得到的总体积不变。</p>
+<p>一般地，对于 <span class="math inline">n</span> 维区域 <span class="math inline">U \subset \mathbb{R}^n</span> 和向量 <span class="math inline">\mathbf{x} = (x_1, x_2, \dots, x_n)^T</span>：</p>
+<p><span class="math display">\int_U f(\mathbf{x})\,d\mathbf{x}</span></p>
+<p>本质上仍然是<strong>无限小区域贡献的求和</strong>。多重积分的核心思想与一元定积分完全一致——都是”分割、近似、求和、取极限”，只是分割的对象从区间变成了高维区域。</p>
+</section>
+<section id="多重积分中的变量替换" class="level2">
+<h2 class="anchored" data-anchor-id="多重积分中的变量替换">多重积分中的变量替换</h2>
+<p>许多高维积分在直角坐标系下极其困难。例如著名的高斯积分：</p>
+<p><span class="math display">\int_{-\infty}^{+\infty}\int_{-\infty}^{+\infty} e^{-(x^2+y^2)}\,dx\,dy</span></p>
+<p>直接计算几乎不可能，但转换到<strong>极坐标</strong>后迎刃而解。<strong>换元</strong>（变量替换）是高维积分中一个关键工具。</p>
+<p>设有一个从新坐标 <span class="math inline">\mathbf{u}</span> 到旧坐标 <span class="math inline">\mathbf{x}</span> 的<strong>映射</strong>（Transformation）：</p>
+<p><span class="math display">\boldsymbol{\phi}: \mathbb{R}^n \to \mathbb{R}^n, \quad \mathbf{x} = \boldsymbol{\phi}(\mathbf{u})</span></p>
+<p>例如极坐标： <span class="math display">\begin{cases} x = r\cos\theta \\ y = r\sin\theta \end{cases}</span></p>
+<p>为了保证变换是”良定义的”，通常要求 <span class="math inline">\boldsymbol{\phi}</span> 是<strong>单射</strong>（Injective，即一一对应，不会把不同点压到同一个位置，更简单的理解是，如果<span class="math inline">\Phi(x)=\Phi(y)</span>的时候，仅当<span class="math inline">x=y</span>的时候才成立），且连续可微。</p>
+<p>映射 <span class="math inline">\boldsymbol{\phi}</span> 在点 <span class="math inline">\mathbf{u}</span> 处的<strong>雅可比矩阵</strong>（Jacobian Matrix）是所有一阶偏导数构成的矩阵：</p>
+<p><span class="math display">D\boldsymbol{\phi} = \frac{\partial(x_1,\dots,x_n)}{\partial(u_1,\dots,u_n)} = \begin{bmatrix}
+\frac{\partial x_1}{\partial u_1} &amp; \cdots &amp; \frac{\partial x_1}{\partial u_n} \\
 \vdots &amp; \ddots &amp; \vdots \\
-\frac{\partial^2 f}{\partial x_n \partial x_1} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_n^2}
+\frac{\partial x_n}{\partial u_1} &amp; \cdots &amp; \frac{\partial x_n}{\partial u_n}
 \end{bmatrix}</span></p>
-<p>根据 <strong>Clairaut 定理</strong>（施瓦茨定理），若二阶偏导连续，则求导顺序可交换：</p>
-<p><span class="math display">\frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i}</span></p>
-<p>因此 Hessian 矩阵是对称矩阵：<span class="math inline">\mathbf{H}^\top = \mathbf{H}</span>。</p>
-<p>利用 Hessian 矩阵，函数在原点附近的二阶近似为：</p>
-<p><span class="math display">f(\mathbf{x}) \approx f(\mathbf{0}) + \nabla f(\mathbf{0})^\top \mathbf{x} + \frac{1}{2}\mathbf{x}^\top \mathbf{H}(\mathbf{0})\mathbf{x}</span></p>
-这意味着：在局部，任何复杂函数都可以用一个<strong>抛物面</strong>来近似。如下图:
-<div data-align="center">
-<p><img src="./imgs/20.png" width="400" height="300"></p>
-</div>
-<p>Hessian 矩阵可用于自适应地调整学习率：</p>
-<ul>
-<li>曲率大（<span class="math inline">\mathbf{H}</span> 的特征值大）的地方，函数变化剧烈，应使用<strong>较小</strong>的学习率；</li>
-<li>曲率小（<span class="math inline">\mathbf{H}</span> 的特征值小）的地方，可以使用<strong>较大</strong>的学习率。</li>
-</ul>
-<p>由此导出的<strong>牛顿法</strong>更新公式为：</p>
-<p><span class="math display">\mathbf{x}_{\text{new}} = \mathbf{x} - \mathbf{H}^{-1} \nabla f</span></p>
-<p>对比梯度下降法：</p>
-<p><span class="math display">\mathbf{x}_{\text{new}} = \mathbf{x} - \eta \nabla f</span></p>
-<p>虽然牛顿法利用了曲率信息，理论上收敛更快，但在深度学习中<strong>极少直接使用</strong>，原因在于：</p>
-<ol type="1">
-<li>参数维度巨大，Hessian 矩阵的存储和求逆计算量不可接受；</li>
-<li>深度学习中的损失函数高度非凸，Hessian 可能不正定。</li>
-</ol>
-<p>此处加一个正定矩阵的定义:正定矩阵是指对任意非零向量<span class="math inline">x</span>，满足<span class="math inline">x^T A x &gt; 0</span>的实对称矩阵或Hermite矩阵。即特征值全部为正.</p>
-<p>Hessian 不正定 = 局部不是”碗”而是”马鞍”或”倒碗”。牛顿法依赖”碗”的形状来计算最优步长，一旦形状不对，它就可能把你带向山顶或悬崖。</p>
-<blockquote class="blockquote">
-<p><strong>注</strong>：现代深度学习中的二阶方法（如 L-BFGS、自然梯度等）都是对完整 Hessian 的近似，而非直接计算。</p>
-</blockquote>
-</section>
-<section id="矩阵微积分深度学习的核心语言" class="level2">
-<h2 class="anchored" data-anchor-id="矩阵微积分深度学习的核心语言">矩阵微积分：深度学习的核心语言</h2>
-<p>矩阵运算在深度学习中占据核心地位。将标量微积分推广到向量和矩阵，是高效计算网络梯度的关键。</p>
-<p>在矩阵微积分中，求导结果的布局有两种约定：<strong>分子布局</strong>（Numerator Layout）和<strong>分母布局</strong>（Denominator Layout）。在深度学习文献中，通常采用<strong>分母布局</strong>（也称为 Hessian 约定），其规则是：</p>
-<blockquote class="blockquote">
-<p>若标量 <span class="math inline">f</span> 对列向量 <span class="math inline">\mathbf{x}</span> 求导，结果是与 <span class="math inline">\mathbf{x}</span> 同维度的列向量。</p>
-</blockquote>
-<p><span class="math display">\frac{\partial f}{\partial \mathbf{x}} = \begin{bmatrix} \frac{\partial f}{\partial x_1} \\ \frac{\partial f}{\partial x_2} \\ \vdots \\ \frac{\partial f}{\partial x_n} \end{bmatrix}</span></p>
-<p>我们下面对一些经典案例进行一些分析:</p>
-<ol type="1">
-<li>线性型</li>
-</ol>
-<p>设列向量 <span class="math inline">\boldsymbol{\beta}, \mathbf{x} \in \mathbb{R}^n</span>，函数 <span class="math inline">f(\mathbf{x}) = \boldsymbol{\beta}^\top \mathbf{x}</span> 是一个标量（点积）。</p>
-<p>逐分量求导： <span class="math display">\frac{\partial f}{\partial x_i} = \beta_i</span></p>
-<p>因此： <span class="math display">\frac{\partial}{\partial \mathbf{x}} (\boldsymbol{\beta}^\top \mathbf{x})=\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^T \boldsymbol{\beta})= \boldsymbol{\beta}</span></p>
-<p>这是一个极其常用的基础公式。</p>
-<ol start="2" type="1">
-<li>二次型</li>
-</ol>
-<p>设 <span class="math inline">\mathbf{x} \in \mathbb{R}^n</span>，方阵 <span class="math inline">\mathbf{A} \in \mathbb{R}^{n \times n}</span>，考虑二次型： <span class="math display">y = \mathbf{x}^\top \mathbf{A} \mathbf{x} = \sum_{i=1}^n \sum_{j=1}^n A_{ij} x_i x_j</span></p>
-<p>利用 Einstein 求和约定或逐分量求导，对 <span class="math inline">x_k</span> 求偏导： <span class="math display">\frac{\partial y}{\partial x_k} = \sum_j A_{kj} x_j + \sum_i A_{ik} x_i</span></p>
-<p>写成向量形式： <span class="math display">\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top \mathbf{A} \mathbf{x}) = (\mathbf{A} + \mathbf{A}^\top)\mathbf{x}</span></p>
-<p>特别地，若 <span class="math inline">\mathbf{A}</span> 为对称矩阵（<span class="math inline">\mathbf{A}^\top = \mathbf{A}</span>），则： <span class="math display">\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top \mathbf{A} \mathbf{x}) = 2\mathbf{A}\mathbf{x}</span></p>
-<ol start="3" type="1">
-<li>矩阵分解中的梯度</li>
-</ol>
-<p>设 <span class="math inline">\mathbf{X} \in \mathbb{R}^{n \times m}</span>，<span class="math inline">\mathbf{U} \in \mathbb{R}^{n \times r}</span>，<span class="math inline">\mathbf{V} \in \mathbb{R}^{r \times m}</span>，考虑 Frobenius 范数损失： <span class="math display">L = \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_F^2</span></p>
-<p><strong>直觉推导</strong>：先考虑一维情形，设均为标量 <span class="math inline">x, u, v</span>，则 <span class="math display">\frac{d}{dv}(x - uv)^2 = 2(x - uv) \cdot (-u)</span></p>
-<p>推广到矩阵情形，结果应与 <span class="math inline">\mathbf{V}</span> 同维（<span class="math inline">r \times m</span>）。通过维度分析：</p>
-<ul>
-<li><span class="math inline">\mathbf{X} - \mathbf{U}\mathbf{V}</span> 是 <span class="math inline">n \times m</span></li>
-<li><span class="math inline">\mathbf{U}^\top</span> 是 <span class="math inline">r \times n</span></li>
-<li>因此 <span class="math inline">\mathbf{U}^\top(\mathbf{X} - \mathbf{U}\mathbf{V})</span> 是 <span class="math inline">r \times m</span>，与 <span class="math inline">\mathbf{V}</span> 匹配</li>
-</ul>
-<p>故： <span class="math display">\frac{\partial L}{\partial \mathbf{V}} = -2\mathbf{U}^\top (\mathbf{X} - \mathbf{U}\mathbf{V})</span></p>
-<blockquote class="blockquote">
-<p><strong>维度一致性检查</strong>是矩阵求导中最可靠的”验算”手段。</p>
-</blockquote>
-<p>如在标准线性层中，设 <span class="math inline">\mathbf{Y} = \mathbf{W}\mathbf{X}</span>，损失为 <span class="math inline">L(\mathbf{Y})</span>。则：</p>
-<p><span class="math display">\frac{\partial L}{\partial \mathbf{W}} = \frac{\partial L}{\partial \mathbf{Y}} \cdot \mathbf{X}^\top</span></p>
-<p>这里的 <span class="math inline">\mathbf{X}^\top</span> 出现，正是为了保证维度匹配（<span class="math inline">\frac{\partial L}{\partial \mathbf{Y}}</span> 与 <span class="math inline">\mathbf{Y}</span> 同维，右乘 <span class="math inline">\mathbf{X}^\top</span> 后得到与 <span class="math inline">\mathbf{W}</span> 同维的结果）。</p>
-<p>假设<span class="math inline">\mathbf{X}</span>的尺寸为<span class="math inline">b×c</span>,<span class="math inline">\mathbf{W}</span>的尺寸为<span class="math inline">a×b</span>,则<span class="math inline">\mathbf{Y}</span>的尺寸为<span class="math inline">a×c</span>,根据前文所说,我们要求求导出来的右侧这个尺寸应当为<span class="math inline">c×b</span>且要么是<span class="math inline">\mathbf{X}</span>要么是<span class="math inline">\mathbf{X}^\top</span>,故我们可以得到结果为<span class="math inline">\mathbf{X}^\top</span></p>
+<p>其行列式 <span class="math inline">\det(D\boldsymbol{\phi})</span> 称为<strong>雅可比行列式</strong>（Jacobian Determinant）。</p>
+<p><strong>多重积分的换元公式</strong>：</p>
+<p><span class="math display">\boxed{\int_{\boldsymbol{\phi}(U)} f(\mathbf{x})\,d\mathbf{x} = \int_U f(\boldsymbol{\phi}(\mathbf{u}))\, \bigl|\det(D\boldsymbol{\phi}(\mathbf{u}))\bigr|\,d\mathbf{u}}</span></p>
+<p><strong>各项含义</strong>： - <strong>左边</strong>：在旧区域 <span class="math inline">\boldsymbol{\phi}(U)</span> 上对 <span class="math inline">f(\mathbf{x})</span> 积分。 - <strong>右边</strong>： - 被积函数变为 <span class="math inline">f(\boldsymbol{\phi}(\mathbf{u}))</span>； - 面积（体积）微元 <span class="math inline">d\mathbf{x}</span> 变为 <span class="math inline">\bigl|\det(D\boldsymbol{\phi})\bigr|\,d\mathbf{u}</span>。</p>
+<p><strong>几何意义</strong>：<span class="math inline">|\det(D\boldsymbol{\phi})|</span> 表示坐标变换时，<strong>单位体积微元的伸缩比例</strong>。它衡量了映射 <span class="math inline">\boldsymbol{\phi}</span> 对局部空间的”拉伸”或”压缩”程度。</p>
+<p>计算： <span class="math display">I = \iint_{\mathbb{R}^2} e^{-(x^2+y^2)}\,dx\,dy</span></p>
+<p><strong>步骤 1：换元</strong></p>
+<p>令 <span class="math inline">x = r\cos\theta,\; y = r\sin\theta</span>，则 <span class="math inline">x^2+y^2 = r^2</span>。</p>
+<p><strong>步骤 2：计算雅可比行列式</strong></p>
+<p><span class="math display">
+D\boldsymbol{\phi} = \begin{bmatrix}
+\frac{\partial x}{\partial r} &amp; \frac{\partial x}{\partial \theta} \\[6pt]
+\frac{\partial y}{\partial r} &amp; \frac{\partial y}{\partial \theta}
+\end{bmatrix}
+= \begin{bmatrix}
+\cos\theta &amp; -r\sin\theta \\
+\sin\theta &amp; r\cos\theta
+\end{bmatrix}
+</span></p>
+<p><span class="math display">\det(D\boldsymbol{\phi}) = r\cos^2\theta + r\sin^2\theta = r</span></p>
+<p>因此 <span class="math inline">dx\,dy = r\,dr\,d\theta</span>。</p>
+<p><strong>步骤 3：确定新区域</strong></p>
+<p>整个平面 <span class="math inline">\mathbb{R}^2</span> 对应 <span class="math inline">r \in [0, +\infty)</span>，<span class="math inline">\theta \in [0, 2\pi)</span>。</p>
+<p><strong>步骤 4：计算积分</strong></p>
+<p><span class="math display">
+\begin{aligned}
+I &amp;= \int_0^{2\pi}\int_0^{\infty} e^{-r^2}\,r\,dr\,d\theta \\
+&amp;= \int_0^{2\pi} d\theta \cdot \int_0^{\infty} e^{-r^2}\,r\,dr \\
+&amp;= 2\pi \cdot \int_0^{\infty} e^{-r^2}\,\frac{d(r^2)}{2} \qquad (\text{因为 } d(r^2) = 2r\,dr) \\
+&amp;= 2\pi \cdot \frac{1}{2}\left[-e^{-r^2}\right]_0^{\infty} \\
+&amp;= \pi \cdot (0 - (-1)) = \boxed{\pi}
+\end{aligned}
+</span></p>
+<p><strong>副产品</strong>：由此可推出一元高斯积分 <span class="math inline">\displaystyle\int_{-\infty}^{+\infty} e^{-x^2}\,dx = \sqrt{\pi}</span>。</p>
+<p>积分不是“求面积的公式”，而是一种看待累积与变换的思维方式。当你理解“微分是局部的线性近似，积分是全局的累积还原，换元是坐标变换下的体积守恒”时，你就真正掌握了微积分的灵魂。</p>
 
 
 </section>
