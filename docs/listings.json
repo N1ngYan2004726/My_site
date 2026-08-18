@@ -6,7 +6,8 @@
   {
     "listing": "/blog/index.html",
     "items": [
-      "/blog/Multivariable_Calculus.html",
+      "/blog/Multivariable_Calculus_1.html",
+      "/blog/Multivariable_Calculus_2.html",
       "/blog/Single_Variable_Calculus.html",
       "/blog/Deepseek_Harness.html",
       "/blog/Eigen decomposition.html",

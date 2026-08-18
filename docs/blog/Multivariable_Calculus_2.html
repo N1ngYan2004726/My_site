@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="简单介绍了微分学的作用，以及一些基础的运算规则，并介绍了高阶导数与泰勒展开公式">
+<meta name="description" content="介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明">
 
-<title>多元微积分 – N1ngYan</title>
+<title>多元微积分(2) – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -75,6 +75,49 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -139,15 +182,24 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#多变量链式法则" id="toc-多变量链式法则" class="nav-link active" data-scroll-target="#多变量链式法则">多变量链式法则</a></li>
+  <li><a href="#反向传播算法" id="toc-反向传播算法" class="nav-link" data-scroll-target="#反向传播算法">反向传播算法</a></li>
+  <li><a href="#hessian矩阵与二阶方法" id="toc-hessian矩阵与二阶方法" class="nav-link" data-scroll-target="#hessian矩阵与二阶方法">Hessian矩阵与二阶方法</a></li>
+  <li><a href="#矩阵微积分深度学习的核心语言" id="toc-矩阵微积分深度学习的核心语言" class="nav-link" data-scroll-target="#矩阵微积分深度学习的核心语言">矩阵微积分：深度学习的核心语言</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">多元微积分</h1>
+<h1 class="title">多元微积分(2)</h1>
   <div class="quarto-categories">
     <div class="quarto-category">mathematics</div>
     <div class="quarto-category">Calculus</div>
@@ -156,7 +208,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    简单介绍了微分学的作用，以及一些基础的运算规则，并介绍了高阶导数与泰勒展开公式
+    介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明
   </div>
 </div>
 
@@ -179,8 +231,126 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="多变量链式法则" class="level2">
+<h2 class="anchored" data-anchor-id="多变量链式法则">多变量链式法则</h2>
+<p>此部分我们主要是介绍一下，在神经网络中，梯度是如何计算。这非常重要，对于我们理解数值稳定性问题很有帮助。</p>
+我们先来观察一个简单的计算图过程：
+<div data-align="center">
+<p><img src="./imgs/18.png" width="400" height="300"></p>
+</div>
+<div data-align="center">
+<p><img src="./imgs/19.png" width="1200" height="400"></p>
+</div>
+<p>一个变量对最终输出的影响，需要把所有路径的贡献加起来。</p>
+<p>因此： <span class="math display">\frac{\partial f}{\partial w} = \frac{\partial f}{\partial u}\frac{\partial u}{\partial a}\frac{\partial a}{\partial w} + \frac{\partial f}{\partial v}\frac{\partial v}{\partial a}\frac{\partial a}{\partial w} + \frac{\partial f}{\partial u}\frac{\partial u}{\partial b}\frac{\partial b}{\partial w} + \frac{\partial f}{\partial v}\frac{\partial v}{\partial b}\frac{\partial b}{\partial w}</span></p>
+<p>这正是多变量链式法则的路径版本。对于更一般的计算图，若变量 <span class="math inline">y</span> 通过多条路径影响 <span class="math inline">f</span>，则：</p>
+<p><span class="math display">\frac{\partial f}{\partial y} = \sum_{\text{路径 } p: y \to f} \frac{\partial f}{\partial p}</span></p>
+</section>
+<section id="反向传播算法" class="level2">
+<h2 class="anchored" data-anchor-id="反向传播算法">反向传播算法</h2>
+<p>继续上一节的例子，我们可以显式计算各局部偏导数：</p>
+<p><span class="math display">\frac{\partial f}{\partial u} = 2(u+v), \quad \frac{\partial f}{\partial v} = 2(u+v)</span></p>
+<p><span class="math display">\frac{\partial u}{\partial a} = 2(a+b), \quad \frac{\partial u}{\partial b} = 2(a+b)</span></p>
+<p><span class="math display">\frac{\partial v}{\partial a} = 2(a-b), \quad \frac{\partial v}{\partial b} = -2(a-b)</span></p>
+<p><span class="math display">\frac{\partial a}{\partial w} = 2(w+x+y+z), \quad \frac{\partial b}{\partial w} = 2(w+x-y-z)</span></p>
+<p>将这些值代入链式法则，即可求得 <span class="math inline">\frac{\partial f}{\partial w}</span>。</p>
+<p>在神经网络中也是如此：我们不需要将复合函数完全展开，而是逐层计算自己的梯度，再乘起来。这种方法称为<strong>自动微分</strong>（Automatic Differentiation）。</p>
+<p>为什么要”反向”？</p>
+<p>如果简单地从输入层到输出层逐层计算梯度并展开，效率极低。因此引入了<strong>反向传播</strong>（Backpropagation）：梯度计算不从输入算到输出，而是<strong>从输出算到输入</strong>。</p>
+<p>因为正向的时候，每计算一个参数，就要重新算一遍，有大量的中间量被重复计算，而反向传播只做了一次遍历，把中间结果是存下来复用的。故反向传播在参数较多的情况下非常适用。</p>
+<p><strong>最终目的只有一个</strong>：计算损失 <span class="math inline">L</span> 对每个权重 <span class="math inline">\mathbf{w}</span> 的梯度 <span class="math inline">\frac{\partial L}{\partial \mathbf{w}}</span>。</p>
+<p>所以我们可以再优化一下我们的训练流程：</p>
+<ol type="1">
+<li>前向传播(Forward propagation): 输入<span class="math inline">x\rightarrow</span> 计算输出<span class="math inline">y</span></li>
+<li>计算损失(Loss): 比较预测值<span class="math inline">y_hat</span>与真实值<span class="math inline">y_true</span>,得到<span class="math inline">L</span></li>
+<li>反向传播(Backward Propagation): 计算梯度<span class="math inline">\frac{\partial L}{\partial w}</span></li>
+<li>参数更新(Parameter Update):使用梯度下降法来更新<span class="math inline">\pmb{w}\leftarrow\pmb{w}-\eta\frac{\partial L}{\partial w}</span></li>
+<li>重复步骤1到4即可.</li>
+</ol>
+</section>
+<section id="hessian矩阵与二阶方法" class="level2">
+<h2 class="anchored" data-anchor-id="hessian矩阵与二阶方法">Hessian矩阵与二阶方法</h2>
+<p>我们在前面部分已经初步探讨了Hessian矩阵,这个地方我们会更详细一些.</p>
+<p>梯度只包含一阶信息。为了描述损失函数在某点附近的<strong>弯曲程度</strong>（曲率），我们需要二阶偏导数，它们组织成 <strong>Hessian 矩阵</strong>：</p>
+<p><span class="math display">\mathbf{H}_f = \nabla^2 f = \begin{bmatrix}
+\frac{\partial^2 f}{\partial x_1^2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_1 \partial x_n} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial^2 f}{\partial x_n \partial x_1} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_n^2}
+\end{bmatrix}</span></p>
+<p>根据 <strong>Clairaut 定理</strong>（施瓦茨定理），若二阶偏导连续，则求导顺序可交换：</p>
+<p><span class="math display">\frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i}</span></p>
+<p>因此 Hessian 矩阵是对称矩阵：<span class="math inline">\mathbf{H}^\top = \mathbf{H}</span>。</p>
+<p>利用 Hessian 矩阵，函数在原点附近的二阶近似为：</p>
+<p><span class="math display">f(\mathbf{x}) \approx f(\mathbf{0}) + \nabla f(\mathbf{0})^\top \mathbf{x} + \frac{1}{2}\mathbf{x}^\top \mathbf{H}(\mathbf{0})\mathbf{x}</span></p>
+这意味着：在局部，任何复杂函数都可以用一个<strong>抛物面</strong>来近似。如下图:
+<div data-align="center">
+<p><img src="./imgs/20.png" width="400" height="300"></p>
+</div>
+<p>Hessian 矩阵可用于自适应地调整学习率：</p>
+<ul>
+<li>曲率大（<span class="math inline">\mathbf{H}</span> 的特征值大）的地方，函数变化剧烈，应使用<strong>较小</strong>的学习率；</li>
+<li>曲率小（<span class="math inline">\mathbf{H}</span> 的特征值小）的地方，可以使用<strong>较大</strong>的学习率。</li>
+</ul>
+<p>由此导出的<strong>牛顿法</strong>更新公式为：</p>
+<p><span class="math display">\mathbf{x}_{\text{new}} = \mathbf{x} - \mathbf{H}^{-1} \nabla f</span></p>
+<p>对比梯度下降法：</p>
+<p><span class="math display">\mathbf{x}_{\text{new}} = \mathbf{x} - \eta \nabla f</span></p>
+<p>虽然牛顿法利用了曲率信息，理论上收敛更快，但在深度学习中<strong>极少直接使用</strong>，原因在于：</p>
+<ol type="1">
+<li>参数维度巨大，Hessian 矩阵的存储和求逆计算量不可接受；</li>
+<li>深度学习中的损失函数高度非凸，Hessian 可能不正定。</li>
+</ol>
+<p>此处加一个正定矩阵的定义:正定矩阵是指对任意非零向量<span class="math inline">x</span>，满足<span class="math inline">x^T A x &gt; 0</span>的实对称矩阵或Hermite矩阵。即特征值全部为正.</p>
+<p>Hessian 不正定 = 局部不是”碗”而是”马鞍”或”倒碗”。牛顿法依赖”碗”的形状来计算最优步长，一旦形状不对，它就可能把你带向山顶或悬崖。</p>
+<blockquote class="blockquote">
+<p><strong>注</strong>：现代深度学习中的二阶方法（如 L-BFGS、自然梯度等）都是对完整 Hessian 的近似，而非直接计算。</p>
+</blockquote>
+</section>
+<section id="矩阵微积分深度学习的核心语言" class="level2">
+<h2 class="anchored" data-anchor-id="矩阵微积分深度学习的核心语言">矩阵微积分：深度学习的核心语言</h2>
+<p>矩阵运算在深度学习中占据核心地位。将标量微积分推广到向量和矩阵，是高效计算网络梯度的关键。</p>
+<p>在矩阵微积分中，求导结果的布局有两种约定：<strong>分子布局</strong>（Numerator Layout）和<strong>分母布局</strong>（Denominator Layout）。在深度学习文献中，通常采用<strong>分母布局</strong>（也称为 Hessian 约定），其规则是：</p>
+<blockquote class="blockquote">
+<p>若标量 <span class="math inline">f</span> 对列向量 <span class="math inline">\mathbf{x}</span> 求导，结果是与 <span class="math inline">\mathbf{x}</span> 同维度的列向量。</p>
+</blockquote>
+<p><span class="math display">\frac{\partial f}{\partial \mathbf{x}} = \begin{bmatrix} \frac{\partial f}{\partial x_1} \\ \frac{\partial f}{\partial x_2} \\ \vdots \\ \frac{\partial f}{\partial x_n} \end{bmatrix}</span></p>
+<p>我们下面对一些经典案例进行一些分析:</p>
+<ol type="1">
+<li>线性型</li>
+</ol>
+<p>设列向量 <span class="math inline">\boldsymbol{\beta}, \mathbf{x} \in \mathbb{R}^n</span>，函数 <span class="math inline">f(\mathbf{x}) = \boldsymbol{\beta}^\top \mathbf{x}</span> 是一个标量（点积）。</p>
+<p>逐分量求导： <span class="math display">\frac{\partial f}{\partial x_i} = \beta_i</span></p>
+<p>因此： <span class="math display">\frac{\partial}{\partial \mathbf{x}} (\boldsymbol{\beta}^\top \mathbf{x})=\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^T \boldsymbol{\beta})= \boldsymbol{\beta}</span></p>
+<p>这是一个极其常用的基础公式。</p>
+<ol start="2" type="1">
+<li>二次型</li>
+</ol>
+<p>设 <span class="math inline">\mathbf{x} \in \mathbb{R}^n</span>，方阵 <span class="math inline">\mathbf{A} \in \mathbb{R}^{n \times n}</span>，考虑二次型： <span class="math display">y = \mathbf{x}^\top \mathbf{A} \mathbf{x} = \sum_{i=1}^n \sum_{j=1}^n A_{ij} x_i x_j</span></p>
+<p>利用 Einstein 求和约定或逐分量求导，对 <span class="math inline">x_k</span> 求偏导： <span class="math display">\frac{\partial y}{\partial x_k} = \sum_j A_{kj} x_j + \sum_i A_{ik} x_i</span></p>
+<p>写成向量形式： <span class="math display">\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top \mathbf{A} \mathbf{x}) = (\mathbf{A} + \mathbf{A}^\top)\mathbf{x}</span></p>
+<p>特别地，若 <span class="math inline">\mathbf{A}</span> 为对称矩阵（<span class="math inline">\mathbf{A}^\top = \mathbf{A}</span>），则： <span class="math display">\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top \mathbf{A} \mathbf{x}) = 2\mathbf{A}\mathbf{x}</span></p>
+<ol start="3" type="1">
+<li>矩阵分解中的梯度</li>
+</ol>
+<p>设 <span class="math inline">\mathbf{X} \in \mathbb{R}^{n \times m}</span>，<span class="math inline">\mathbf{U} \in \mathbb{R}^{n \times r}</span>，<span class="math inline">\mathbf{V} \in \mathbb{R}^{r \times m}</span>，考虑 Frobenius 范数损失： <span class="math display">L = \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_F^2</span></p>
+<p><strong>直觉推导</strong>：先考虑一维情形，设均为标量 <span class="math inline">x, u, v</span>，则 <span class="math display">\frac{d}{dv}(x - uv)^2 = 2(x - uv) \cdot (-u)</span></p>
+<p>推广到矩阵情形，结果应与 <span class="math inline">\mathbf{V}</span> 同维（<span class="math inline">r \times m</span>）。通过维度分析：</p>
+<ul>
+<li><span class="math inline">\mathbf{X} - \mathbf{U}\mathbf{V}</span> 是 <span class="math inline">n \times m</span></li>
+<li><span class="math inline">\mathbf{U}^\top</span> 是 <span class="math inline">r \times n</span></li>
+<li>因此 <span class="math inline">\mathbf{U}^\top(\mathbf{X} - \mathbf{U}\mathbf{V})</span> 是 <span class="math inline">r \times m</span>，与 <span class="math inline">\mathbf{V}</span> 匹配</li>
+</ul>
+<p>故： <span class="math display">\frac{\partial L}{\partial \mathbf{V}} = -2\mathbf{U}^\top (\mathbf{X} - \mathbf{U}\mathbf{V})</span></p>
+<blockquote class="blockquote">
+<p><strong>维度一致性检查</strong>是矩阵求导中最可靠的”验算”手段。</p>
+</blockquote>
+<p>如在标准线性层中，设 <span class="math inline">\mathbf{Y} = \mathbf{W}\mathbf{X}</span>，损失为 <span class="math inline">L(\mathbf{Y})</span>。则：</p>
+<p><span class="math display">\frac{\partial L}{\partial \mathbf{W}} = \frac{\partial L}{\partial \mathbf{Y}} \cdot \mathbf{X}^\top</span></p>
+<p>这里的 <span class="math inline">\mathbf{X}^\top</span> 出现，正是为了保证维度匹配（<span class="math inline">\frac{\partial L}{\partial \mathbf{Y}}</span> 与 <span class="math inline">\mathbf{Y}</span> 同维，右乘 <span class="math inline">\mathbf{X}^\top</span> 后得到与 <span class="math inline">\mathbf{W}</span> 同维的结果）。</p>
+<p>假设<span class="math inline">\mathbf{X}</span>的尺寸为<span class="math inline">b×c</span>,<span class="math inline">\mathbf{W}</span>的尺寸为<span class="math inline">a×b</span>,则<span class="math inline">\mathbf{Y}</span>的尺寸为<span class="math inline">a×c</span>,根据前文所说,我们要求求导出来的右侧这个尺寸应当为<span class="math inline">c×b</span>且要么是<span class="math inline">\mathbf{X}</span>要么是<span class="math inline">\mathbf{X}^\top</span>,故我们可以得到结果为<span class="math inline">\mathbf{X}^\top</span></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script>

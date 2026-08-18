@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明">
 
-<title>Blog – N1ngYan</title>
+<title>多元微积分(1) – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -35,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -74,35 +73,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "搜索"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
@@ -170,7 +140,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../blog/index.html" aria-current="page"> 
+    <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -213,21 +183,44 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">分类</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">全部 <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Q2FsY3VsdXM=">Calculus <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWlnZW4lMjBkZWNvbXBvc2l0aW9u">Eigen decomposition <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SGFybmVzcw==">Harness <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGluZWFyLWFsZ2VicmE=">linear-algebra <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWF0aGVtYXRpY3M=">mathematics <span class="quarto-category-count">(6)</span></div><div class="category" data-category="bnVtcHk=">numpy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#高维微分" id="toc-高维微分" class="nav-link active" data-scroll-target="#高维微分">高维微分</a></li>
+  <li><a href="#梯度的几何意义与梯度下降" id="toc-梯度的几何意义与梯度下降" class="nav-link" data-scroll-target="#梯度的几何意义与梯度下降">梯度的几何意义与梯度下降</a></li>
+  <li><a href="#优化问题的数学说明" id="toc-优化问题的数学说明" class="nav-link" data-scroll-target="#优化问题的数学说明">优化问题的数学说明</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
+<h1 class="title">多元微积分(1)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">mathematics</div>
+    <div class="quarto-category">Calculus</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月18日</p>
+    </div>
+  </div>
   
     
   </div>
@@ -237,208 +230,51 @@ window.Quarto = {
 </header>
 
 
-<p>Recent blog posts and learning notes.</p>
+<section id="高维微分" class="level2">
+<h2 class="anchored" data-anchor-id="高维微分">高维微分</h2>
+<p>对于现代神经网络而言，我们前面所说的单变量以及不够用了。模型通常包括上亿个可训练参数，我们将这些参数记为一个<span class="math inline">N</span>维向量： <span class="math display">\pmb{w}=(w_1, w_2,···, w_N)^T</span> 网络的损失函数则是这些参数的多元标量函数： <span class="math display">L(\pmb{w})=L(w_1, w_2,···, w_N)</span></p>
+<p>当我们想要变动其中的一个参数<span class="math inline">w_i</span>，而其他参数保持不变的时候，损失函数的变化与<strong>单变量微积分</strong>中的情形并无本质区别。 <span class="math display">L(w_1, w_2,···, w_i+\epsilon_i,···, w_N)=L(w_1, w_2,···, w_N)+\epsilon_i \frac{\partial L}{\partial w_i}</span></p>
+<p>这里的<span class="math inline">\frac{\partial L}{\partial w_i}</span>称为<span class="math inline">L</span>对<span class="math inline">w_i</span>的<strong>偏导数</strong>，计算的时候，只需要把别的参数都当作常数，对<span class="math inline">w_i</span>求导即可。</p>
+<p>实例：设<span class="math inline">L(x, y)=x^2+3xy+y^2</span>，则 <span class="math display">\frac{\partial L}{\partial x}=2x+3y, \frac{\partial L}{\partial y}=2y+3x</span></p>
+<p>当你变化同时变化两个参数的时候，如下图： <img src="./imgs/17.png" class="img-fluid"> 式子的最后一部分，因为他是两个无穷小量相乘，我们直接省略。</p>
+<p>我们通过这个例子可以得出，当我们同时改变多个参数时，设增量向量为$ =(_1, _2,…, _N)^T$,则损失函数的一阶近似为： <span class="math display">L(\pmb{w}+\pmb{\varepsilon})≈L(\pmb{w})+\sum_{i=1}^{N}\varepsilon_i\frac{\partial L}{\partial w_i}</span></p>
+<p>将所有的偏导数也组织成一个列向量，即<strong>梯度向量</strong>(Gradient): <span class="math display">\nabla_{\pmb{w}}L=[\frac{\partial L}{\partial w_1}, \frac{\partial L}{\partial w_2},...,\frac{\partial L}{\partial w_n}]^T</span></p>
+<p>于是上述展开式可以简洁的写为向量点积形式： <span class="math display">L(\pmb{w}+\pmb{\varepsilon})≈L(\pmb{w})+\pmb{\varepsilon}^T\nabla_{\pmb{w}}L</span></p>
+</section>
+<section id="梯度的几何意义与梯度下降" class="level2">
+<h2 class="anchored" data-anchor-id="梯度的几何意义与梯度下降">梯度的几何意义与梯度下降</h2>
+<p>梯度下降算法最贴近生活的一个实例就是下山。假设我们在山上的某个位置，我们要如何走才能最快到达山底呢？答案很显然，沿着山腰最陡峭的方向向下走。</p>
+<p>具体方法步骤如下：确定自己所在的地方，查看并找到四周最陡峭的方向，朝那个陡峭的方向下山一定距离(learning rate)，看是否到达山底，如果没有到达则回到查看自己位置这一步，否则到达山底，任务结束。</p>
+<p>梯度下降算法实际上和上面的爬山很类似了，我们可以把山体想象成一个三维空间平面，它就是我们要最优化的一个多元函数，我们的目的就是找到函数的最小值，即所谓的山底。上述的下山流程和梯度下降算法也是基本一致的，那个最陡峭的方向实际上就是函数的负梯度方向，因为梯度是函数变化最快的方向，沿着梯度向量的方向会使函数易于找到最大值，反之，沿负梯度方向也就能很快找到函数的最小值。</p>
+<p>从近似式<span class="math inline">L(\pmb{w}+\pmb{\varepsilon})≈L(\pmb{w})+\pmb{\varepsilon}^T\nabla_{\pmb{w}}L</span>可以看出： - 若<span class="math inline">\pmb{\varepsilon}^T\nabla_{\pmb{w}}L&gt;0</span>，损失函数值增加； - 若<span class="math inline">\pmb{\varepsilon}^T\nabla_{\pmb{w}}L&lt;0</span>，损失函数值减小。</p>
+<p>这就引导出了神经网络训练中最核心的更新规则–<strong>梯度下降法</strong>： <span class="math display">\pmb{w}\leftarrow\pmb{w}-\eta\nabla_{\pmb{w}}L</span> 其中的<span class="math inline">\eta</span>被称为学习率(Lr,Learing rate), 控制每一步的更新的步长。<span class="math inline">\nabla_{\pmb{w}}L</span>则是控制更新的方向</p>
+<p>我们说了这么多，那为什么我们选择梯度的方向呢？为什么这个方向就是最陡的呢？</p>
+<p>假设我们沿某一个方向<span class="math inline">\pmb{v}</span>移动步长<span class="math inline">\varepsilon</span>(即<span class="math inline">\pmb{\varepsilon}=\varepsilon\pmb{v}</span>，且<span class="math inline">||v||=1</span>),则： <span class="math display">L(\pmb{w}+\varepsilon\pmb{v})≈L(\pmb{w})+\varepsilon·\pmb{v}^T\nabla L=L(\pmb{w})+\varepsilon||\nabla L||\cos \theta</span></p>
+<p>其中，<span class="math inline">\theta</span>是方向<span class="math inline">\pmb{v}</span>与梯度<span class="math inline">\nabla L</span>的夹角，要使得损失下降的最多，需要使<span class="math inline">\cos \theta=-1</span>，即<span class="math inline">\pmb{v}</span>与<span class="math inline">\nabla L</span>的<strong>方向完全相反</strong>，这就是为什么梯度前面是负号的原因。</p>
+<p>直观理解：梯度<span class="math inline">\nabla L</span>指向损失函数增长最快的方向，因此梯度下降就是反着走——每沿负梯度方向走一步，损失就变小一点。</p>
+<p>故我们可以总结一下梯度下降法的流程： 1. 随机初始化<span class="math inline">\pmb{w}</span>; 2. 计算梯度<span class="math inline">\nabla_{\pmb{w}}L</span>; 3. 更新参数<span class="math inline">\pmb{w}\leftarrow\pmb{w}-\eta\nabla_{\pmb{w}}L</span>; 4. 重复2-3步，直至收敛。</p>
+<p>从数学上证明了：神经网络训练时，只需计算每个权重的偏导数，然后沿负梯度方向更新所有权重即可。我们就可以降低训练集上的<span class="math inline">Loss</span>值，只是快慢问题罢了。</p>
+</section>
+<section id="优化问题的数学说明" class="level2">
+<h2 class="anchored" data-anchor-id="优化问题的数学说明">优化问题的数学说明</h2>
+<p>优化问题的数学表述是：给定函数 <span class="math inline">L(\mathbf{x})</span>，寻找 <span class="math inline">\mathbf{x}^*</span> 使得 <span class="math inline">L(\mathbf{x})</span> 达到最大或最小。</p>
+<p>在简单问题中，我们可以通过求导并令导数为零来得到<strong>解析解</strong>。例如：</p>
+<p><span class="math display">f(x) = x^2 - 4x + 3 \Rightarrow f'(x) = 2x - 4 = 0 \Rightarrow x = 2</span></p>
+<p>但在深度神经网络中，参数维度极高，损失函数极为复杂，<strong>不可能写出解析表达式</strong>。因此，我们只能依赖<strong>数值优化</strong>方法——通过迭代不断更新参数，逐步逼近最优解。例如我们前面介绍的梯度下降法。</p>
+<p>下面介绍几种特殊点：</p>
+<p>令梯度为零的点称为<strong>临界点</strong>（Critical Point）或<strong>驻点</strong>（Stationary Point）：</p>
+<p><span class="math display">\nabla L(\mathbf{x}) = \mathbf{0}</span></p>
+<p>临界点只是可能的极值点，并不一定是全局最优。在高维非凸优化中，我们更常遇到的是：</p>
+<ul>
+<li><strong>局部极小值</strong>（Local Minimum）：在该点附近损失最小，但不是全局最小；</li>
+<li><strong>鞍点</strong>（Saddle Point）：梯度为零，但沿某些方向损失增加，沿另一些方向损失减小。</li>
+</ul>
+<p>鞍点的存在是深度神经网络训练中的核心挑战之一，这也是为什么在实际训练中，仅仅找到梯度为零的点是不够的。</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787040538600" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="86">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Multivariable_Calculus_1.html" class="no-external">多元微积分(1)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Multivariable_Calculus_1.html" class="no-external">
-<p>介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Multivariable_Calculus_1.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787048965039" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="419">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Multivariable_Calculus_2.html" class="no-external">多元微积分(2)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Multivariable_Calculus_2.html" class="no-external">
-<p>介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Multivariable_Calculus_2.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787027357259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Single_Variable_Calculus.html" class="no-external">单变量微积分</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Single_Variable_Calculus.html" class="no-external">
-<p>简单介绍了微分学的作用，以及一些基础的运算规则，并介绍了高阶导数与泰勒展开公式</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Single_Variable_Calculus.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="SGFybmVzcw==" data-listing-date-sort="1786809600000" data-listing-file-modified-sort="1787021194889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="230">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Deepseek_Harness.html" class="no-external">Deepseek Harness 安装教程</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('SGFybmVzcw=='); return false;">Harness</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Deepseek_Harness.html" class="no-external">
-<p>Deepseek Harness 安装教程 + 插件安装方法</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Deepseek_Harness.html" class="no-external">
-<div class="listing-date">
-2026年8月16日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="bWF0aGVtYXRpY3MlMkNFaWdlbiUyMGRlY29tcG9zaXRpb24=" data-listing-date-sort="1786723200000" data-listing-file-modified-sort="1786882539092" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="384">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Eigen decomposition.html" class="no-external">特征分解</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RWlnZW4lMjBkZWNvbXBvc2l0aW9u'); return false;">Eigen decomposition</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Eigen decomposition.html" class="no-external">
-<p>进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Eigen decomposition.html" class="no-external">
-<div class="listing-date">
-2026年8月15日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782136368" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="77">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">(1)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<p>线性代数与几何的基础概念，包括向量、矩阵、线性变换等。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782148330" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="184">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">(2)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<p>线性代数与几何的进阶内容。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="Y29kZSUyQ251bXB5JTJDcHl0aG9u" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786780561762" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Numpy_learning.html" class="no-external">NumPy学习笔记</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bnVtcHk='); return false;">numpy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Numpy_learning.html" class="no-external">
-<p>NumPy基础操作、数组运算、广播机制等核心功能的学习记录。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Numpy_learning.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">无匹配项</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script>
 // 主题切换逻辑
 (function() {
@@ -766,6 +602,57 @@ window.Quarto = {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
