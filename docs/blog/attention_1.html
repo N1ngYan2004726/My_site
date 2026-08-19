@@ -240,9 +240,7 @@ window.Quarto = {
   <li><a href="#注意力权重可视化" id="toc-注意力权重可视化" class="nav-link" data-scroll-target="#注意力权重可视化">注意力权重可视化</a></li>
   <li><a href="#注意力汇聚nadaraya-watson-核回归" id="toc-注意力汇聚nadaraya-watson-核回归" class="nav-link" data-scroll-target="#注意力汇聚nadaraya-watson-核回归">注意力汇聚：Nadaraya-Watson 核回归</a></li>
   <li><a href="#批量矩阵乘法" id="toc-批量矩阵乘法" class="nav-link" data-scroll-target="#批量矩阵乘法">批量矩阵乘法</a></li>
-  </ul></li>
-  <li><a href="#定义模型" id="toc-定义模型" class="nav-link" data-scroll-target="#定义模型">定义模型</a>
-  <ul class="collapse">
+  <li><a href="#定义模型" id="toc-定义模型" class="nav-link" data-scroll-target="#定义模型">定义模型</a></li>
   <li><a href="#训练" id="toc-训练" class="nav-link" data-scroll-target="#训练">训练</a></li>
   <li><a href="#掩蔽softmax操作" id="toc-掩蔽softmax操作" class="nav-link" data-scroll-target="#掩蔽softmax操作">掩蔽softmax操作</a></li>
   <li><a href="#加性注意力-1" id="toc-加性注意力-1" class="nav-link" data-scroll-target="#加性注意力-1">加性注意力</a></li>
@@ -607,9 +605,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-</section>
-<section id="定义模型" class="level2">
-<h2 class="anchored" data-anchor-id="定义模型">定义模型</h2>
+<section id="定义模型" class="level3">
+<h3 class="anchored" data-anchor-id="定义模型">定义模型</h3>
 <div id="8042d63e" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>代码</summary>
@@ -644,6 +641,7 @@ window.Quarto = {
         [2, 2, 2]])</code></pre>
 </div>
 </div>
+</section>
 <section id="训练" class="level3">
 <h3 class="anchored" data-anchor-id="训练">训练</h3>
 <p>接下来，将训练数据集变换为键和值用于训练注意力模型。 在带参数的注意力汇聚模型中， 任何一个训练样本的输入都会和除自己以外的所有训练样本的“键－值”对进行计算， 从而得到其对应的预测输出。</p>
@@ -691,7 +689,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="27d49506" class="cell">
+<div id="27d49506" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># keys 形状: (n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）</span></span>
@@ -823,7 +821,7 @@ tensor([13.8725], requires_grad=True)</code></pre>
          [0.3403, 0.3771, 0.2826, 0.0000]]])</code></pre>
 </div>
 </div>
-<div id="51316150" class="cell">
+<div id="51316150" class="cell" data-execution_count="33">
 <details class="code-fold">
 <summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>masked_softmax(torch.rand(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), torch.tensor([[<span class="dv">1</span>, <span class="dv">3</span>], [<span class="dv">2</span>, <span class="dv">4</span>]])) <span class="co"># 这个是valid_lens为2D张量的形式</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
@@ -926,7 +924,7 @@ tensor([13.8725], requires_grad=True)</code></pre>
 <li><p>输出的形状为 (2, 1, 4)，表示每个查询的最终加权值（每个值有4个特征）。</p></li>
 </ul>
 <p>最终的结果的2表示为批量大小，1为query的数量，4为vlaue的特征长度。</p>
-<div id="47479dc8" class="cell">
+<div id="47479dc8" class="cell" data-execution_count="41">
 <details class="code-fold">
 <summary>代码</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>d2l.show_heatmaps(attention.attention_weights.reshape((<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">10</span>)), <span class="co"># 这边的2可以理解为Q的batch*查询的个数</span></span>
