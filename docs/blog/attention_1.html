@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="本文是基于李沐的动手学深度学习课程的一些笔记与个人见解">
+
+<title>注意力机制(1) – N1ngYan</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2f5524832805d734b96ee676820b2dda.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">N1ngYan</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks/index.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications/index.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../cv/index.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../news/index.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/N1ngYan2004726"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../#"> <i class="bi bi-circle-half" role="img" aria-label="切换主题">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#注意力机制" id="toc-注意力机制" class="nav-link active" data-scroll-target="#注意力机制">注意力机制</a>
+  <ul class="collapse">
+  <li><a href="#为什么需要注意力机制" id="toc-为什么需要注意力机制" class="nav-link" data-scroll-target="#为什么需要注意力机制">为什么需要注意力机制</a></li>
+  <li><a href="#生物学中的注意力提示" id="toc-生物学中的注意力提示" class="nav-link" data-scroll-target="#生物学中的注意力提示">生物学中的注意力提示</a></li>
+  <li><a href="#qkv" id="toc-qkv" class="nav-link" data-scroll-target="#qkv">QKV</a></li>
+  <li><a href="#非参数注意力汇聚" id="toc-非参数注意力汇聚" class="nav-link" data-scroll-target="#非参数注意力汇聚">非参数注意力汇聚</a></li>
+  <li><a href="#带参数注意力汇聚" id="toc-带参数注意力汇聚" class="nav-link" data-scroll-target="#带参数注意力汇聚">带参数注意力汇聚</a></li>
+  </ul></li>
+  <li><a href="#注意力评分机制" id="toc-注意力评分机制" class="nav-link" data-scroll-target="#注意力评分机制">注意力评分机制</a>
+  <ul class="collapse">
+  <li><a href="#加性注意力" id="toc-加性注意力" class="nav-link" data-scroll-target="#加性注意力">加性注意力</a></li>
+  <li><a href="#缩放点积注意力" id="toc-缩放点积注意力" class="nav-link" data-scroll-target="#缩放点积注意力">缩放点积注意力</a></li>
+  </ul></li>
+  <li><a href="#代码" id="toc-代码" class="nav-link" data-scroll-target="#代码">代码</a>
+  <ul class="collapse">
+  <li><a href="#注意力权重可视化" id="toc-注意力权重可视化" class="nav-link" data-scroll-target="#注意力权重可视化">注意力权重可视化</a></li>
+  <li><a href="#注意力汇聚nadaraya-watson-核回归" id="toc-注意力汇聚nadaraya-watson-核回归" class="nav-link" data-scroll-target="#注意力汇聚nadaraya-watson-核回归">注意力汇聚：Nadaraya-Watson 核回归</a></li>
+  <li><a href="#批量矩阵乘法" id="toc-批量矩阵乘法" class="nav-link" data-scroll-target="#批量矩阵乘法">批量矩阵乘法</a></li>
+  </ul></li>
+  <li><a href="#定义模型" id="toc-定义模型" class="nav-link" data-scroll-target="#定义模型">定义模型</a>
+  <ul class="collapse">
+  <li><a href="#训练" id="toc-训练" class="nav-link" data-scroll-target="#训练">训练</a></li>
+  <li><a href="#掩蔽softmax操作" id="toc-掩蔽softmax操作" class="nav-link" data-scroll-target="#掩蔽softmax操作">掩蔽softmax操作</a></li>
+  <li><a href="#加性注意力-1" id="toc-加性注意力-1" class="nav-link" data-scroll-target="#加性注意力-1">加性注意力</a></li>
+  <li><a href="#缩放点积注意力-1" id="toc-缩放点积注意力-1" class="nav-link" data-scroll-target="#缩放点积注意力-1">缩放点积注意力</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">注意力机制(1)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> 代码</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">显示所有代码</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">隐藏所有代码</a></li></ul></div></div>
+  <div class="quarto-categories">
+    <div class="quarto-category">attention</div>
+    <div class="quarto-category">Deep Learning</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    本文是基于李沐的动手学深度学习课程的一些笔记与个人见解
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月19日</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="注意力机制" class="level2">
+<h2 class="anchored" data-anchor-id="注意力机制">注意力机制</h2>
+<section id="为什么需要注意力机制" class="level3">
+<h3 class="anchored" data-anchor-id="为什么需要注意力机制">为什么需要注意力机制</h3>
+<p>与我们的传统的Seq2Seq模型有关，假如我们要做机器翻译从”I Love You”翻译成”我爱你”</p>
+<p>传统的Encoder-Decoder的想法是：</p>
+<p>把整个句子”I Love You”压缩成一个固定长度的向量： <span class="math inline">c</span>，例如假设Encoder是一个没有输出的RNN模型，有N层隐藏层， <span class="math inline">c</span>就是第N层隐藏层的最后一步的隐藏单元。</p>
+<p>然后Decoder根据这个向量与初始设定的输入，一个词一个词地生成结果”我→爱→你”</p>
+<p>但是，如果我们输入的是一串几百个词呢？我们的Encoder必须把整个句子压缩成一个固定大小的向量，这就好像你把500页的书总结出100字的句子一样，信息一定会有损失。所以我们想，为什么 Decoder 不能在生成每一个词的时候，回头看看 Encoder 的所有输出？</p>
+<p>假设 Encoder 读完整句话后，产生： <span class="math display">h_1, h_2,···，h_T</span> 每个<span class="math inline">h_i</span>对应输入序列中的一个位置。</p>
+<p>例如,<span class="math inline">I|Love|You</span>可以分为三个部分，得到了<span class="math inline">h_1,h_2,h_3</span></p>
+<p>现在Decoder要生成”我”，他可以问，我现在重点要参考Encoder里的哪几个位置？</p>
+<p>于是计算了<span class="math inline">[\alpha_1, \alpha_2, \alpha_3]</span>，比如[0.8, 0.1, 0.1]，那么新的上下文向量就是<span class="math inline">c=0.8h_1+0.1h_2+0.1h_3</span></p>
+<p>这意味着，生成第一个词的时候，主要关注第一个输入词，后面也一样。</p>
+</section>
+<section id="生物学中的注意力提示" class="level3">
+<h3 class="anchored" data-anchor-id="生物学中的注意力提示">生物学中的注意力提示</h3>
+<p>此处我们以D2L课程的举例为开始。我们先思考，注意力机制是如何应用在我们的视觉系统的呢？</p>
+<p>此处我们引出一个(two-component)的框架，在这个框架中，我们总是基于<strong>非自主提示</strong>与<strong>自主性提示</strong>有选择地引导我们的注意力的焦点。</p>
+<p>下面我们将以一个经典案例来解释这两个提示，想象一下，在你面前的桌子上有五个物品，一份报纸，一篇研究论文，一杯咖啡，一本笔记本和一本书，其中除了咖啡杯是红色以外，其他物品都是黑白颜色的。</p>
+<ol type="1">
+<li><p><strong>非自主提示</strong>是基于环境中物品本身的突出性与易见性。在上面这个案例中，显然红色的咖啡杯是最显眼的，不自主的引起人们的注意力，所以我们会把我们的注意力放到咖啡杯上。<br>
+<img src="./imgs/24.svg" class="img-fluid"></p></li>
+<li><p>当我们喝完咖啡以后，可能想要开始读书了，这时候我们就选择把我们的注意力放到书本上了，此时选择书是受到了认知和意识的影响，因此注意力是在基于<strong>自主性提示</strong>去辅助我们的选择。<br>
+<img src="./imgs/25.svg" class="img-fluid"></p></li>
+</ol>
+<p>其实，我们可以用一个非常简单的例子来建立对注意力机制的直观认识。</p>
+<p>假如现在有 5 个数字：<span class="math inline">[0.1,\ 0.2,\ 10,\ 0.3,\ 0.4]</span></p>
+<p>如果我们不对其中任何一个数字给予特殊关注，而是给它们分配相同的权重，例如都为 0.2，那么将这些数字进行加权求和：<span class="math inline">0.1\times0.2+0.2\times0.2+10\times0.2+0.3\times0.2+0.4\times0.2=2.02</span></p>
+<p>此时，每个数字获得的权重都是相同的，也就是说，我们并没有特别“关注”其中的某一个数字。</p>
+<p>但如果我们改变这些权重，例如希望最终得到的信息更多地受到 0.4 的影响，于是将 0.4 对应的权重提高到 0.96，而其余四个数字的权重分别降低到 0.01：<span class="math inline">[0.01,\ 0.01,\ 0.01,\ 0.01,\ 0.96]</span></p>
+<p>那么再次进行加权求和：<span class="math inline">0.1\times0.01+0.2\times0.01+10\times0.01+0.3\times0.01+0.4\times0.96=0.49</span>可以看到，即使原来的数字中存在一个远大于其他数字的 10，通过调整权重，我们仍然可以显著降低它对最终结果的影响，同时让结果更多地受到 0.4 的影响。</p>
+<p>这就是理解注意力机制时一个非常重要的直觉：我们可以通过给不同的信息分配不同的权重，来控制不同信息对最终结果的影响程度。权重越高的信息，就越受到“关注”。注意力就是给不同信息分配不同权重，然后做加权平均</p>
+<p>当然，在真正的注意力机制中，这些权重通常并不是由我们手动指定的，而是由模型根据当前任务以及不同信息之间的相关性自动计算出来的。这里的例子只是帮助我们先建立一个直观认识：所谓“注意力”，可以理解为让模型学会把有限的关注分配给不同的信息。</p>
+</section>
+<section id="qkv" class="level3">
+<h3 class="anchored" data-anchor-id="qkv">QKV</h3>
+<p>下面我们将讲解一下,是如何基于人类的注意力系统,用深度学习来设计注意力机制的框架.</p>
+<p>之前学习的卷积、全连接、池化层都只考虑“不随意线索”.</p>
+<p>注意力机制则考虑“随意线索”，随意线索被称之为查询(query)，也就是当前需要处理的任务（如翻译中的目标词）。每个输入是一个值(value)和不随意线索(key)的对，通过注意力池化层来有偏向性的选择选择某些输入。而key就代表输入数据的特征表示（如源语言词的编码），Value通常与Key相同，是实际用于生成输出的信息。注意力权重通过Query和Key的相似度计算，然后加权求和Value得到输出。<br>
+<img src="./imgs/26.svg" class="img-fluid"></p>
+<p>如何理解QKV呢?</p>
+首先,我们假设我们有3个key-value对:
+<div data-align="center">
+<p><img src="./imgs/27.png" width="400" height="300"></p>
+</div>
+<p>假设存在一个q=57,我们想要知道他应该的体重是多少,我们会怎么求?</p>
+<p>按照常理来说,由于57是56与58的中间值,故会觉得,体重应当也为<span class="math inline">v_2</span>与<span class="math inline">v_3</span>的中间值,即<span class="math inline">43\times0.5+48\times0.5=45.5</span>,但是这种情况下,我们好像没有给<span class="math inline">v_1</span>注意力权重了.这显然是不适合的.这边先引出注意力权重,其即为与值相乘的选中,累加后为我们的输入.不是我们人为选择离 57 最近的两个点，而是让所有 Value 都参与，通过注意力权重自动让不相关的信息贡献趋近于零。</p>
+<p>此时我们要思考,那我们应该怎么分配注意力权重呢?</p>
+<p>假设用<span class="math inline">\alpha(q, k_i)</span>来表示<span class="math inline">q</span>与<span class="math inline">k</span>对应的注意力权重,则体重预测值f(q)为: <span class="math display">f(q)=\alpha(q, k_1)v_1+\alpha(q, k_2)v_2+\alpha(q, k_3)v_3=\sum_{i=1}^3\alpha(q, k_i)v_i</span></p>
+<p><span class="math inline">\alpha</span>是能任意刻画相关性的函数,但是需要归一化,我们以高斯核(注意力分数)为例(包括softmax函数),注意力分数主要是帮助我们衡量两者的匹配程度,<span class="math inline">softmax</span>是负责把所有匹配分数归一化成权重.</p>
+<div data-align="center">
+<p><img src="./imgs/28.png" width="800" height="300"></p>
+</div>
+<p>其中的<span class="math inline">\sum_{i=1}^3\alpha(q, k_i)=1</span> ,我们可以把此处的求解<span class="math inline">f(57)</span>的过程,理解为我们上一部分结尾的举例.</p>
+<p>通过这种方式我们就可以得到体重的估计值,这也就是注意力机制.</p>
+<p>如果出现更高维的情况呢?如下图: <img src="./imgs/29.png" class="img-fluid"></p>
+<p>根据我们前面提到的<span class="math inline">\alpha(q, k_i)=softmax (a(q, k_i))</span>,其中的<span class="math inline">\alpha(q, k_i)</span>为注意力权重,而<span class="math inline">a(q, k_i)</span>是注意力分数,我们想要求得前者,就必须先求得后者,我们前面提过一种高斯核的方式,下面我们会介绍更常见的一些方式:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>注意力模型</th>
+<th>注意力分数函数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>加性模型</td>
+<td><span class="math inline">a(q,k_i)=v^T\tanh(W_k k_i + W_q q)</span></td>
+</tr>
+<tr class="even">
+<td>点积模型</td>
+<td><span class="math inline">a(q,k_i)=qk_i^T</span></td>
+</tr>
+<tr class="odd">
+<td>缩放点积模型</td>
+<td><span class="math inline">a(q,k_i)=\dfrac{qk_i^T}{\sqrt{d}}</span></td>
+</tr>
+</tbody>
+</table>
+<p>我们以点积模型为例: <span class="math display">\alpha(q_1, k_1)=softmax(q_1k_1^T)</span> 后面的也是一致,我们就不再赘述</p>
+<p>为了方便,我们可以用如下的矩阵来表示: <img src="./imgs/30.png" class="img-fluid"></p>
+<p>这个被称为缩放点积注意力模型</p>
+<p>假设有很多个query，即<span class="math inline">Q \in R^{n_q\times d}</span>，多个key，即<span class="math inline">K \in R^{n_k\times d}</span>，多个value，即<span class="math inline">V \in R^{n_k\times d_v}</span></p>
+<p>可以看出来，<span class="math inline">Q</span>与<span class="math inline">K</span>的特征维度是一致长度的，<span class="math inline">K</span>与<span class="math inline">V</span>的样本长度是一样的长度。</p>
+<p>我们可以看出，<span class="math inline">\frac{QK^T}{\sqrt{d}}</span>是一个形状为<span class="math inline">(n_q \times n_k)</span>的矩阵，是注意力分数矩阵，然后对其每一行做softmax，再与<span class="math inline">V</span>相乘。</p>
+</section>
+<section id="非参数注意力汇聚" class="level3">
+<h3 class="anchored" data-anchor-id="非参数注意力汇聚">非参数注意力汇聚</h3>
+<p>此处内容其实前面已经讲的差不多了，最简单的就是平均池化汇聚： <span class="math display">f(x)=\frac{1}{n}\sum_i y_i</span> 更好一些的就是Nadaraya-Waston核回归： <span class="math display">f(x)=\sum_{i=1}^n \frac{K(x-x_i)}{\sum_{j=1}^n K(x-x_j)} y_j</span> 其中的<span class="math inline">K</span>被称为核，例如我们前面提到的高斯核就是其中一种<span class="math inline">K(u)=\frac{1}{\sqrt{2\pi}}exp(-\frac{u^2}{2})</span></p>
+<p>这种方法是没有参数的，只要查询<span class="math inline">x</span>与键值对<span class="math inline">(x_i,y_i)</span>相同，算出来的结果都是一样的。</p>
+</section>
+<section id="带参数注意力汇聚" class="level3">
+<h3 class="anchored" data-anchor-id="带参数注意力汇聚">带参数注意力汇聚</h3>
+<p>在下面的查询<span class="math inline">x</span>和键<span class="math inline">x_i</span>之间的距离乘以可学习参数<span class="math inline">w</span>（标量）：</p>
+<p><span class="math display">\begin{aligned}f(x) &amp;= \sum_{i=1}^n \alpha(x, x_i) y_i \\&amp;= \sum_{i=1}^n \frac{\exp\left(-\frac{1}{2}((x - x_i)w)^2\right)}{\sum_{j=1}^n \exp\left(-\frac{1}{2}((x - x_j)w)^2\right)} y_i \\&amp;= \sum_{i=1}^n \mathrm{softmax}\left(-\frac{1}{2}((x - x_i)w)^2\right) y_i\end{aligned}</span></p>
+<p>注：模型中的可训练参数<span class="math inline">w</span>是 <strong>标量</strong> 而非向量，用于调节核的宽度或“敏感度”。</p>
+</section>
+</section>
+<section id="注意力评分机制" class="level2">
+<h2 class="anchored" data-anchor-id="注意力评分机制">注意力评分机制</h2>
+前面使用了高斯核来对查询与键之间的关系建模：
+<div data-align="center">
+<p><img src="./imgs/28.png" width="800" height="300"></p>
+</div>
+<p>图中的高斯核指数部分(红色部分)可以视为<em>注意力评分函数</em>（attention scoring function），简称<em>评分函数</em>（scoring function），然后把这个函数的输出结果输入到softmax函数中进行运算。通过上述步骤，将得到与键对应的值的概率分布（即注意力权重，橙色部分）。最后，注意力汇聚的输出就是基于这些注意力权重的值的加权和。</p>
+<p>下图说明了如何将注意力汇聚的输出计算成为值的加权和，其中<span class="math inline">a</span>表示注意力评分函数。由于注意力权重是概率分布，因此加权和其本质上是加权平均值。</p>
+<div data-align="center">
+<p><img src="./imgs/31.svg" width="800" height="300"></p>
+</div>
+<p>用数学语言描述，假设有一个查询 <span class="math inline">\mathbf{q} \in \mathbb{R}^q</span> 和 <span class="math inline">m</span> 个“键－值”对 <span class="math inline">(\mathbf{k}_1, \mathbf{v}_1), \ldots, (\mathbf{k}_m, \mathbf{v}_m)</span>， 其中<span class="math inline">\mathbf{k}_i \in \mathbb{R}^k</span>，<span class="math inline">\mathbf{v}_i \in \mathbb{R}^v</span>。 注意力汇聚函数<span class="math inline">f</span>就被表示成值的加权和：</p>
+<p><span class="math display">f(\mathbf{q}, (\mathbf{k}_1, \mathbf{v}_1), \ldots, (\mathbf{k}_m, \mathbf{v}_m)) = \sum_{i=1}^m \alpha(\mathbf{q}, \mathbf{k}_i) \mathbf{v}_i \in \mathbb{R}^v</span></p>
+<p>其中查询<span class="math inline">\mathbf{q}</span>和键<span class="math inline">\mathbf{k}_i</span>的注意力权重（标量） 是通过注意力评分函数<span class="math inline">a</span>将两个向量映射成标量， 再经过softmax运算得到的：</p>
+<p><span class="math display">\alpha(\mathbf{q}, \mathbf{k}_i) = \mathrm{softmax}(a(\mathbf{q}, \mathbf{k}_i)) = \frac{\exp(a(\mathbf{q}, \mathbf{k}_i))}{\sum_{j=1}^m \exp(a(\mathbf{q}, \mathbf{k}_j))} \in \mathbb{R}</span></p>
+<p>正如上图所示，选择不同的注意力评分函数<span class="math inline">a</span>会导致不同的注意力汇聚操作。 本节将介绍两个流行的评分函数，稍后将用他们来实现更复杂的注意力机制。</p>
+<section id="加性注意力" class="level3">
+<h3 class="anchored" data-anchor-id="加性注意力">加性注意力</h3>
+<p>一般来说，当查询和键是不同长度的矢量时，可以使用加性注意力作为评分函数。 给定查询 <span class="math inline">\mathbf{q} \in \mathbb{R}^q</span> 和键 <span class="math inline">\mathbf{k_i} \in \mathbb{R}^k</span>， <em>加性注意力</em>（additive attention）的评分函数为</p>
+<p><span class="math display">a(\mathbf q, \mathbf k_i) = \mathbf w_v^\top \text{tanh}(\mathbf W_q\mathbf q + \mathbf W_k \mathbf k_i) \in \mathbb{R}</span></p>
+<p>其中可学习的参数是 <span class="math inline">\mathbf W_q\in\mathbb R^{h\times q}</span>、 <span class="math inline">\mathbf W_k\in\mathbb R^{h\times k}</span> 和 <span class="math inline">\mathbf w_v\in\mathbb R^{h}</span>。 其实就是将查询和键连结起来后输入到一个多层感知机（MLP）中， 感知机包含一个隐藏层，其隐藏单元数是一个超参数 <span class="math inline">h</span>。 通过使用 <span class="math inline">\tanh</span> 作为激活函数，并且禁用偏置项。 注：<span class="math inline">a(\mathbf q, \mathbf k)</span> 是一个长度为 <span class="math inline">k</span> 的向量。</p>
+<p>其优点就是对于尺寸没有限制。</p>
+</section>
+<section id="缩放点积注意力" class="level3">
+<h3 class="anchored" data-anchor-id="缩放点积注意力">缩放点积注意力</h3>
+<p>使用点积可以得到计算效率更高的评分函数， 但是点积操作要求查询和键具有相同的长度 <span class="math inline">d</span>。 假设查询和键的所有元素都是独立的随机变量， 并且都满足零均值和单位方差， 那么两个向量的点积的均值为 <span class="math inline">0</span>，方差为 <span class="math inline">d</span>。 为确保无论向量长度如何， 点积的方差在不考虑向量长度的情况下仍然是 <span class="math inline">1</span>， 我们再将点积除以 <span class="math inline">\sqrt{d}</span>， 则<em>缩放点积注意力</em>（scaled dot-product attention）评分函数为：</p>
+<p><span class="math display">a(\mathbf q, \mathbf k) = \mathbf{q}^\top \mathbf{k}  /\sqrt{d}</span></p>
+<p>在实践中，我们通常从小批量的角度来考虑提高效率， 例如基于 <span class="math inline">n</span> 个查询和 <span class="math inline">m</span> 个键－值对计算注意力， 其中查询和键的长度为 <span class="math inline">d</span>，值的长度为 <span class="math inline">v</span>。 查询 <span class="math inline">\mathbf Q\in\mathbb R^{n\times d}</span>、 键 <span class="math inline">\mathbf K\in\mathbb R^{m\times d}</span> 和值 <span class="math inline">\mathbf V\in\mathbb R^{m\times v}</span> 的缩放点积注意力是：</p>
+<p><span class="math display">\mathrm{softmax}\left(\frac{\mathbf Q \mathbf K^\top }{\sqrt{d}}\right) \mathbf V \in \mathbb{R}^{n\times v}</span></p>
+<p>为什么要除以<span class="math inline">\sqrt{d}</span>呢？</p>
+<p>在点积注意力中，注意力得分（scores）是通过将查询（query）和键（key）的向量进行点积计算的，即： <span class="math inline">\text{scores} = Q \cdot K^\top</span>。</p>
+<p>其中，<span class="math inline">Q</span> 是查询向量，<span class="math inline">K</span> 是键向量。如果查询和键的向量维度是 <span class="math inline">d</span>，那么当 <span class="math inline">d</span> 增大时，向量的点积结果会变得越来越大。这是因为两个随机向量的点积的期望值与它们的维度 <span class="math inline">d</span> 成正比。因此，随着 <span class="math inline">d</span> 增大，点积值会变大。</p>
+<p>点积值如果过大，输入到 softmax 函数时，会导致数值不稳定。因为 softmax 会放大差异，使得较大的点积值在 softmax 输出中占据主导地位，而较小的点积会接近于零。这样会导致梯度变得非常稀疏，模型训练效果不好。</p>
+<p>当 <span class="math inline">d</span> 很大时，未经缩放的点积可能会导致注意力权重变得极端，只有少数几个键对应的权重接近 1，而其他权重接近 0。这种不平衡的注意力分布会影响梯度的流动，可能会导致<strong>梯度爆炸或消失问题</strong>，影响模型训练。因此，为了平衡这个问题，需要通过除以 <span class="math inline">\sqrt{d}</span> 来缩放点积值。</p>
+</section>
+</section>
+<section id="代码" class="level2">
+<h2 class="anchored" data-anchor-id="代码">代码</h2>
+<section id="注意力权重可视化" class="level3">
+<h3 class="anchored" data-anchor-id="注意力权重可视化">注意力权重可视化</h3>
+<div id="b0d92a59" class="cell" data-execution_count="43">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> d2l <span class="im">import</span> torch <span class="im">as</span> d2l</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>为了可视化注意力权重，我们定义了一个<code>show_heatmaps</code>的函数，其输入的形状为(要显示的行数，要显示的列数，查询的数目，键的数目)</p>
+<div id="a9e75e1f" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_heatmaps(matrices, xlabel, ylabel, titles<span class="op">=</span><span class="va">None</span>, figsize<span class="op">=</span>(<span class="fl">2.5</span>, <span class="fl">2.5</span>), cmap<span class="op">=</span><span class="st">'Reds'</span>):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""显示矩阵热图"""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    d2l.use_svg_display()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    num_rows, num_cols <span class="op">=</span> matrices.shape[<span class="dv">0</span>], matrices.shape[<span class="dv">1</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> d2l.plt.subplots(num_rows, num_cols, figsize<span class="op">=</span>figsize,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                 sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>, squeeze<span class="op">=</span><span class="va">False</span>) <span class="co"># axes表示所有子图对象。</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, (row_axes, row_matrices) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(axes, matrices)):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j, (ax, matrix) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(row_axes, row_matrices)): </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 这部分就是把第(i, j)个矩阵，画到第(i, j)个子图上。</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            pcm <span class="op">=</span> ax.imshow(matrix.detach().numpy(), cmap<span class="op">=</span>cmap)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i <span class="op">==</span> num_rows <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                ax.set_xlabel(xlabel)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> j <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                ax.set_ylabel(ylabel)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> titles:</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                ax.set_title(titles[j])</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    fig.colorbar(pcm, ax<span class="op">=</span>axes, shrink<span class="op">=</span><span class="fl">0.6</span>)<span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 下面使用一个简单的例子进行演示。在本例子中，仅当查询和键相同时，注意力权重为1，否则为0。</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># attention_weights = torch.eye(10).reshape((1, 1, 10, 10))  # torch.eye(10) 生成一个10x10的单位矩阵</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 这部分是随机生成一个$10 \times 10$矩阵并使用`softmax`运算来确保每行都是有效的概率分布，然后可视化输出注意力权重。</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>matrix <span class="op">=</span> torch.randn(<span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>attention_weights <span class="op">=</span> F.softmax(matrix, dim<span class="op">=</span><span class="dv">1</span>).reshape((<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>show_heatmaps(attention_weights, xlabel<span class="op">=</span><span class="st">'Keys'</span>, ylabel<span class="op">=</span><span class="st">'Queries'</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="注意力汇聚nadaraya-watson-核回归" class="level3">
+<h3 class="anchored" data-anchor-id="注意力汇聚nadaraya-watson-核回归">注意力汇聚：Nadaraya-Watson 核回归</h3>
+<p>简单起见，考虑下面这个回归问题： 给定的成对的“输入－输出”数据集 <span class="math inline">\{(x_1, y_1), \ldots, (x_n, y_n)\}</span>， 如何学习<span class="math inline">f</span>来预测任意新输入<span class="math inline">x</span>的输出<span class="math inline">\hat{y} = f(x)</span>？</p>
+<p>根据下面的非线性函数生成一个人工数据集， 其中加入的噪声项为<span class="math inline">\epsilon</span>：</p>
+<p><span class="math display">y_i = 2\sin(x_i) + x_i^{0.8} + \epsilon</span></p>
+<p>其中<span class="math inline">\epsilon</span>服从均值为<span class="math inline">0</span>和标准差为<span class="math inline">0.5</span>的正态分布。 在这里生成了<span class="math inline">50</span>个训练样本和<span class="math inline">50</span>个测试样本。 为了更好地可视化之后的注意力模式，需要将训练样本进行排序。</p>
+<div id="ac7ad90a" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n_train <span class="op">=</span> <span class="dv">50</span>  <span class="co"># 训练样本数</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x_train, _ <span class="op">=</span> torch.sort(torch.rand(n_train) <span class="op">*</span> <span class="dv">5</span>)   </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># * 5 的意思是从[0, 1]到[0, 5]</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 排序后的训练样本,默认升序 其中x是数据，_是每个元素在原始张量中的索引位置</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="cacb1e1e" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> torch.sin(x) <span class="op">+</span> x<span class="op">**</span><span class="fl">0.8</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> f(x_train) <span class="op">+</span> torch.normal(<span class="fl">0.0</span>, <span class="fl">0.5</span>, (n_train,))  <span class="co"># 训练样本的输出</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x_test <span class="op">=</span> torch.arange(<span class="dv">0</span>, <span class="dv">5</span>, <span class="fl">0.1</span>)  <span class="co"># 测试样本</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>y_truth <span class="op">=</span> f(x_test)  <span class="co"># 测试样本的真实输出</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>n_test <span class="op">=</span> <span class="bu">len</span>(x_test)  <span class="co"># 测试样本数</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>下面的函数将绘制所有的训练样本（样本由圆圈表示）， 不带噪声项的真实数据生成函数<span class="math inline">f</span>（标记为“Truth”）， 以及学习得到的预测函数（标记为“Pred”）。</p>
+<div id="8a5156fb" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_kernel_reg(y_hat):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    d2l.plot(x_test, [y_truth, y_hat], <span class="st">'x'</span>, <span class="st">'y'</span>, legend<span class="op">=</span>[<span class="st">'Truth'</span>, <span class="st">'Pred'</span>],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             xlim<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">5</span>], ylim<span class="op">=</span>[<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    d2l.plt.plot(x_train, y_train, <span class="st">'o'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)<span class="op">;</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="979ad896" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 我们先试试平均汇聚</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> torch.repeat_interleave(y_train.mean(), n_test) <span class="co">#这样就变成了n_test个均值了 </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plot_kernel_reg(y_hat)  <span class="co"># 注：样本由圆圈表示</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-7-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9638987b" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 基于高斯核的非参数注意力汇聚模型</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># X_repeat的形状:(n_test,n_train),</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 每一行都包含着相同的测试输入（例如：同样的查询）</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>X_repeat <span class="op">=</span> x_test.repeat_interleave(n_train).reshape((<span class="op">-</span><span class="dv">1</span>, n_train))  <span class="co"># 复制x_test，n_train次</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># x_train包含着键。attention_weights的形状：(n_test,n_train),</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 每一行都包含着要在给定的每个查询的值（y_train）之间分配的注意力权重</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>attention_weights <span class="op">=</span> F.softmax(<span class="op">-</span>(X_repeat <span class="op">-</span> x_train)<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span>, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># y_hat的每个元素都是值的加权平均值，其中的权重是注意力权重</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> torch.matmul(attention_weights, y_train)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plot_kernel_reg(y_hat)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-8-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>现在来观察注意力的权重。 这里测试数据的输入相当于查询，而训练数据的输入相当于键。</p>
+<p>因为两个输入都是经过排序的，因此由观察可知“查询-键”对越接近， 注意力汇聚的注意力权重就越高。</p>
+<p>在这里面，<span class="math inline">x_{train}</span>就是<span class="math inline">key</span>, <span class="math inline">y_{train}</span>就是<span class="math inline">value</span>, <span class="math inline">x_{test}</span>就是<span class="math inline">query</span></p>
+<div id="f70c8685" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 可视化注意力的权重，纵坐标代表 query，横坐标代表 key，颜色代表权重值</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>d2l.show_heatmaps(attention_weights.unsqueeze(<span class="dv">0</span>).unsqueeze(<span class="dv">0</span>),  <span class="co"># unsqueeze 用来在指定的位置添加一个维度（将张量的形状增加一个维度）</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                  xlabel<span class="op">=</span><span class="st">'Sorted training inputs'</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                  ylabel<span class="op">=</span><span class="st">'Sorted testing inputs'</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="批量矩阵乘法" class="level3">
+<h3 class="anchored" data-anchor-id="批量矩阵乘法">批量矩阵乘法</h3>
+<p>为了更有效地计算小批量数据的注意力， 我们可以利用深度学习开发框架中提供的批量矩阵乘法。</p>
+<p>假设第一个小批量数据包含<span class="math inline">n</span>个矩阵<span class="math inline">\mathbf{X}_1,\ldots, \mathbf{X}_n</span>， 形状为<span class="math inline">a\times b</span>， 第二个小批量包含<span class="math inline">n</span>个矩阵<span class="math inline">\mathbf{Y}_1, \ldots, \mathbf{Y}_n</span>， 形状为<span class="math inline">b\times c</span>。 它们的批量矩阵乘法得到<span class="math inline">n</span>个矩阵 <span class="math inline">\mathbf{X}_1\mathbf{Y}_1, \ldots, \mathbf{X}_n\mathbf{Y}_n</span>， 形状为<span class="math inline">a\times c</span>。 因此，假定两个张量的形状分别是<span class="math inline">(n,a,b)</span>和<span class="math inline">(n,b,c)</span>， 它们的批量矩阵乘法输出的形状为<span class="math inline">(n,a,c)</span>。</p>
+<div id="d9159ffb" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.ones((<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> torch.ones((<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># bmm - batch matrix multiplication</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>torch.bmm(X, Y).shape</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>torch.Size([2, 1, 6])</code></pre>
+</div>
+</div>
+<div id="3b6c5e6f" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> torch.ones((<span class="dv">2</span>, <span class="dv">10</span>)) <span class="op">*</span> <span class="fl">0.1</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> torch.arange(<span class="fl">20.0</span>).reshape((<span class="dv">2</span>, <span class="dv">10</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># unsqueeze 用来在指定的位置添加一个维度（将张量的形状增加一个维度）</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># weights.unsqueeze(1) -&gt; (2, 1, 10)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># values.unsqueeze(-1) -&gt; (2, 10, 1)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>torch.bmm(weights.unsqueeze(<span class="dv">1</span>), values.unsqueeze(<span class="op">-</span><span class="dv">1</span>))  <span class="co"># (2, 1, 10) * (2, 10, 1) -&gt; (2, 1, 1)</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>tensor([[[ 4.5000]],
+
+        [[14.5000]]])</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="定义模型" class="level2">
+<h2 class="anchored" data-anchor-id="定义模型">定义模型</h2>
+<div id="8042d63e" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NWKernelRegression(nn.Module):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">**</span>kwargs):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(<span class="op">**</span>kwargs)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> nn.Parameter(torch.rand((<span class="dv">1</span>,), requires_grad<span class="op">=</span><span class="va">True</span>))  <span class="co"># 模型中的可训练参数self.w 是一个标量，用于调节核的宽度或“敏感度”</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, queries, keys, values):</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># queries 和 attention_weights 的形状为 (查询个数，“键－值”对个数)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        queries <span class="op">=</span> queries.repeat_interleave(keys.shape[<span class="dv">1</span>]).reshape((<span class="op">-</span><span class="dv">1</span>, keys.shape[<span class="dv">1</span>]))  <span class="co"># 每个 query 被复制了“键－值”对个数次后 reshape</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attention_weights <span class="op">=</span> nn.functional.softmax(<span class="op">-</span>((queries <span class="op">-</span> keys) <span class="op">*</span> <span class="va">self</span>.w)<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span>, dim<span class="op">=</span><span class="dv">1</span>)  <span class="co"># dim=1 指定沿着键－值对的维度进行 softmax</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 注：self.w 是一个标量，标量 w 与向量 (queries - keys) 相乘，调整 attention_weights 的分布</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># values 的形状为 (查询个数，“键－值”对个数)</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 返回值的形状为 (查询个数, 1, 1)</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.bmm(<span class="va">self</span>.attention_weights.unsqueeze(<span class="dv">1</span>),  <span class="co"># -&gt; (查询个数, 1, 键－值对个数)</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                         values.unsqueeze(<span class="op">-</span><span class="dv">1</span>)).reshape(<span class="op">-</span><span class="dv">1</span>)  <span class="co"># -&gt; (查询个数, 键－值对个数, 1)</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>注意 queries = queries.repeat_interleave(keys.shape[1]).reshape((-1, keys.shape[1])) 的用法非常巧妙。</p>
+<p>可以将 queries 重复 keys.shape[1] 次，然后将其展平为 (-1, keys.shape[1]) 的形状，这样就可以将 queries 与 keys 按列拼接起来了。</p>
+<div id="c7480735" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 效果示例</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>queries <span class="op">=</span> torch.tensor([<span class="dv">1</span>, <span class="dv">2</span>])  <span class="co"># 假设查询个数为 2，“键－值”对个数为 3</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>queries.repeat_interleave(<span class="dv">3</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>tensor([[1, 1, 1],
+        [2, 2, 2]])</code></pre>
+</div>
+</div>
+<section id="训练" class="level3">
+<h3 class="anchored" data-anchor-id="训练">训练</h3>
+<p>接下来，将训练数据集变换为键和值用于训练注意力模型。 在带参数的注意力汇聚模型中， 任何一个训练样本的输入都会和除自己以外的所有训练样本的“键－值”对进行计算， 从而得到其对应的预测输出。</p>
+<div id="a1d52ae1" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X_tile 形状:(n_train，n_train)，每一行都包含着相同的训练输入</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>X_tile <span class="op">=</span> x_train.repeat((n_train, <span class="dv">1</span>))  <span class="co"># x_train 被重复 n_train 次</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y_tile 形状:(n_train，n_train)，每一行都包含着相同的训练输出</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>Y_tile <span class="op">=</span> y_train.repeat((n_train, <span class="dv">1</span>))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># keys 形状:('n_train'，'n_train'-1)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># torch.eye 生成单位矩阵</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 去掉对角线元素（即只保留自己之外的元素），并 reshape</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>keys <span class="op">=</span> X_tile[(<span class="dv">1</span> <span class="op">-</span> torch.eye(n_train)).<span class="bu">type</span>(torch.<span class="bu">bool</span>)].reshape((n_train, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># values 形状:('n_train'，'n_train'-1)</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> Y_tile[(<span class="dv">1</span> <span class="op">-</span> torch.eye(n_train)).<span class="bu">type</span>(torch.<span class="bu">bool</span>)].reshape((n_train, <span class="op">-</span><span class="dv">1</span>))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+上面这部分代码十分优美，我们可以做以下解释：
+<div data-align="center">
+<p><img src="./imgs/32.png" width="1000" height="600"></p>
+</div>
+<div id="f18b0d6b" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> NWKernelRegression()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> nn.MSELoss(reduction<span class="op">=</span><span class="st">'none'</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> torch.optim.SGD(net.parameters(), lr<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>animator <span class="op">=</span> d2l.Animator(xlabel<span class="op">=</span><span class="st">'epoch'</span>, ylabel<span class="op">=</span><span class="st">'loss'</span>, xlim<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">5</span>])</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    trainer.zero_grad()</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    l <span class="op">=</span> loss(net(x_train, keys, values), y_train)  <span class="co"># x_train 为查询(queries)，keys 和 values 为键值对</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    l.<span class="bu">sum</span>().backward()</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    trainer.step()</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'epoch </span><span class="sc">{</span>epoch <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">, loss </span><span class="sc">{</span><span class="bu">float</span>(l.<span class="bu">sum</span>())<span class="sc">:.6f}</span><span class="ss">'</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    animator.add(epoch <span class="op">+</span> <span class="dv">1</span>, <span class="bu">float</span>(l.<span class="bu">sum</span>()))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-15-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="27d49506" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># keys 形状: (n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>keys <span class="op">=</span> x_train.repeat((n_test, <span class="dv">1</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(keys)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># values 形状: (n_test，n_train)</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> y_train.repeat((n_test, <span class="dv">1</span>))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(values)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 在测试集上进行预测</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> net(x_test, keys, values).unsqueeze(<span class="dv">1</span>).detach()  <span class="co"># x_test 为查询(queries)，keys 和 values 为键值对</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plot_kernel_reg(y_hat)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([[0.1302, 0.2635, 0.3140,  ..., 4.7392, 4.7653, 4.7894],
+        [0.1302, 0.2635, 0.3140,  ..., 4.7392, 4.7653, 4.7894],
+        [0.1302, 0.2635, 0.3140,  ..., 4.7392, 4.7653, 4.7894],
+        ...,
+        [0.1302, 0.2635, 0.3140,  ..., 4.7392, 4.7653, 4.7894],
+        [0.1302, 0.2635, 0.3140,  ..., 4.7392, 4.7653, 4.7894],
+        [0.1302, 0.2635, 0.3140,  ..., 4.7392, 4.7653, 4.7894]])
+tensor([[0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103],
+        [0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103],
+        [0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103],
+        ...,
+        [0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103],
+        [0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103],
+        [0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103]])</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-16-output-2.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>如图所示，训练完带参数的注意力汇聚模型后可以发现： 在尝试拟合带噪声的训练数据时， 预测结果绘制的线不如之前非参数模型的平滑。</p>
+<p>为什么新的模型更不平滑了呢？ 下面看一下输出结果的绘制图： 与非参数的注意力汇聚模型相比， 带参数的模型加入可学习的参数后， 曲线在注意力权重较大的区域变得更不平滑。</p>
+<p>权重<code>attention_weights</code>变得更加集中， 是因为受到参数<span class="math inline">w</span>的影响， 即使得更高的权重集中在查询点的附近， “窗口”更窄。</p>
+<div id="e24c549d" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>d2l.show_heatmaps(net.attention_weights.unsqueeze(<span class="dv">0</span>).unsqueeze(<span class="dv">0</span>),</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                  xlabel<span class="op">=</span><span class="st">'Sorted training inputs'</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                  ylabel<span class="op">=</span><span class="st">'Sorted testing inputs'</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-17-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="b9d3e5c4" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(net.attention_weights.shape)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看可训练参数 w</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>net.w  <span class="co"># 起到了扩大查询点周围权重的作用（指数函数特性--爆炸增长）</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([50, 50])</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>Parameter containing:
+tensor([13.8725], requires_grad=True)</code></pre>
+</div>
+</div>
+</section>
+<section id="掩蔽softmax操作" class="level3">
+<h3 class="anchored" data-anchor-id="掩蔽softmax操作">掩蔽softmax操作</h3>
+<p>正如上面提到的，softmax操作用于输出一个概率分布作为注意力权重。 在某些情况下，并非所有的值都应该被纳入到注意力汇聚中。 例如，为了在在机器翻译中高效处理小批量数据集， 某些文本序列被填充了没有意义的特殊词元。 为了仅将有意义的词元作为值来获取注意力汇聚， 可以指定一个有效序列长度（即词元的个数）， 以便在计算softmax时过滤掉超出指定范围的位置。 下面的<code>masked_softmax</code>函数实现了这样的<em>掩蔽softmax操作</em>（masked softmax operation）， 其中任何超出有效长度的位置都被掩蔽并置为0。</p>
+<div id="23411a15" class="cell" data-execution_count="30">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 插播下 repeat_interleave 的效果</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>ri <span class="op">=</span> torch.tensor([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>torch.repeat_interleave(ri, <span class="dv">2</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>tensor([1, 1, 2, 2, 3, 3])</code></pre>
+</div>
+</div>
+<div id="8311b251" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 注意：是在最后一个轴（即 feature_dim）上执行掩蔽操作。</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> masked_softmax(X, valid_lens):</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""通过在最后一个轴上掩蔽元素来执行softmax操作"""</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># X: 3D 张量。(batch_size, num_steps, feature_dim) 或 (batch_size，查询的个数，“键-值”对的个数)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># X 可以理解为第 b 个样本中，第 i 个 query 对第 j 个 key 的注意力分数。</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># valid_lens: 1D 或 2D 张量。(batch_size,) 或 (batch_size, num_steps)</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> valid_lens <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> nn.functional.softmax(X, dim<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># 在最后一个维度进行 softmax 操作</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        shape <span class="op">=</span> X.shape  <span class="co"># (batch_size, num_steps, feature_dim)</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> valid_lens.dim() <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>            valid_lens <span class="op">=</span> torch.repeat_interleave(valid_lens, shape[<span class="dv">1</span>])  <span class="co"># 见上一 chunk 中 repeat_interleave 的用法示例</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 此时 valid_lens 形状为 (batch_size * num_steps,)</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            valid_lens <span class="op">=</span> valid_lens.reshape(<span class="op">-</span><span class="dv">1</span>)  <span class="co"># 展平为一维，(batch_size * num_steps,)</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 最后一轴上被掩蔽的元素使用一个非常大的负值替换，从而其 softmax 输出为 0</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> d2l.sequence_mask(X.reshape(<span class="op">-</span><span class="dv">1</span>, shape[<span class="op">-</span><span class="dv">1</span>]),  <span class="co"># 将 X 的前两维展平为一维 (batch_size * num_steps, feature_dim)</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>                              valid_lens,</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>                              value<span class="op">=-</span><span class="fl">1e6</span>)  <span class="co"># e^(-1e6) 趋近于 0</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> nn.functional.softmax(X.reshape(shape), dim<span class="op">=-</span><span class="dv">1</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>为了演示此函数是如何工作的， 考虑由两个<span class="math inline">2 \times 4</span>矩阵表示的样本， 这两个样本的有效长度分别为<span class="math inline">2</span>和<span class="math inline">3</span>。 经过掩蔽softmax操作，超出有效长度的值都被掩蔽为0。</p>
+<div id="de2343ab" class="cell" data-execution_count="32">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 对 X 的最后一个轴（feature_dim）进行掩蔽</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># X 形状可理解为 批量大小（batch_size） = 2, 查询个数（queries） = 2, 键值对个数（key_value_num） = 4</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 值的大小代表注意力权重</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>masked_softmax(torch.rand(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), torch.tensor([<span class="dv">2</span>, <span class="dv">3</span>]))</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>tensor([[[0.4015, 0.5985, 0.0000, 0.0000],
+         [0.4007, 0.5993, 0.0000, 0.0000]],
+
+        [[0.4083, 0.2767, 0.3150, 0.0000],
+         [0.3403, 0.3771, 0.2826, 0.0000]]])</code></pre>
+</div>
+</div>
+<div id="51316150" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>masked_softmax(torch.rand(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), torch.tensor([[<span class="dv">1</span>, <span class="dv">3</span>], [<span class="dv">2</span>, <span class="dv">4</span>]])) <span class="co"># 这个是valid_lens为2D张量的形式</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>tensor([[[1.0000, 0.0000, 0.0000, 0.0000],
+         [0.4124, 0.2589, 0.3287, 0.0000]],
+
+        [[0.4538, 0.5462, 0.0000, 0.0000],
+         [0.2559, 0.2787, 0.2436, 0.2218]]])</code></pre>
+</div>
+</div>
+</section>
+<section id="加性注意力-1" class="level3">
+<h3 class="anchored" data-anchor-id="加性注意力-1">加性注意力</h3>
+<div id="719173e0" class="cell" data-execution_count="35">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AdditiveAttention(nn.Module):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""加性注意力"""</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, key_size, query_size, num_hiddens, dropout, <span class="op">**</span>kwargs):</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(AdditiveAttention, <span class="va">self</span>).<span class="fu">__init__</span>(<span class="op">**</span>kwargs)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.W_k <span class="op">=</span> nn.Linear(key_size, num_hiddens, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.W_q <span class="op">=</span> nn.Linear(query_size, num_hiddens, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_v <span class="op">=</span> nn.Linear(num_hiddens, <span class="dv">1</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dropout <span class="op">=</span> nn.Dropout(dropout)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, queries, keys, values, valid_lens):</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 维度扩展前</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># queries 形状：(batch_size，查询的个数，query_size)</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># keys 形状：(batch_size，“键－值”对的个数，key_size)</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>        queries, keys <span class="op">=</span> <span class="va">self</span>.W_q(queries), <span class="va">self</span>.W_k(keys)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 在维度扩展后</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># queries 形状：(batch_size，查询的个数，1，num_hiddens)</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># key 形状：(batch_size，1，“键－值”对的个数，num_hiddens)</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 使用广播方式进行求和</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>        features <span class="op">=</span> queries.unsqueeze(<span class="dv">2</span>) <span class="op">+</span> keys.unsqueeze(<span class="dv">1</span>)  <span class="co"># (batch_size, num_queries, num_kv_pairs, num_hiddens)</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>        features <span class="op">=</span> torch.tanh(features)</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># self.w_v 仅有一个输出，因此从形状中移除最后那个维度</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># scores 形状：(batch_size，查询的个数，“键-值”对的个数)</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>        scores <span class="op">=</span> <span class="va">self</span>.w_v(features).squeeze(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 掩蔽 softmax 操作（即在 key_value_num(“键-值”对的个数) 维度上进行掩蔽）</span></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attention_weights <span class="op">=</span> masked_softmax(scores, valid_lens)</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># values 形状：(batch_size，“键－值”对的个数，值的维度)</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 返回值形状： (batch_size，查询的个数，值的维度)</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.bmm(<span class="va">self</span>.dropout(<span class="va">self</span>.attention_weights), values)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="99c92fc2" class="cell" data-execution_count="38">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># queries：2 个批次，每个批次有 1 个查询，每个查询有 20 个特征</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># keys：2 个批次，每个批次有 10 个键，每个键有 2 个特征</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>queries, keys <span class="op">=</span> torch.normal(<span class="dv">0</span>, <span class="dv">1</span>, (<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">20</span>)), torch.ones((<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">2</span>))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># values 的小批量，两个值矩阵是相同的</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> torch.arange(<span class="dv">40</span>, dtype<span class="op">=</span>torch.float32).reshape(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">4</span>).repeat(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># repeat 后得到 (2, 10, 4)</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 表示第一个批次中只有前 2 个键有效，第二个批次中前 6 个键有效</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>valid_lens <span class="op">=</span> torch.tensor([<span class="dv">2</span>, <span class="dv">6</span>])</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>attention <span class="op">=</span> AdditiveAttention(key_size<span class="op">=</span><span class="dv">2</span>, query_size<span class="op">=</span><span class="dv">20</span>, num_hiddens<span class="op">=</span><span class="dv">8</span>, dropout<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>attention.<span class="bu">eval</span>()  <span class="co"># 不会启用 dropout</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>attention(queries, keys, values, valid_lens)  <span class="co"># (batch_size, num_queries, value_size)</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>tensor([[[ 2.0000,  3.0000,  4.0000,  5.0000]],
+
+        [[10.0000, 11.0000, 12.0000, 13.0000]]], grad_fn=&lt;BmmBackward0&gt;)</code></pre>
+</div>
+</div>
+<p>上述大致运算过程如下：</p>
+<p><strong>1.线性变换：</strong></p>
+<ul>
+<li><p>queries 和 keys 分别通过线性层 <span class="math inline">W_q</span> 和 <span class="math inline">W_k</span> 投影到隐含空间维度（8个特征）。</p></li>
+<li><p>变换后的 queries 形状为 (2, 1, 8)，keys 形状为 (2, 10, 8)。</p></li>
+</ul>
+<p><strong>2.特征加法：</strong></p>
+<ul>
+<li><p>使用广播机制，将 queries 和 keys 的维度扩展后相加：</p></li>
+<li><p>queries 形状扩展为 (2, 1, 1, 8)。</p></li>
+<li><p>keys 形状扩展为 (2, 1, 10, 8)。</p></li>
+<li><p>相加后的 features 形状为 (2, 1, 10, 8)，表示每个查询和每个键之间的组合特征。</p></li>
+</ul>
+<p><strong>3.计算注意力分数：</strong></p>
+<ul>
+<li><p>features 经过 tanh 激活函数，然后通过线性层 <span class="math inline">w_v</span> 压缩为注意力分数。</p></li>
+<li><p>scores 的形状为 (2, 1, 10)，表示每个查询和每个键之间的分数。</p></li>
+</ul>
+<p><strong>4.使用 valid_lens 掩蔽无效键：</strong></p>
+<ul>
+<li>masked_softmax 函数通过 valid_lens 掩蔽无效的键，将这些位置的分数设置为非常小的值（如 -1e6），对应的 softmax 输出将会是0。</li>
+</ul>
+<p><strong>5.计算加权求和值：</strong></p>
+<ul>
+<li><p>对掩蔽后的 scores 进行 softmax，得到 attention_weights，表示注意力权重。</p></li>
+<li><p>attention_weights 形状为 (2, 1, 10)，表示每个查询对10个键的权重分布。</p></li>
+<li><p>使用 torch.bmm（批量矩阵乘法），将 attention_weights 和 values 相乘，得到加权求和值。</p></li>
+<li><p>输出的形状为 (2, 1, 4)，表示每个查询的最终加权值（每个值有4个特征）。</p></li>
+</ul>
+<p>最终的结果的2表示为批量大小，1为query的数量，4为vlaue的特征长度。</p>
+<div id="47479dc8" class="cell">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>d2l.show_heatmaps(attention.attention_weights.reshape((<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">10</span>)), <span class="co"># 这边的2可以理解为Q的batch*查询的个数</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                  xlabel<span class="op">=</span><span class="st">'Keys'</span>, ylabel<span class="op">=</span><span class="st">'Queries'</span>)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-25-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="缩放点积注意力-1" class="level3">
+<h3 class="anchored" data-anchor-id="缩放点积注意力-1">缩放点积注意力</h3>
+<div id="8ff1f52f" class="cell" data-execution_count="45">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DotProductAttention(nn.Module):</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""缩放点积注意力"""</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dropout, <span class="op">**</span>kwargs):</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(DotProductAttention, <span class="va">self</span>).<span class="fu">__init__</span>(<span class="op">**</span>kwargs)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dropout <span class="op">=</span> nn.Dropout(dropout)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># queries 形状：(batch_size，查询的个数，d)，d 是每个查询的特征维度</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># keys 形状：(batch_size，“键－值”对的个数，d)，d 是每个 key 的特征维度</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># values 形状：(batch_size，“键－值”对的个数，值的维度)</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># valid_lens 形状：(batch_size，) 或者 (batch_size，查询的个数)</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, queries, keys, values, valid_lens<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> queries.shape[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># transpose 交换 keys 的最后两个维度（转置），以便进行矩阵乘法</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>        scores <span class="op">=</span> torch.bmm(queries, keys.transpose(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="op">/</span> math.sqrt(d)</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># scores 形状：(batch_size，查询的个数，“键-值”对的个数)</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 掩蔽 softmax 操作</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 在 score 的最后一个维度 key_value_num 进行掩蔽</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.attention_weights <span class="op">=</span> masked_softmax(scores, valid_lens)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.bmm(<span class="va">self</span>.dropout(<span class="va">self</span>.attention_weights), values)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div id="8db2158b" class="cell" data-execution_count="46">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># queries：2 个批次，每个批次有 1 个查询，每个查询有 2 个特征</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>queries <span class="op">=</span> torch.normal(<span class="dv">0</span>, <span class="dv">1</span>, (<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># keys：2 个批次，每个批次有 10 个键，每个键有 2 个特征</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>keys <span class="op">=</span> torch.ones((<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">2</span>))</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>attention <span class="op">=</span> DotProductAttention(dropout<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>attention.<span class="bu">eval</span>()</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>attention(queries, keys, values, valid_lens)  <span class="co"># (batch_size, num_queries, value_size)</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre><code>tensor([[[ 2.0000,  3.0000,  4.0000,  5.0000]],
+
+        [[10.0000, 11.0000, 12.0000, 13.0000]]])</code></pre>
+</div>
+</div>
+<div id="cbd92caa" class="cell" data-execution_count="47">
+<details class="code-fold">
+<summary>代码</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>d2l.show_heatmaps(attention.attention_weights.reshape((<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">10</span>)),</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                  xlabel<span class="op">=</span><span class="st">'Keys'</span>, ylabel<span class="op">=</span><span class="st">'Queries'</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 颜色越深，注意力权重越大</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># valid_lens = torch.tensor([2, 6])；故第一个查询只有前两个key-value对具有权重，第二个查询只有前六个键值对具有权重</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="attention_1_files/figure-html/cell-28-output-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+// 主题切换逻辑
+(function() {
+  'use strict';
+  
+  const STORAGE_KEY = 'site-theme';
+  
+  function getStoredTheme() {
+    return localStorage.getItem(STORAGE_KEY);
+  }
+  
+  function setStoredTheme(theme) {
+    localStorage.setItem(STORAGE_KEY, theme);
+  }
+  
+  function getPreferredTheme() {
+    const stored = getStoredTheme();
+    if (stored) return stored;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      document.body.classList.add('quarto-dark');
+      document.body.classList.remove('quarto-light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      document.body.classList.remove('quarto-dark');
+      document.body.classList.add('quarto-light');
+    }
+  }
+  
+  // 查找主题切换按钮的多种方式
+  function findToggleButton() {
+    // 方式1: 通过图标类名查找
+    const icon = document.querySelector('i.bi-circle-half, .bi-circle-half');
+    if (icon) {
+      const btn = icon.closest('a');
+      if (btn) return btn;
+    }
+    
+    // 方式2: 通过 aria-label 查找
+    const btnByLabel = document.querySelector('[aria-label="切换主题"], [aria-label="Toggle theme"]');
+    if (btnByLabel) return btnByLabel;
+    
+    // 方式3: 通过 data-theme-toggle 属性查找
+    const btnByAttr = document.querySelector('[data-theme-toggle]');
+    if (btnByAttr) return btnByAttr;
+    
+    // 方式4: 查找导航栏中包含 circle-half 图标的链接
+    const navLinks = document.querySelectorAll('.navbar a.nav-link');
+    for (const link of navLinks) {
+      if (link.querySelector('.bi-circle-half') || link.querySelector('i[class*="circle"]')) {
+        return link;
+      }
+    }
+    
+    return null;
+  }
+  
+  // 绑定点击事件
+  function bindToggleButton() {
+    const toggleBtn = findToggleButton();
+    if (toggleBtn) {
+      toggleBtn.id = 'theme-toggle';
+      // 移除可能的默认行为
+      toggleBtn.setAttribute('href', '#');
+      
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const isDark = document.documentElement.classList.contains('dark');
+        const newTheme = isDark ? 'light' : 'dark';
+        applyTheme(newTheme);
+        setStoredTheme(newTheme);
+        // 触发自定义事件以便其他组件响应
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
+      });
+      
+      return true;
+    }
+    return false;
+  }
+  
+  // 初始化主题
+  const initialTheme = getPreferredTheme();
+  applyTheme(initialTheme);
+  setStoredTheme(initialTheme);
+  
+  // 立即尝试绑定
+  if (!bindToggleButton()) {
+    // 如果立即绑定失败，等待DOM加载完成后重试
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindToggleButton);
+    } else {
+      // 延迟一点时间后重试
+      setTimeout(bindToggleButton, 100);
+    }
+  }
+  
+  // 监听系统主题变化
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    if (!getStoredTheme()) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+})();
+</script>
+<script>
+// Listing 年份分组：将 Quarto listing 文章按年份分组，并在侧边栏添加年份导航
+(function() {
+  'use strict';
+
+  function groupListingByYear() {
+    var listing = document.querySelector('.quarto-listing');
+    if (!listing) return;
+
+    var posts = listing.querySelectorAll('.quarto-post');
+    if (posts.length === 0) return;
+
+    // 收集每个文章的年份
+    var yearGroups = {};
+    var postArray = Array.prototype.slice.call(posts);
+
+    postArray.forEach(function(post) {
+      var dateEl = post.querySelector('.listing-date, .date');
+      var dateText = dateEl ? dateEl.textContent.trim() : '';
+      var year = '';
+
+      // 尝试从日期文本中提取年份
+      var match = dateText.match(/(\d{4})/);
+      if (match) {
+        year = match[1];
+      } else {
+        // 尝试从 metadata 属性中获取
+        var meta = post.querySelector('.metadata');
+        if (meta) {
+          var metaMatch = meta.textContent.match(/(\d{4})/);
+          if (metaMatch) year = metaMatch[1];
+        }
+      }
+
+      if (!year) year = '其他';
+
+      if (!yearGroups[year]) {
+        yearGroups[year] = [];
+      }
+      yearGroups[year].push(post);
+    });
+
+    // 按年份降序排序
+    var sortedYears = Object.keys(yearGroups).sort(function(a, b) {
+      return parseInt(b) - parseInt(a);
+    });
+
+    if (sortedYears.length <= 1 && sortedYears[0] === '其他') return;
+
+    // 创建年份分组
+    var listingContainer = posts[0].parentElement;
+
+    sortedYears.forEach(function(year) {
+      var yearHeader = document.createElement('h2');
+      yearHeader.className = 'listing-year-header';
+      yearHeader.id = 'year-' + year;
+      yearHeader.textContent = year;
+      yearHeader.style.cssText = 'font-size:1.4rem;font-weight:600;color:var(--text);margin-top:2rem;margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:2px solid var(--accent-soft);';
+
+      // 在该年份的第一个文章前插入标题
+      var firstPost = yearGroups[year][0];
+      listingContainer.insertBefore(yearHeader, firstPost);
+
+      // 为该年份的所有文章添加 data-year 属性
+      yearGroups[year].forEach(function(post) {
+        post.setAttribute('data-year', year);
+      });
+    });
+
+    // 在侧边栏添加年份导航
+    var sidebar = document.querySelector('#quarto-margin-sidebar, .margin-sidebar');
+    if (sidebar) {
+      var yearNav = document.createElement('nav');
+      yearNav.className = 'listing-year-nav';
+      yearNav.innerHTML = '<h3 class="listing-year-title" style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:0.4rem;margin-bottom:0.6rem;">Years</h3>';
+
+      var yearList = document.createElement('ul');
+      yearList.style.cssText = 'list-style:none;padding-left:0;';
+
+      sortedYears.forEach(function(year) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#year-' + year;
+        a.textContent = year;
+        a.style.cssText = 'color:var(--muted);text-decoration:none;font-size:0.85rem;display:block;padding:0.2rem 0.5rem;border-radius:4px;transition:all 0.2s ease;';
+        a.addEventListener('mouseenter', function() {
+          a.style.color = 'var(--accent)';
+          a.style.background = 'var(--accent-soft)';
+        });
+        a.addEventListener('mouseleave', function() {
+          a.style.color = 'var(--muted)';
+          a.style.background = 'transparent';
+        });
+        li.appendChild(a);
+        yearList.appendChild(li);
+      });
+
+      yearNav.appendChild(yearList);
+
+      // 插入到侧边栏顶部（在分类筛选之前）
+      var firstChild = sidebar.firstElementChild;
+      if (firstChild) {
+        sidebar.insertBefore(yearNav, firstChild);
+      } else {
+        sidebar.appendChild(yearNav);
+      }
+    }
+  }
+
+  // 等待 Quarto listing 渲染完成后执行
+  function init() {
+    // 立即尝试
+    if (document.querySelector('.quarto-post')) {
+      groupListingByYear();
+      return;
+    }
+
+    // 使用 MutationObserver 等待 listing 渲染
+    var observer = new MutationObserver(function(mutations, obs) {
+      if (document.querySelector('.quarto-post')) {
+        groupListingByYear();
+        obs.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    // 超时后停止观察
+    setTimeout(function() {
+      observer.disconnect();
+      if (document.querySelector('.quarto-post') && !document.querySelector('.listing-year-header')) {
+        groupListingByYear();
+      }
+    }, 5000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2024–2026 Ning Yan</p>
+</div>   
+    <div class="nav-footer-center">
+<p>个人学习笔记站点</p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
