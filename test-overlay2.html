@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>Debug Overlay Test</title>
+<style>
+  body { margin: 0; padding: 0; background: #1a1a2e; color: #fff; font-family: sans-serif; }
+  #page-content { padding: 40px; }
+</style>
+</head>
+<body>
+<div id="page-content">
+  <h1>Page Title</h1>
+  <p>This is the page content. The overlay should be on top of this.</p>
+  <p>If you can see this paragraph, the overlay is NOT covering the page.</p>
+</div>
+
+<!-- Inline copy of the welcome overlay script for debugging -->
+<script>
+/**
+ * Handwriting Pixel Art Welcome Overlay v4.0
+ * DEBUG VERSION - with console logging
+ */
+(function() {
+  'use strict';
+
+  var SESSION_KEY = 'ny_welcomed_pixel_v4';
+  var BLOCK = 16;
+
+  var isHomePage = function() {
+    return true; // Force show for debugging
+  };
+
+  var init = function() {
+    console.log('[DEBUG] init() called');
+    
+    var o = document.createElement('div');
+    o.className = 'hw-overlay';
+    o.innerHTML =
+      '<div class="hw-bg"></div>' +
+      '<div class="hw-text-layer" id="hwTextLayer">' +
+        '<div class="hw-text-cn">你好</div>' +
+        '<div class="hw-text-en">N1ngYan</div>' +
+      '</div>' +
+      '<canvas class="hw-canvas" id="hwCanvas"></canvas>' +
+      '<button class="hw-enter" type="button" id="hwEnter">' +
+        '<span class="hw-enter-label">▶ PRESS START</span>' +
+      '</button>' +
+      '<div class="hw-hint" id="hwHint">[ CLICK OR PRESS ENTER ]</div>';
+
+    document.body.appendChild(o);
+    console.log('[DEBUG] overlay appended to body');
+    
+    document.body.style.overflow = 'hidden';
+
+    injectStyles();
+    console.log('[DEBUG] styles injected');
+    
+    setTimeout(function() { 
+      o.classList.add('hw-ready'); 
+      console.log('[DEBUG] hw-ready class added');
+    }, 30);
+    
+    loadFontsAndStart();
+
+    var btn = document.getElementById('hwEnter');
+    btn.addEventListener('click', function() { enterSite(o); });
+  };
+
+  var enterSite = function(o) {
+    if (o.classList.contains('hw-exiting')) return;
+    o.classList.add('hw-exiting');
+    document.body.style.overflow = '';
+    sessionStorage.setItem(SESSION_KEY, 'true');
+    setTimeout(function() {
+      if (o.parentNode) o.parentNode.removeChild(o);
+    }, 700);
+  };
+
+  var rafId = null;
+  var blocksData = null;
+  var canvas = null;
+  var ctx = null;
+  var W = 0, H = 0;
+
+  var loadFontsAndStart = function() {
+    console.log('[DEBUG] loadFontsAndStart()');
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Caveat:wght@700&display=swap';
+    document.head.appendChild(link);
+    console.log('[DEBUG] font link appended');
+
+    var startAfterLoad = function() {
+      if (document.fonts && document.fonts.load) {
+        Promise.all([
+          document.fonts.load('400 48px "Ma Shan Zheng"'),
+          document.fonts.load('700 48px "Caveat"')
+        ]).then(function() {
+          console.log('[DEBUG] fonts loaded');
+          setTimeout(function() {
+            try {
+              startAnim();
+            } catch(e) {
+              console.error('[DEBUG] startAnim error:', e);
+            }
+          }, 300);
+        }).catch(function() {
+          console.log('[DEBUG] font load failed, retrying');
+          setTimeout(startAnim, 2000);
+        });
+      } else {
+        console.log('[DEBUG] no font loading API, starting in 3s');
+        setTimeout(startAnim, 3000);
+      }
+    };
+    startAfterLoad();
+  };
+
+  var startAnim = function() {
+    console.log('[DEBUG] startAnim()');
+    canvas = document.getElementById('hwCanvas');
+    ctx = canvas.getContext('2d');
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+    console.log('[DEBUG] canvas:', W, 'x', H);
+
+    blocksData = buildPixelData(W, H);
+    console.log('[DEBUG] blocks:', blocksData.blocks.length, 'duration:', blocksData.totalDuration + 'ms');
+
+    runReveal();
+  };
+
+  var buildPixelData = function(W, H) {
+    var gridW = Math.floor(W / BLOCK);
+    var gridH = Math.floor(H / BLOCK);
+    var SS = 3;
+
+    var ssCanvas = document.createElement('canvas');
+    ssCanvas.width = gridW * SS;
+    ssCanvas.height = gridH * SS;
+    var ssc = ssCanvas.getContext('2d');
+
+    ssc.fillStyle = '#FFFFFF';
+    ssc.fillRect(0, 0, ssCanvas.width, ssCanvas.height);
+
+    var cnFontSz = Math.floor(gridH * 0.38) * SS;
+    var enFontSz = Math.floor(gridH * 0.32) * SS;
+    var gapSz = Math.floor(gridH * 0.05) * SS;
+
+    var totalH = cnFontSz + gapSz + enFontSz;
+    var startY = Math.floor((ssCanvas.height - totalH) / 2);
+
+    ssc.fillStyle = '#1a1a1a';
+    ssc.textAlign = 'center';
+    ssc.textBaseline = 'alphabetic';
+
+    var cx = Math.floor(ssCanvas.width / 2);
+    var cy1 = startY + Math.floor(cnFontSz * 0.85);
+    ssc.font = cnFontSz + "px 'Ma Shan Zheng','Long Cang','Zhi Mang Xing',cursive";
+    ssc.fillText('你好', cx, cy1);
+
+    var cy2 = startY + cnFontSz + gapSz + Math.floor(enFontSz * 0.85);
+    ssc.font = enFontSz + "px 'Caveat','Pacifico',cursive";
+    ssc.fillText('N1ngYan', cx, cy2);
+
+    var ssImg = ssc.getImageData(0, 0, ssCanvas.width, ssCanvas.height).data;
+    var rawBlocks = [];
+
+    for (var gy = 0; gy < gridH; gy++) {
+      for (var gx = 0; gx < gridW; gx++) {
+        var sumA = 0, count = 0;
+        var startSy = gy * SS;
+        var startSx = gx * SS;
+        for (var sy = startSy; sy < startSy + SS && sy < ssCanvas.height; sy++) {
+          for (var sx = startSx; sx < startSx + SS && sx < ssCanvas.width; sx++) {
+            var si = (sy * ssCanvas.width + sx) * 4;
+            sumA += ssImg[si + 3];
+            count++;
+          }
+        }
+        var avgA = sumA / count;
+        if (avgA > 100) {
+          rawBlocks.push({
+            lx: gx,
+            ly: gy,
+            px: gx * BLOCK,
+            py: gy * BLOCK,
+            alpha: avgA / 255
+          });
+        }
+      }
+    }
+
+    console.log('[DEBUG] raw blocks:', rawBlocks.length, 'grid:', gridW, 'x', gridH);
+
+    var groups = partitionBlocks(rawBlocks, gridW, gridH, cy1 / SS, cnFontSz / SS, cy2 / SS, enFontSz / SS);
+
+    var all = [];
+    var charStart = 0;
+
+    for (var g = 0; g < groups.length; g++) {
+      var grp = groups[g];
+      var count = grp.length;
+      if (count === 0) continue;
+
+      grp.sort(function(a, b) {
+        var colDiff = a.lx - b.lx;
+        if (Math.abs(colDiff) <= 2) {
+          return a.ly - b.ly;
+        }
+        return colDiff;
+      });
+
+      var shuffled = [];
+      var chunkSize = 6 + Math.floor(Math.random() * 6);
+      for (var i = 0; i < grp.length; i += chunkSize) {
+        var chunk = grp.slice(i, Math.min(i + chunkSize, grp.length));
+        if (Math.random() > 0.5) {
+          chunk.reverse();
+        }
+        shuffled = shuffled.concat(chunk);
+      }
+
+      var charDuration;
+      if (g === 0) {
+        charDuration = Math.max(3000, count * 3.5);
+      } else if (g === 1) {
+        charDuration = Math.max(1500, count * 2.8);
+      } else {
+        charDuration = Math.max(2500, count * 3.0);
+      }
+
+      var pauseBefore = charStart;
+      for (var j = 0; j < shuffled.length; j++) {
+        var rel = j / shuffled.length;
+        var eased = rel < 0.5
+          ? 2 * rel * rel
+          : 1 - Math.pow(-2 * rel + 2, 2) / 2;
+
+        var speedVar = 0.5 + Math.random() * 1.0;
+        var t = pauseBefore + eased * charDuration / speedVar;
+
+        shuffled[j].writeTime = t;
+        shuffled[j].color = '#1a1a1a';
+        shuffled[j].groupIdx = g;
+        all.push(shuffled[j]);
+      }
+
+      charStart = pauseBefore + charDuration + 250 + Math.random() * 200;
+    }
+
+    all.sort(function(a, b) { return a.writeTime - b.writeTime; });
+
+    return { blocks: all, totalDuration: charStart + 600 };
+  };
+
+  var partitionBlocks = function(raw, lrW, lrH, cy1, cnSz, cy2, enSz) {
+    var gCn = [], gSp = [], gEn = [];
+
+    for (var i = 0; i < raw.length; i++) {
+      var b = raw[i];
+      if (b.ly >= cy1 - cnSz && b.ly <= cy1 + cnSz * 0.5) {
+        gCn.push(b);
+      } else if (b.ly >= cy2 - enSz && b.ly <= cy2 + enSz * 0.5) {
+        gEn.push(b);
+      } else if (b.ly > cy1 + cnSz * 0.3 && b.ly < cy2 - enSz * 0.3) {
+        gSp.push(b);
+      } else {
+        if (Math.abs(b.ly - cy1) < Math.abs(b.ly - cy2)) {
+          gCn.push(b);
+        } else {
+          gEn.push(b);
+        }
+      }
+    }
+
+    return [gCn, gSp, gEn];
+  };
+
+  var runReveal = function() {
+    var blocks = blocksData.blocks;
+    var total = blocksData.totalDuration;
+    var startTs = null;
+    var lastDrawnIdx = -1;
+
+    var frame = function(ts) {
+      if (!startTs) startTs = ts;
+      var elapsed = ts - startTs;
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.imageSmoothingEnabled = false;
+
+      var currentIdx = lastDrawnIdx;
+
+      for (var i = 0; i < blocks.length; i++) {
+        if (blocks[i].writeTime <= elapsed) {
+          ctx.globalAlpha = blocks[i].alpha || 1.0;
+          ctx.fillStyle = blocks[i].color;
+          ctx.fillRect(blocks[i].px, blocks[i].py, BLOCK, BLOCK);
+          currentIdx = i;
+        } else {
+          break;
+        }
+      }
+      ctx.globalAlpha = 1.0;
+
+      lastDrawnIdx = currentIdx;
+
+      if (elapsed < total) {
+        rafId = requestAnimationFrame(frame);
+      } else {
+        showEnterButton();
+      }
+    };
+
+    rafId = requestAnimationFrame(frame);
+  };
+
+  var showEnterButton = function() {
+    var btn = document.getElementById('hwEnter');
+    var hint = document.getElementById('hwHint');
+    var textLayer = document.getElementById('hwTextLayer');
+    btn.classList.add('hw-visible');
+    hint.classList.add('hw-visible');
+    if (textLayer) {
+      textLayer.style.transition = 'opacity 0.8s ease-out';
+      textLayer.style.opacity = '0.5';
+    }
+  };
+
+  var injectStyles = function() {
+    if (document.getElementById('hw-welcome-styles')) return;
+
+    var s = document.createElement('style');
+    s.id = 'hw-welcome-styles';
+    s.textContent = [
+      '.hw-overlay{',
+      'position:fixed;inset:0;z-index:9998;',
+      'display:flex;align-items:center;justify-content:center;',
+      'background:#FFFFFF;',
+      'opacity:0;transition:opacity 0.4s steps(4);',
+      '}',
+      '.hw-overlay.hw-ready{opacity:1;}',
+      '.hw-overlay.hw-exiting{',
+      'opacity:0;transition:opacity 0.6s steps(6);',
+      'pointer-events:none;',
+      '}',
+      '.hw-bg{',
+      'position:absolute;inset:0;',
+      'background:#FFFFFF;',
+      '}',
+      '.hw-text-layer{',
+      'position:absolute;inset:0;',
+      'display:flex;flex-direction:column;',
+      'align-items:center;justify-content:center;',
+      'z-index:1;',
+      'pointer-events:none;',
+      '}',
+      '.hw-text-cn{',
+      'font-family:"Ma Shan Zheng","Long Cang","Zhi Mang Xing",cursive;',
+      'font-size:28vh;',
+      'color:#1a1a1a;',
+      'line-height:1;',
+      'margin-bottom:1.5vh;',
+      'text-align:center;',
+      '}',
+      '.hw-text-en{',
+      'font-family:"Caveat","Pacifico",cursive;',
+      'font-size:24vh;',
+      'color:#1a1a1a;',
+      'line-height:1;',
+      'text-align:center;',
+      '}',
+      '.hw-canvas{',
+      'position:absolute;inset:0;',
+      'z-index:3;',
+      'image-rendering:pixelated;',
+      '}',
+      '.hw-enter{',
+      'position:relative;z-index:10;',
+      'margin-top:' + (BLOCK * 4) + 'px;',
+      'padding:' + (BLOCK * 1.5) + 'px ' + (BLOCK * 3) + 'px;',
+      'font-family:"Press Start 2P","Courier New",monospace;',
+      'font-size:' + (BLOCK * 1.4) + 'px;',
+      'color:#FFFFFF;',
+      'background:#E65100;',
+      'border:none;cursor:pointer;',
+      'opacity:0;',
+      '}',
+      '.hw-enter.hw-visible{opacity:1;}',
+      '.hw-hint{',
+      'position:relative;z-index:10;',
+      'margin-top:' + (BLOCK * 2) + 'px;',
+      'font-family:"Caveat","Ma Shan Zheng",cursive;',
+      'font-size:' + (BLOCK * 2.5) + 'px;',
+      'color:#636e72;',
+      'opacity:0;',
+      '}',
+      '.hw-hint.hw-visible{opacity:1;}'
+    ].join('');
+    document.head.appendChild(s);
+    console.log('[DEBUG] styles element appended, rules count:', s.textContent.split('}').length - 1);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>

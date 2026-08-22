@@ -43,8 +43,10 @@ format:
     css: styles.css
 
     include-after-body:
+      - assets/welcome-overlay.html
       - assets/theme-toggle.html
       - assets/listing-year-group.js
+      - assets/image-lightbox.js
 
     toc: false
 

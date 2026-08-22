@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>Test Overlay</title>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; }
+  .hw-overlay {
+    position: fixed; inset: 0; z-index: 9998;
+    display: flex; align-items: center; justify-content: center;
+    background: #FFFFFF;
+  }
+  .hw-text-layer {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 1; pointer-events: none;
+  }
+  .hw-text-cn {
+    font-family: "Ma Shan Zheng", cursive;
+    font-size: 200px; color: #1a1a1a;
+    line-height: 1; margin-bottom: 30px;
+  }
+  .hw-text-en {
+    font-family: "Caveat", cursive;
+    font-size: 180px; color: #1a1a1a;
+    line-height: 1;
+  }
+  .hw-canvas {
+    position: absolute; inset: 0; z-index: 3;
+    image-rendering: pixelated;
+  }
+</style>
+</head>
+<body>
+<h1>This is the page content (should be hidden by overlay)</h1>
+<p>Black background test</p>
+
+<div class="hw-overlay">
+  <div class="hw-text-layer">
+    <div class="hw-text-cn">你好</div>
+    <div class="hw-text-en">N1ngYan</div>
+  </div>
+  <canvas class="hw-canvas" id="hwCanvas"></canvas>
+</div>
+
+<script>
+  // Draw some blocks on canvas to test
+  var canvas = document.getElementById('hwCanvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var ctx = canvas.getContext('2d');
+  
+  // Draw dark blocks to simulate pixel text
+  var BLOCK = 16;
+  ctx.fillStyle = '#1a1a1a';
+  // Draw a simple pattern
+  for (var y = 200; y < 600; y += BLOCK) {
+    for (var x = 100; x < 800; x += BLOCK) {
+      if (Math.random() > 0.4) {
+        ctx.fillRect(x, y, BLOCK, BLOCK);
+      }
+    }
+  }
+  
+  console.log('Canvas:', canvas.width, 'x', canvas.height);
+  console.log('Blocks drawn');
+</script>
+</body>
+</html>
