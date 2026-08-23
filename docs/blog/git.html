@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="关于git相关的一些教程">
 
-<title>Blog – N1ngYan</title>
+<title>git 教程 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -35,8 +71,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -74,80 +108,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "搜索"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -170,7 +132,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../blog/index.html" aria-current="page"> 
+    <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -213,21 +175,51 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">分类</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">全部 <span class="quarto-category-count">(13)</span></div><div class="category" data-category="YXR0ZW50aW9u">attention <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Q2FsY3VsdXM=">Calculus <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVlcCUyMExlYXJuaW5n">Deep Learning <span class="quarto-category-count">(3)</span></div><div class="category" data-category="RWlnZW4lMjBkZWNvbXBvc2l0aW9u">Eigen decomposition <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2l0">git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SGFybmVzcw==">Harness <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGluZWFyLWFsZ2VicmE=">linear-algebra <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWF0aGVtYXRpY3M=">mathematics <span class="quarto-category-count">(7)</span></div><div class="category" data-category="bnVtcHk=">numpy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHV0b3JpYWw=">Tutorial <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#git与github" id="toc-git与github" class="nav-link active" data-scroll-target="#git与github">Git与Github</a>
+  <ul class="collapse">
+  <li><a href="#git简要介绍" id="toc-git简要介绍" class="nav-link" data-scroll-target="#git简要介绍">Git简要介绍</a></li>
+  <li><a href="#安装git" id="toc-安装git" class="nav-link" data-scroll-target="#安装git">安装Git</a></li>
+  <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github">Github</a></li>
+  <li><a href="#配置git" id="toc-配置git" class="nav-link" data-scroll-target="#配置git">配置Git</a></li>
+  <li><a href="#本地创建版本库" id="toc-本地创建版本库" class="nav-link" data-scroll-target="#本地创建版本库">本地创建版本库</a></li>
+  <li><a href="#把文件添加到版本库" id="toc-把文件添加到版本库" class="nav-link" data-scroll-target="#把文件添加到版本库">把文件添加到版本库</a></li>
+  <li><a href="#github远程提交" id="toc-github远程提交" class="nav-link" data-scroll-target="#github远程提交">github远程提交</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
+<h1 class="title">git 教程</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">git</div>
+    <div class="quarto-category">Tutorial</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    关于git相关的一些教程
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月22日</p>
+    </div>
+  </div>
   
     
   </div>
@@ -237,328 +229,159 @@ window.Quarto = {
 </header>
 
 
-<p>Recent blog posts and learning notes.</p>
+<section id="git与github" class="level2">
+<h2 class="anchored" data-anchor-id="git与github">Git与Github</h2>
+<section id="git简要介绍" class="level3">
+<h3 class="anchored" data-anchor-id="git简要介绍">Git简要介绍</h3>
+<p>Git是目前世界上最先进的<strong>分布式版本控制系统</strong>。</p>
+<p>什么是版本控制系统呢？</p>
+<p>以平常工作为例，可能对于某一个项目，想删除一个段落，又怕将来想恢复找不回来怎么办？有办法，先把当前文件“另存为……”一个新的Word文件，再接着改，改到一定程度，再“另存为……”一个新文件，这样一直改下去。这样下去可能我们会关于一个项目有十几个版本。</p>
+<p>过一段时间后，你想要找回被删除的内容，但是已经记不清删除前保存在哪个文件里了，只好一个一个文件去找。看着一堆乱七八糟的文件，想保留最新的一个，然后把其他的删掉，又怕哪天会用上，还不敢删。</p>
+<p>更要命的是，有些部分需要你的财务同事帮助填写，于是你把文件Copy到U盘里给她（也可能通过Email发送一份给她），然后，你继续修改Word文件。一天后，同事再把Word文件传给你，此时，你必须想想，发给她之后到你收到她的文件期间，你作了哪些改动，得把你的改动和她的部分合并</p>
+<p>于是你想，如果有一个软件，不但能自动帮我记录每次文件的改动，还可以让同事协作编辑，这样就不用自己管理一堆类似的文件了，也不需要把文件传来传去。如果想查看某次改动，只需要在软件里瞄一眼就可以，岂不是很方便？</p>
+<p>这个软件的作用就是如此，记录一个文件的多个版本，且可以记录是谁记录的？是什么时候记录的？更改的内容是什么？等等。</p>
+<p>这样，你就结束了手动管理多个“版本”的史前时代，进入到版本控制的20世纪。</p>
+</section>
+<section id="安装git" class="level3">
+<h3 class="anchored" data-anchor-id="安装git">安装Git</h3>
+<p>本文此处仅介绍windows版本的安装方法。</p>
+<p>方法一：直接从Git官网下载安装程序，然后自行选择选项安装即可。</p>
+<p>搜索Git - https://git-scm.com/ -&gt; “Install for Windows”</p>
+<p>点进后，显示如图页面，直接点击箭头处内容下载即可。默认选择默认安装路径即可，如若想更改路径，务必使用英文路径</p>
+<div data-align="center">
+<p><img src="./imgs/43.png"></p>
+</div>
+<p>默认编辑器我们推荐选择VSCode：</p>
+<div data-align="center">
+<p><img src="./imgs/45.png"></p>
+</div>
+分支部分推荐改为main：
+<div data-align="center">
+<p><img src="./imgs/46.png"></p>
+</div>
+<p>后续建议直接选择默认选项即可，如果想要知道其选项具体含义，可以前往以下网站：</p>
+<p><a href="https://blog.csdn.net/m0_74603930/article/details/147917069">安装git bash选项推荐</a></p>
+一般来说，我们只要在开始菜单或者桌面找到Git Bash，点击后蹦出一个如图的命令行窗口，就可以说明Git安装成功了。
+<div data-align="center">
+<p><img src="./imgs/44.png"></p>
+</div>
+</section>
+<section id="github" class="level3">
+<h3 class="anchored" data-anchor-id="github">Github</h3>
+<p>我们先简单理解一下Github是什么，其作用是什么？</p>
+<p>简单来说，GitHub 是一个专门用来存放、管理和分享代码的网站。你可以把它理解成“程序员的网盘 + 代码版本管理工具 + 开源社区”。</p>
+<p>假如你在steam上玩过游戏这点就更好理解了，前面的git能够帮我们在本地存档，就好像你玩游戏的存档一样，记录了你存档的时候什么时间，有什么具体信息，做了什么。</p>
+而Github就是steam云状态，他把你退出游戏以后最后保存的那个存档存到云端上，这样就能保证，只要你账号是对的，在别的地方你也可以打开这个存档了。
+<div data-align="center">
+<p><img src="./imgs/48.png"></p>
+</div>
+<p>因此，我们需要一个Github账号，将其与我们的Git绑定，这样我们就可以进行我们项目上传了。</p>
+<p>首先先进入<a href="https://github.com/">Github</a>，如果进不去，可以使用Watt toolkit这类软件，如果有更好的就更好了，这边就不做推荐了:)</p>
+然后自己进行注册即可。下图就是已经注册成功，你可以自己改动一些个性化内容：
+<div data-align="center">
+<p><img src="./imgs/47.png"></p>
+</div>
+</section>
+<section id="配置git" class="level3">
+<h3 class="anchored" data-anchor-id="配置git">配置Git</h3>
+<p>我们安装完Git的第一步，就是给我们记录一个名字和Email地址：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"email@example.com"</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>其中的名字和邮箱按理说可以随意取，但是如果你想关联到自己的Github账号的话，将邮箱与Github的邮箱保持一致。</p>
+<p>且后面想要查看自己的信息，可以使用:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>后面想要更改名字与邮箱再设置一次即可，但是修改后只影响未来的新commit。以前已经提交的 commit 里的作者信息不会自动改变。</p>
+<p>注意<code>git config</code>命令的<code>--global</code>参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。只要进入对应文件夹，使用前面的设置代码即可。</p>
+</section>
+<section id="本地创建版本库" class="level3">
+<h3 class="anchored" data-anchor-id="本地创建版本库">本地创建版本库</h3>
+<p>什么是版本库呢？版本库又名仓库（Repository），你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
+<ol type="1">
+<li>创建空目录</li>
+</ol>
+<p>先选择一个合适的地方，创建一个空目录，可以手动建立，也可以进入某个目标文件夹使用<code>mkdir xxxx</code></p>
+<p>然后使用<code>cd xxxx</code>进入我们新建的文件夹。</p>
+<p>可以使用<code>pwd</code>,显示当前目录。</p>
+<ol start="2" type="1">
+<li>把目录变成Git可以管理的仓库</li>
+</ol>
+<p>我们可以通过<code>git init</code>来执行这个事情,输入即可,可能输出如下：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git init</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Initialized</span> empty Git repository in /Users/michael/xxxx/.git/</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>瞬间Git就把仓库建好了，而且告诉你是一个空的仓库（empty Git repository），细心的读者可以发现当前目录下多了一个<code>.git</code>的目录，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。</p>
+<p>如果你没有看到<code>.git</code>目录，那是因为这个目录默认是隐藏的，用<code>ls -ah</code>命令就可以看见。</p>
+当然，我们前面使用了VSCode的默认编辑器，我们可以打开VSCode，然后如图点击即可，这个地方也可以帮助我们初始化我们的仓库即<code>git init</code>：
+<div data-align="center">
+<p><img src="./imgs/49.png"></p>
+</div>
+<p>这边我们已经初始化过了，就不演示了，现在的界面是已经初始化过后的情况。</p>
+</section>
+<section id="把文件添加到版本库" class="level3">
+<h3 class="anchored" data-anchor-id="把文件添加到版本库">把文件添加到版本库</h3>
+<p>版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道。</p>
+<p>不幸的是，Microsoft的Word格式是二进制格式，因此，版本控制系统是没法跟踪Word文件的改动的，前面我们举的例子只是为了演示，如果要真正使用版本控制系统，就要以纯文本方式编写文件。</p>
+<p>因为文本是有编码的，比如中文有常用的GBK编码，日文有Shift_JIS编码，如果没有历史遗留问题，强烈建议使用标准的UTF-8编码，所有语言使用同一种编码，既没有冲突，又被所有平台所支持。</p>
+<p>使用Windows的童鞋要特别注意：千万不要使用Windows自带的记事本编辑任何文本文件。原因是Microsoft开发记事本的团队使用了一个非常弱智的行为来保存UTF-8编码的文件，他们自作聪明地在每个文件开头添加了0xefbbbf（十六进制）的字符，你会遇到很多不可思议的问题，比如，网页第一行可能会显示一个“?”，明明正确的程序一编译就报语法错误，等等，都是由记事本的弱智行为带来的。建议你下载Visual Studio Code代替记事本，不但功能强大，而且免费！</p>
+<p>现在，我们可以编写一个<code>readme.txt</code>文件，内容随意。</p>
+<p>一定要放到<code>learngit</code>目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git再厉害也找不到这个文件。</p>
+<p>和把大象放到冰箱需要3步相比，把一个文件放到Git仓库只需要两步。</p>
+<p>第一步，用命令<code>git add</code>告诉Git，把文件添加到仓库:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git add readme.txt</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>执行上面的命令，没有任何显示，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p>
+<p>第二步，用命令<code>git commit</code>告诉Git，把文件提交到仓库：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"wrote a readme file"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[master</span> <span class="er">(</span><span class="ex">root-commit</span><span class="kw">)</span> <span class="ex">eaadf4e]</span> wrote a readme file</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span> file changed, 2 insertions<span class="er">(</span><span class="ex">+</span><span class="kw">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">create</span> mode 100644 readme.txt</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>简单解释一下<code>git commit</code>命令，<code>-m</code>后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。</p>
+<p>嫌麻烦不想输入-m “xxx”行不行？确实有办法可以这么干，但是强烈不建议你这么干，因为输入说明对自己对别人阅读都很重要。实在不想输入说明的童鞋请自行Google，我不告诉你这个参数。</p>
+<p><code>git commit</code>命令执行成功后会告诉你，<code>1 file changed</code>：1个文件被改动（我们新添加的<code>readme.txt</code>文件）；<code>2 insertions</code>：插入了两行内容（<code>readme.txt</code>有两行内容）。</p>
+<p>如果嫌麻烦，可以直接使用<code>git add .</code>，这样就不用考虑暂存哪个文件了。</p>
+<p>当然，前面都是使用终端的指令，我们现在讲一下如何用VScode执行这些操作：</p>
+如图打开对应界面
+<div data-align="center">
+<p><img src="./imgs/50.png"></p>
+</div>
+此处的提交就是代表了<code>git add</code> 与<code>git commit</code>这两个指令了， 红色方框内可输入的位置，即本次提交的说明，与前文一致。 成功后如下图所示：
+<div data-align="center">
+<p><img src="./imgs/51.png"></p>
+</div>
+<p>就可以显示改动的时间，人，以及备注等内容</p>
+如果我们随便增加一些内容，再次commit后，我们点击第二次的save内容，我们可以看到此次更改的内容：
+<div data-align="center">
+<p><img src="./imgs/52.png"></p>
+</div>
+<p>可以自行尝试，多试几次就明白啦:)</p>
+</section>
+<section id="github远程提交" class="level3">
+<h3 class="anchored" data-anchor-id="github远程提交">github远程提交</h3>
+<p>此处，我们可以先在github上创建一个新的项目：</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="git_files/figure-html/928f8338-2-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="git_files/figure-html/928f8338-1-image-2.png" class="img-fluid figure-img"></p>
+<figcaption>image-2.png</figcaption>
+</figure>
+</div>
+<p>红框处可以设置自己的项目名称与是否可见。</p>
+<p>如图就是创建好的：</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="git_files/figure-html/b45531d5-1-image-2.png" class="img-fluid figure-img"></p>
+<figcaption>image-2.png</figcaption>
+</figure>
+</div>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Z2l0JTJDVHV0b3JpYWw=" data-listing-date-sort="1787328000000" data-listing-file-modified-sort="1787460604708" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="136">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/git.html" class="no-external">git 教程</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Z2l0'); return false;">git</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/git.html" class="no-external">
-<p>关于git相关的一些教程</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/git.html" class="no-external">
-<div class="listing-date">
-2026年8月22日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="YXR0ZW50aW9uJTJDRGVlcCUyMExlYXJuaW5n" data-listing-date-sort="1787155200000" data-listing-file-modified-sort="1787231664447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="528">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/attention_3.html" class="no-external">注意力机制(3)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YXR0ZW50aW9u'); return false;">attention</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/attention_3.html" class="no-external">
-<p>本文是基于李沐的动手学深度学习课程的一些笔记与个人见解</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/attention_3.html" class="no-external">
-<div class="listing-date">
-2026年8月20日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="YXR0ZW50aW9uJTJDRGVlcCUyMExlYXJuaW5n" data-listing-date-sort="1787068800000" data-listing-file-modified-sort="1787132646554" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="436">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/attention_1.html" class="no-external">注意力机制(1)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YXR0ZW50aW9u'); return false;">attention</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/attention_1.html" class="no-external">
-<p>本文是基于李沐的动手学深度学习课程的一些笔记与个人见解</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/attention_1.html" class="no-external">
-<div class="listing-date">
-2026年8月19日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="YXR0ZW50aW9uJTJDRGVlcCUyMExlYXJuaW5n" data-listing-date-sort="1787068800000" data-listing-file-modified-sort="1787155457522" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="300">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/attention_2.html" class="no-external">注意力机制(2)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YXR0ZW50aW9u'); return false;">attention</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/attention_2.html" class="no-external">
-<p>本文是基于李沐的动手学深度学习课程的一些笔记与个人见解</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/attention_2.html" class="no-external">
-<div class="listing-date">
-2026年8月19日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787066751005" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="675">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Integration.html" class="no-external">积分微分学</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Integration.html" class="no-external">
-<p>本部分介绍了常见的积分方式，重点还有换元法的使用</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Integration.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787040538600" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="86">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Multivariable_Calculus_1.html" class="no-external">多元微积分(1)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Multivariable_Calculus_1.html" class="no-external">
-<p>介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Multivariable_Calculus_1.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787060276822" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="419">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Multivariable_Calculus_2.html" class="no-external">多元微积分(2)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Multivariable_Calculus_2.html" class="no-external">
-<p>介绍了多变量情形下的链式法则，Hessian矩阵的详细介绍以及矩阵求导的方法。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Multivariable_Calculus_2.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787027357259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Single_Variable_Calculus.html" class="no-external">单变量微积分</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Single_Variable_Calculus.html" class="no-external">
-<p>简单介绍了微分学的作用，以及一些基础的运算规则，并介绍了高阶导数与泰勒展开公式</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Single_Variable_Calculus.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="SGFybmVzcw==" data-listing-date-sort="1786809600000" data-listing-file-modified-sort="1787021194889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="230">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Deepseek_Harness.html" class="no-external">Deepseek Harness 安装教程</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('SGFybmVzcw=='); return false;">Harness</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Deepseek_Harness.html" class="no-external">
-<p>Deepseek Harness 安装教程 + 插件安装方法</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Deepseek_Harness.html" class="no-external">
-<div class="listing-date">
-2026年8月16日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="bWF0aGVtYXRpY3MlMkNFaWdlbiUyMGRlY29tcG9zaXRpb24=" data-listing-date-sort="1786723200000" data-listing-file-modified-sort="1786882539092" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="384">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Eigen decomposition.html" class="no-external">特征分解</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RWlnZW4lMjBkZWNvbXBvc2l0aW9u'); return false;">Eigen decomposition</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Eigen decomposition.html" class="no-external">
-<p>进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Eigen decomposition.html" class="no-external">
-<div class="listing-date">
-2026年8月15日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="10" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782136368" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="77">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">(1)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<p>线性代数与几何的基础概念，包括向量、矩阵、线性变换等。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="11" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782148330" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="184">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">(2)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<p>线性代数与几何的进阶内容。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="12" data-categories="Y29kZSUyQ251bXB5JTJDcHl0aG9u" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786780561762" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Numpy_learning.html" class="no-external">NumPy学习笔记</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bnVtcHk='); return false;">numpy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Numpy_learning.html" class="no-external">
-<p>NumPy基础操作、数组运算、广播机制等核心功能的学习记录。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Numpy_learning.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">无匹配项</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script>
 // 主题切换逻辑
 (function() {
@@ -1426,6 +1249,57 @@ window.Quarto = {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
