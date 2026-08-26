@@ -1,0 +1,3038 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="本文是我在学习廖雪峰的Git教程的一些笔记与个人理解">
+
+<title>Git&amp;Github的初学者教程 – N1ngYan</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2f5524832805d734b96ee676820b2dda.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">N1ngYan</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks/index.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications/index.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../cv/index.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../news/index.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/N1ngYan2004726"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../#"> <i class="bi bi-circle-half" role="img" aria-label="切换主题">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#git与github是什么" id="toc-git与github是什么" class="nav-link active" data-scroll-target="#git与github是什么">Git与Github是什么</a>
+  <ul class="collapse">
+  <li><a href="#git" id="toc-git" class="nav-link" data-scroll-target="#git">Git</a></li>
+  <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github">Github</a></li>
+  </ul></li>
+  <li><a href="#git安装与配置" id="toc-git安装与配置" class="nav-link" data-scroll-target="#git安装与配置">Git安装与配置</a>
+  <ul class="collapse">
+  <li><a href="#git安装" id="toc-git安装" class="nav-link" data-scroll-target="#git安装">Git安装</a></li>
+  <li><a href="#github账号注册" id="toc-github账号注册" class="nav-link" data-scroll-target="#github账号注册">Github账号注册</a></li>
+  <li><a href="#配置git" id="toc-配置git" class="nav-link" data-scroll-target="#配置git">配置Git</a></li>
+  </ul></li>
+  <li><a href="#如何更新版本库" id="toc-如何更新版本库" class="nav-link" data-scroll-target="#如何更新版本库">如何更新版本库</a>
+  <ul class="collapse">
+  <li><a href="#工作区暂存区版本库" id="toc-工作区暂存区版本库" class="nav-link" data-scroll-target="#工作区暂存区版本库">工作区、暂存区、版本库</a></li>
+  <li><a href="#使用命令行进行一次提交" id="toc-使用命令行进行一次提交" class="nav-link" data-scroll-target="#使用命令行进行一次提交">使用命令行进行一次提交</a></li>
+  <li><a href="#使用-vscode-来进行一次提交" id="toc-使用-vscode-来进行一次提交" class="nav-link" data-scroll-target="#使用-vscode-来进行一次提交">使用 VSCode 来进行一次提交</a></li>
+  </ul></li>
+  <li><a href="#版本管理" id="toc-版本管理" class="nav-link" data-scroll-target="#版本管理">版本管理</a>
+  <ul class="collapse">
+  <li><a href="#查看修改与历史" id="toc-查看修改与历史" class="nav-link" data-scroll-target="#查看修改与历史">查看修改与历史</a></li>
+  <li><a href="#恢复撤销与回退" id="toc-恢复撤销与回退" class="nav-link" data-scroll-target="#恢复撤销与回退">恢复，撤销与回退</a></li>
+  </ul></li>
+  <li><a href="#分支管理" id="toc-分支管理" class="nav-link" data-scroll-target="#分支管理">分支管理</a>
+  <ul class="collapse">
+  <li><a href="#分支branch" id="toc-分支branch" class="nav-link" data-scroll-target="#分支branch">分支(Branch)</a></li>
+  <li><a href="#分支合并与冲突" id="toc-分支合并与冲突" class="nav-link" data-scroll-target="#分支合并与冲突">分支合并与冲突</a></li>
+  </ul></li>
+  <li><a href="#github-1" id="toc-github-1" class="nav-link" data-scroll-target="#github-1">Github</a>
+  <ul class="collapse">
+  <li><a href="#远程仓库remotesshpush-与-pull" id="toc-远程仓库remotesshpush-与-pull" class="nav-link" data-scroll-target="#远程仓库remotesshpush-与-pull">远程仓库：Remote、SSH、Push 与 Pull</a></li>
+  <li><a href="#clone从远程仓库获取一个完整项目" id="toc-clone从远程仓库获取一个完整项目" class="nav-link" data-scroll-target="#clone从远程仓库获取一个完整项目">Clone：从远程仓库获取一个完整项目</a></li>
+  <li><a href="#gitignore告诉-git-哪些文件不要管理" id="toc-gitignore告诉-git-哪些文件不要管理" class="nav-link" data-scroll-target="#gitignore告诉-git-哪些文件不要管理">.gitignore：告诉 Git 哪些文件不要管理</a></li>
+  </ul></li>
+  <li><a href="#团队协作" id="toc-团队协作" class="nav-link" data-scroll-target="#团队协作">团队协作</a></li>
+  <li><a href="#tag与release-给重要版本一个名字" id="toc-tag与release-给重要版本一个名字" class="nav-link" data-scroll-target="#tag与release-给重要版本一个名字">Tag与Release ：给重要版本一个名字</a></li>
+  <li><a href="#git常用命令速查" id="toc-git常用命令速查" class="nav-link" data-scroll-target="#git常用命令速查">Git常用命令速查</a>
+  <ul class="collapse">
+  <li><a href="#git-基础配置" id="toc-git-基础配置" class="nav-link" data-scroll-target="#git-基础配置">Git 基础配置</a></li>
+  <li><a href="#创建与查看-git-仓库" id="toc-创建与查看-git-仓库" class="nav-link" data-scroll-target="#创建与查看-git-仓库">创建与查看 Git 仓库</a></li>
+  <li><a href="#添加与提交修改" id="toc-添加与提交修改" class="nav-link" data-scroll-target="#添加与提交修改">添加与提交修改</a></li>
+  <li><a href="#撤销工作区修改" id="toc-撤销工作区修改" class="nav-link" data-scroll-target="#撤销工作区修改">撤销工作区修改</a></li>
+  <li><a href="#删除文件" id="toc-删除文件" class="nav-link" data-scroll-target="#删除文件">删除文件</a></li>
+  <li><a href="#查看与恢复历史版本" id="toc-查看与恢复历史版本" class="nav-link" data-scroll-target="#查看与恢复历史版本">查看与恢复历史版本</a></li>
+  <li><a href="#版本回退与撤销-commit" id="toc-版本回退与撤销-commit" class="nav-link" data-scroll-target="#版本回退与撤销-commit">版本回退与撤销 Commit</a></li>
+  <li><a href="#branch-分支操作" id="toc-branch-分支操作" class="nav-link" data-scroll-target="#branch-分支操作">Branch 分支操作</a></li>
+  <li><a href="#merge-与冲突处理" id="toc-merge-与冲突处理" class="nav-link" data-scroll-target="#merge-与冲突处理">Merge 与冲突处理</a></li>
+  <li><a href="#ssh-与-github-身份验证" id="toc-ssh-与-github-身份验证" class="nav-link" data-scroll-target="#ssh-与-github-身份验证">SSH 与 GitHub 身份验证</a></li>
+  <li><a href="#remote-远程仓库" id="toc-remote-远程仓库" class="nav-link" data-scroll-target="#remote-远程仓库">Remote 远程仓库</a></li>
+  <li><a href="#push-上传代码" id="toc-push-上传代码" class="nav-link" data-scroll-target="#push-上传代码">Push 上传代码</a></li>
+  <li><a href="#pull-与-fetch" id="toc-pull-与-fetch" class="nav-link" data-scroll-target="#pull-与-fetch">Pull 与 Fetch</a></li>
+  <li><a href="#clone-获取项目" id="toc-clone-获取项目" class="nav-link" data-scroll-target="#clone-获取项目">Clone 获取项目</a></li>
+  <li><a href="#gitignore-与停止跟踪文件" id="toc-gitignore-与停止跟踪文件" class="nav-link" data-scroll-target="#gitignore-与停止跟踪文件">.gitignore 与停止跟踪文件</a></li>
+  <li><a href="#tag-标签管理" id="toc-tag-标签管理" class="nav-link" data-scroll-target="#tag-标签管理">Tag 标签管理</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Git&amp;Github的初学者教程</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">git</div>
+    <div class="quarto-category">Tutorial</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    本文是我在学习廖雪峰的Git教程的一些笔记与个人理解
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月25日</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>本文是我在学习廖雪峰的Git教程的一些笔记与个人理解，如果想要学的更基础更细可以前往<a href="https://liaoxuefeng.com/books/git/introduction/index.html" target="_blank">廖雪峰的Git教程</a></p>
+</blockquote>
+<section id="git与github是什么" class="level2">
+<h2 class="anchored" data-anchor-id="git与github是什么">Git与Github是什么</h2>
+<section id="git" class="level3">
+<h3 class="anchored" data-anchor-id="git">Git</h3>
+<p>在开始学习 Git 之前，我们先思考一个实际的问题。</p>
+<p>假设你正在开发一个网站。刚开始的时候，项目只有一个简单的首页，你觉得很满意，于是继续添加新的功能。几天之后，你增加了登录功能，又修改了页面样式，还尝试加入了一些新的交互效果。</p>
+<p>但是某一天，你发现项目出现了问题：某个功能突然无法使用，而你已经修改了很多文件，完全不知道是哪一次修改导致的。</p>
+<p>这时候，你可能会想：“有没有一种方法，可以记录每一次修改，并且让我随时回到之前正常的版本？”</p>
+<p>这就是 Git 要解决的问题。</p>
+<p>如果你玩过 Steam 游戏，可以把 Git 理解成游戏中的存档系统。游戏中的存档可以记录你当前的进度，当你做出了错误选择或者遇到无法解决的问题时，可以读取之前的存档重新开始。例如下图：</p>
+<p><img src="git_files/figure-html/f641d0e5-1-image.png" class="img-fluid"></p>
+<p>Git 的作用也是类似的。</p>
+<p>在开发过程中，每当你完成一个重要阶段，都可以保存当前项目的状态。这个保存过程在 Git 中叫做 commit（提交）。不同的 commit 就像不同时间创建的游戏存档，它们记录着项目在不同阶段的状态。</p>
+<p>因此，简单来说：Git 是一个帮助我们记录代码变化、管理项目历史的版本控制工具。以官方的定义来说，Git是目前世界上最先进的<strong>分布式版本控制系统</strong>。</p>
+<p>不过，Git 有一个特点：它主要运行在你的本地电脑上。也就是说，你可以在自己的电脑中使用 Git 来管理项目，即使没有网络也没有问题。</p>
+<p>但是，这里又产生了问题：如果电脑损坏怎么办？如果想换一台电脑继续开发怎么办？如果想让别人看到你的代码，或者和其他人一起开发怎么办？</p>
+<p>这时候，就需要 GitHub。</p>
+</section>
+<section id="github" class="level3">
+<h3 class="anchored" data-anchor-id="github">Github</h3>
+<p>GitHub 可以理解为 Git 的“云端仓库”。如果把 Git 比作电脑中的游戏存档，那么 GitHub 就类似 Steam 的云存档功能。如下图：</p>
+<p><img src="git_files/figure-html/1a5cfa8d-1-image.png" class="img-fluid"></p>
+<p>游戏存档原本只保存在你的电脑里，通过云同步之后，你可以在另一台电脑继续游戏。Git 也是一样。你可以把本地 Git 仓库上传到 GitHub，让代码保存在远程服务器中。</p>
+<p>很多初学者会认为 GitHub 就是 Git，其实它们的关系更像是“工具”和“平台”的关系。</p>
+<p>Git 是负责管理版本的工具，它关注的是：“我的代码经历了哪些变化？”.而 GitHub 是提供远程存储和协作功能的平台，它关注的是：“如何让这些代码可以被保存、分享，并且让多人一起开发？”</p>
+<p>你完全可以只使用 Git，而不使用 GitHub。 但是，如果你希望把项目上传到网络，让其他人访问或者参与开发，那么 GitHub 就非常有用了。</p>
+<p>在实际的软件开发过程中，Git 和 GitHub 通常会配合使用。</p>
+<p>一个典型流程是这样的：你首先在电脑上创建项目，然后使用 Git 保存每一次重要修改。当项目达到一定阶段后，把代码上传到 GitHub。之后，如果团队成员需要参与开发，他们可以从 GitHub 获取项目，并继续修改。</p>
+<p>所以，在开始学习 Git 的时候，你只需要先记住三个概念：</p>
+<ol type="1">
+<li><p>Git 是一个版本控制工具，负责记录代码的变化。</p></li>
+<li><p>GitHub 是一个代码托管平台，负责保存 Git 仓库，并提供协作能力。</p></li>
+<li><p>两者结合起来，可以让我们更加安全、高效地管理代码。</p></li>
+</ol>
+<p>接下来，我们会从安装 Git 开始，让你的电脑真正具备代码版本管理能力。</p>
+</section>
+</section>
+<section id="git安装与配置" class="level2">
+<h2 class="anchored" data-anchor-id="git安装与配置">Git安装与配置</h2>
+<section id="git安装" class="level3">
+<h3 class="anchored" data-anchor-id="git安装">Git安装</h3>
+<p>本文此处仅介绍windows版本的安装方法。如果是别的系统，请前往<a href="https://liaoxuefeng.com/books/git/install-git/index.html" target="_blank">廖雪峰的Git安装教程</a></p>
+<p>方法一：直接从Git官网下载安装程序，然后自行选择选项安装即可。</p>
+<p>搜索Git - https://git-scm.com/ -&gt; “Install for Windows”</p>
+<p>点进后，显示如图页面，直接点击箭头处内容下载即可。默认选择默认安装路径即可，如若想更改路径，务必使用英文路径</p>
+<div data-align="center">
+<p><img src="./imgs/43.png"></p>
+</div>
+<p>默认编辑器我们推荐选择VSCode：</p>
+<div data-align="center">
+<p><img src="./imgs/45.png"></p>
+</div>
+分支部分推荐改为main：
+<div data-align="center">
+<p><img src="./imgs/46.png"></p>
+</div>
+<p>后续建议直接选择默认选项即可，如果想要知道其选项具体含义，可以前往以下网站：</p>
+<p><a href="https://blog.csdn.net/m0_74603930/article/details/147917069" target="_blank">安装git bash选项推荐</a></p>
+一般来说，我们只要在开始菜单或者桌面找到Git Bash，点击后蹦出一个如图的命令行窗口，就可以说明Git安装成功了。
+<div data-align="center">
+<p><img src="./imgs/44.png"></p>
+</div>
+</section>
+<section id="github账号注册" class="level3">
+<h3 class="anchored" data-anchor-id="github账号注册">Github账号注册</h3>
+<p>我们需要一个Github账号，将其与我们的Git绑定，这样我们就可以进行我们项目上传了。</p>
+<p>首先先进入<a href="https://github.com/">Github</a>，如果进不去，可以使用Watt toolkit这类软件，如果有更好的就更好了，这边就不做推荐了:)</p>
+然后自己进行注册即可。下图就是已经注册成功，你可以自己改动一些个性化内容：
+<div data-align="center">
+<p><img src="./imgs/47.png"></p>
+</div>
+</section>
+<section id="配置git" class="level3">
+<h3 class="anchored" data-anchor-id="配置git">配置Git</h3>
+<p>我们安装完Git的第一步，就是给我们记录一个名字和Email地址：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"email@example.com"</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>其中的名字和邮箱按理说可以随意取，但是如果你想关联到自己的Github账号的话，将邮箱与Github的邮箱保持一致。</p>
+<p>且后面想要查看自己的信息，可以使用:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> <span class="at">--list</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>后面想要更改名字与邮箱再设置一次即可，但是修改后只影响未来的新commit。以前已经提交的 commit 里的作者信息不会自动改变。</p>
+<p>注意<code>git config</code>命令的<code>--global</code>参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。只要进入对应文件夹，使用前面的设置代码即可。</p>
+</section>
+</section>
+<section id="如何更新版本库" class="level2">
+<h2 class="anchored" data-anchor-id="如何更新版本库">如何更新版本库</h2>
+<section id="工作区暂存区版本库" class="level3">
+<h3 class="anchored" data-anchor-id="工作区暂存区版本库">工作区、暂存区、版本库</h3>
+<p>在这部分，我们先介绍一下工作区、暂存区、版本库这三个概念： 1. 工作区(Working Directory): 就是你在电脑里能看到的目录，比如我的<code>My_site</code>文件夹就是一个工作区： <img src="git_files/figure-html/417d466b-2-image.png" class="img-fluid"> 2. 版本库(Repository): 工作区有一个隐藏目录<code>.git</code>，这个不算工作区，而是Git的版本库。</p>
+<pre><code>什么是版本库呢？版本库又名仓库（Repository），你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
+
+Git的版本库里存了很多东西，其中最重要的就是称为`stage`（或者叫`index`）的暂存区，还有Git为我们自动创建的第一个分支`main`(一般来说是`master`，此处是`main`是因为我们前面安装Git的时候设置的)，以及指向`main`的一个指针叫`HEAD`。
+
+![](git_files/figure-html/417d466b-1-image-2.png)</code></pre>
+<p>我们可以简单的理解为，我们本地库的内容，会通过Git上传到版本库的暂存区，即<code>stage</code>，然后再转移到我们指针<code>HEAD</code>指着的分支，默认为<code>main</code></p>
+</section>
+<section id="使用命令行进行一次提交" class="level3">
+<h3 class="anchored" data-anchor-id="使用命令行进行一次提交">使用命令行进行一次提交</h3>
+<p>此部分我们以流程来介绍：</p>
+<ol type="1">
+<li><p>创建空目录</p>
+<p>先选择一个合适的地方，创建一个空目录，可以手动建立，也可以进入某个目标文件夹使用<code>mkdir xxxx</code></p>
+<p>然后使用<code>cd xxxx</code>进入我们新建的文件夹。</p>
+<p>可以使用<code>cd</code>,显示当前目录。</p>
+<p>此处我们新建文件夹<code>learngit_1</code>：</p>
+<p><img src="git_files/figure-html/f79fef3f-4-image.png" class="img-fluid"></p></li>
+<li><p>把目录变成Git可以管理的仓库</p>
+<p>我们可以通过<code>git init</code>来执行这个事情,输入即可,输出如下：</p>
+<p><img src="git_files/figure-html/f79fef3f-1-image-2.png" class="img-fluid"></p>
+<p>瞬间Git就把仓库建好了，而且告诉你是一个空的仓库（empty Git repository），细心的读者可以发现当前目录下多了一个<code>.git</code>的目录，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。</p>
+<p>如果你没有看到<code>.git</code>目录，那是因为这个目录默认是隐藏的，用<code>dir /a</code>命令就可以看见</p></li>
+<li><p>更改并上传文件库内容</p>
+<p>现在，我们可以编写一个<code>readme.txt</code>文件，内容随意。</p>
+<p>一定要放到<code>learngit_1</code>目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git再厉害也找不到这个文件。</p>
+<p>和把大象放到冰箱需要3步相比，把一个文件放到Git仓库只需要两步。</p>
+<p>第一步，用命令<code>git add</code>告诉Git，把文件添加到仓库:</p>
+<p><img src="git_files/figure-html/f79fef3f-2-image-3.png" class="img-fluid"></p>
+<p>一般来说，这个指令是<code>git add readme.txt</code>,但是如果我们想要直接上传该文件夹内的全部修改，可以使用<code>git add .</code>。</p>
+<p>执行上面的命令，没有任何显示，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p>
+<p>第二步，用命令<code>git commit</code>告诉Git，把文件提交到仓库：</p>
+<p><img src="git_files/figure-html/f79fef3f-3-image-4.png" class="img-fluid"></p>
+<p>简单解释一下<code>git commit</code>命令，<code>-m</code>后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。</p>
+<p>嫌麻烦不想输入-m “xxx”行不行？确实有办法可以这么干，但是强烈不建议你这么干，因为输入说明对自己对别人阅读都很重要。</p>
+<p><code>git commit</code>命令执行成功后会告诉你，<code>1 file changed</code>：1个文件被改动（我们新添加的<code>readme.txt</code>文件）；<code>1 insertions</code>：插入了一行内容（<code>readme.txt</code>有一行内容）。</p></li>
+</ol>
+<p>这样我们就完成了一次从本地库到版本库的上传全过程。</p>
+</section>
+<section id="使用-vscode-来进行一次提交" class="level3">
+<h3 class="anchored" data-anchor-id="使用-vscode-来进行一次提交">使用 VSCode 来进行一次提交</h3>
+<p>上面的指令有的人并不想记，这时候我们就推荐例如VSCode的这类可视化工具，我们只需要点按钮即可完成与代码一致的效果。</p>
+<ol type="1">
+<li><p>创建空目录</p>
+<p>相同的，我们也要新建一个文件夹来解释我们的流程，此处新建的文件夹为<code>learngit_2</code>:</p>
+<p><img src="git_files/figure-html/f8fb43ca-4-image.png" class="img-fluid"></p></li>
+<li><p>把目录改成Git管理的仓库 我们可以根据下图的箭头，点击<code>源代码管理</code>按钮进入此界面，然后点击<code>初始化仓库</code>，这一步与我们前面的<code>git init</code>的效果完全一致：</p>
+<p><img src="git_files/figure-html/f8fb43ca-1-image-2.png" class="img-fluid"></p></li>
+<li><p>更改并上传文件库内容</p>
+<p>现在我们同样可以编写一个<code>readme.txt</code>文件，内容同样随意，例如此处我们填写如下：</p>
+<p><img src="git_files/figure-html/f8fb43ca-2-image-3.png" class="img-fluid"></p>
+<p>我们可以看到，我们的<code>源代码管理</code>按钮右下角出现了一个数字”1”，这代表了现在的本地库与版本库内容存在一处差异。“未追踪”的含义是，这个文件是新建的，这些内容推荐读者多尝试一下，就能理解其含义了。</p>
+<p>这之后我们就可以点击<code>源代码管理</code>按钮，进入界面以后，如下图所示：</p>
+<p><img src="git_files/figure-html/f8fb43ca-3-image-4.png" class="img-fluid"></p>
+<p>我们可以看到更改的内容，红框处的内容等价于我们<code>commit</code>后面跟着的备注，提交可以等价于<code>git add .</code>+<code>git commit</code>，我们只需要点击一次就可以上传成功了，非常方便。</p></li>
+</ol>
+</section>
+</section>
+<section id="版本管理" class="level2">
+<h2 class="anchored" data-anchor-id="版本管理">版本管理</h2>
+<section id="查看修改与历史" class="level3">
+<h3 class="anchored" data-anchor-id="查看修改与历史">查看修改与历史</h3>
+<section id="查看修改" class="level4">
+<h4 class="anchored" data-anchor-id="查看修改">查看修改</h4>
+<p>我们首先介绍一下<code>git status</code>这个指令，可以查看在你上次提交之后是否有对文件进行再次修改，我们在我们的<code>learngit_1</code>文件夹修改一下我们的<code>readme.txt</code>文件，且再新建一个文件<code>test.txt</code>，看看输出结果是怎么样的呢:</p>
+<p><img src="git_files/figure-html/6ad7aa7b-4-image.png" class="img-fluid"></p>
+<p>可以看出，如果我们还没有把我们的本地库内容放入暂存区(stage)，现在显示的是红色的文件，且它会显示我们是修改哪些文件。如果我们使用<code>git add .</code> 以后，再使用<code>git status</code>呢：</p>
+<p><img src="git_files/figure-html/6ad7aa7b-1-image-2.png" class="img-fluid"></p>
+<p>我们可以看出来，文件名变成绿色了，它会告诉你，哪些是修改的文件，哪些是新的文件。这时候，我们再使用<code>git commit</code>之后呢？我们再看看结果：</p>
+<p><img src="git_files/figure-html/6ad7aa7b-2-image-3.png" class="img-fluid"></p>
+<p>Git告诉我们当前没有需要提交的修改，而且，工作目录是干净（working tree clean）的。</p>
+<p>上面的内容是通过命令行来观察的，我们要怎么使用VSCode来查看呢？非常简单，我们直接点击<code>源代码管理</code>后，如图框选的内容就是我们使用<code>git status</code>后能看到的信息，后面的点就是来解释这个文件是什么状态:</p>
+<p><img src="git_files/figure-html/6ad7aa7b-3-image-4.png" class="img-fluid"></p>
+<p>这个指令就介绍到这，非常的简单且基础。</p>
+</section>
+<section id="比较差异" class="level4">
+<h4 class="anchored" data-anchor-id="比较差异">比较差异</h4>
+<p>此处我们介绍指令<code>git diff</code>, 是 Git 中一个非常重要的命令，用来查看代码或文件的差异（difference）。简单来说，它告诉你：“哪些地方被修改了？修改前是什么？修改后是什么？”</p>
+<p>我们先基于我们的<code>learngit_1</code>来简单介绍一下，如果我们同时修改了<code>readme.txt</code>与<code>test.txt</code>文件，使用<code>git diff</code>:</p>
+<p><img src="git_files/figure-html/9942570c-3-image.png" class="img-fluid"></p>
+<p>通过此处我们就可以很好的看清楚，我们文件的修改内容是什么了。如果我们<code>add</code>以后呢：</p>
+<p><img src="git_files/figure-html/9942570c-1-image-2.png" class="img-fluid"></p>
+<p>我们可以看到什么都没有了，我们一般来说，<code>git diff</code> 默认看还没<code>git add</code>的修改，<code>git diff --staged</code> 看已经 <code>git add</code>、准备 <code>commit</code> 的修改，<code>git diff HEAD</code> 看从上一次 <code>commit</code>到现在的全部修改。</p>
+<p>在VSCode中，我们可以直接点击更改的文件，其可以自动查看差别：</p>
+<p><img src="git_files/figure-html/9942570c-2-image-3.png" class="img-fluid"></p>
+<p>假如我们以及commit以后，我们使用<code>git diff -staged</code>就能看我们暂存区与我们版本库之间的差别了：</p>
+<p><img src="git_files/figure-html/df78e0dc-1-image.png" class="img-fluid"></p>
+<p>可以看出，完全没有差别，我们有一个结论：commit 后，暂存区会更新为新的 HEAD 状态，因此暂存区和最新提交保持一致，不再存在等待提交的修改。暂存区不会保留“未提交的变化”，但仍然保存当前提交对应的文件索引。所以我们才能得到这个指令输出结果:)</p>
+<p>确实会很绕啊:(</p>
+</section>
+<section id="查看历史" class="level4">
+<h4 class="anchored" data-anchor-id="查看历史">查看历史</h4>
+<p>此部分我们介绍我们的指令<code>git log</code>，其是 Git 中最常用的命令之一，用于查看提交历史记录。它可以显示提交的详细信息，包括提交哈希值、作者、日期和提交信息。通过添加不同的参数，可以自定义输出格式、筛选条件等:</p>
+<p>我们就可以看到我们三次commit的历史信息了：</p>
+<p><img src="git_files/figure-html/5f76e0b1-2-image.png" class="img-fluid"></p>
+<p>git log命令显示从最近到最远的提交日志，如果嫌输出信息太多，看得眼花缭乱的，可以试试加上–pretty=oneline参数：</p>
+<p>在VSCode中，我们可以查看此部分内容：</p>
+<p><img src="git_files/figure-html/5f76e0b1-1-image-2.png" class="img-fluid"></p>
+<p>其可以显示我们现在分支指的方向，以及所有我们在<code>git log</code>中可以获得的信息。</p>
+</section>
+</section>
+<section id="恢复撤销与回退" class="level3">
+<h3 class="anchored" data-anchor-id="恢复撤销与回退">恢复，撤销与回退</h3>
+<p>在前面的学习中，我们已经知道 Git 可以帮助我们保存项目的多个版本。但是在实际开发过程中，我们经常会遇到一些问题：</p>
+<ol type="1">
+<li>刚修改的代码发现写错了，想恢复之前的内容；</li>
+<li>已经 git add 的文件，不想提交了；</li>
+<li>已经 commit 的版本出现问题，想回到之前的版本；</li>
+<li>删除的文件想找回来；</li>
+<li>想查看某个历史版本的代码内容。</li>
+</ol>
+<p>这些操作都属于 Git 中非常重要的一部分。不同阶段的问题，需要使用不同的命令解决。</p>
+<ol type="1">
+<li><p>你本地修改了一个文件，但是发现改错了： 例如，你原本的内容是<code>Hello Git</code>,现在改成了<code>Hello World</code>,但是在<code>add</code>之前，你突然觉得还是原来版本更好，但是现在以及改了，这时候你希望放弃当前修改，恢复到上一次 commit 的状态</p>
+<p>可以使用<code>git restore</code>, 其修复的是工作区文件。也就是说，它只能恢复没有提交的修改。</p>
+<p>我们使用我们的<code>learngit_1</code>中的<code>readme.txt</code>文件，我们修改且保存如下：</p>
+<p><img src="git_files/figure-html/5b933be7-4-image.png" class="img-fluid"></p>
+<p>但是我们这个时候后悔了，其中的<code>this is forth sentence for learngit_1</code>是新增的内容，我们现在其实很方便的就可以回溯，但是只是做一个简单的案例，此时我们可以使用<code>git diff</code>看到我们的差别，然后直接使用<code>git restore</code>，结果如下图：</p>
+<p><img src="git_files/figure-html/5b933be7-1-image-2.png" class="img-fluid"></p>
+<p>可以看出来<code>git restore</code>与<code>git add</code>后面的含义一致，我们直接使用<code>git restore .</code>即可。我们现在回<code>learngit_1</code>中的<code>readme.txt</code>文件：</p>
+<p><img src="git_files/figure-html/5b933be7-2-image-3.png" class="img-fluid"></p>
+<p>我们可以看到，神奇的恢复了！</p>
+<p>在VSCode中即更简单，我们可以直接放弃文件的更改即可，按钮如图：</p>
+<p><img src="git_files/figure-html/5b933be7-3-image-4.png" class="img-fluid"></p></li>
+<li><p>如果修改了文件且<code>add</code>了，突然发现不应该提交这个文件，怎么办？</p>
+<p>这时候不能使用<code>git restore &lt;file&gt;</code>因为他会直接恢复文件内容，这样我们修改后的内容也不见了，正确的应该是<code>git restore --staged &lt;file&gt;</code>，这个操作非常安全。</p></li>
+<li><p>删除后的文件的恢复</p>
+<p>例如我们的文件夹<code>learngit_1</code> ，我们删除其中的文件<code>test.txt</code>，可以使用<code>git status</code>查看其状态:</p>
+<p><img src="git_files/figure-html/9b54a213-2-image.png" class="img-fluid"></p>
+<p>可以看到，该文件已经被删除了，我们分以下两种情况：</p>
+<p>一.还没有提交<code>commit</code>，我们可以使用<code>git restore &lt;file&gt;</code>:</p>
+<p><img src="git_files/figure-html/9b54a213-1-image-2.png" class="img-fluid"></p>
+<p>即从上次<code>commit</code>中恢复文件。</p>
+<p>二.我们已经提交了删除，即已经<code>commit</code>了，此时我们可以查看历史<code>log</code>，假设我们想恢复的文件在版本commit-1，其哈希值为abc123…,我们可以使用<code>git checkout abc123 -- &lt;file&gt;</code>或者<code>git restore --source abc123 &lt;file&gt;</code>来恢复文件</p></li>
+<li><p>查看某个历史版本的代码</p>
+<p>我们可以使用<code>log</code>查看commit对应的哈希值以后，使用<code>git show commit-id</code>，Git会显示修改时间，作者，以及内容等。如:</p>
+<p><img src="git_files/figure-html/1e6622eb-1-image.png" class="img-fluid"></p></li>
+<li><p>版本回退</p>
+<p>我们现在想要的是将项目直接回到过去，可能我们现在的项目历史是:A-&gt;B-&gt;C-&gt;D,我们发布D以后发现，D出现了很大的错误，需要重新回到C，这就是版本回退。</p>
+<p>我们一般可以使用<code>git reset --hard commit_id</code>来进行版本回退。其中有三种模式：</p>
+<ol type="1">
+<li><p>soft:其只移动<code>HEAD</code>，但是保留了工作区和暂存区，适合重新整理<code>commit</code>，他不会影响我们现在本地的内容。</p></li>
+<li><p>mixed(默认):移动<code>HEAD</code>并清空暂存区，但是保留了文件修改的内容。</p></li>
+<li><p>hard:将<code>HEAD</code>，暂存区与工作区全部恢复为想要的版本，效果最彻底。</p></li>
+</ol>
+<p>当然，Git必须知道当前版本是哪个版本，在Git中，用<code>HEAD</code>表示当前版本，也就是最新的提交，上一个版本就是<code>HEAD^</code>，上上一个版本就是<code>HEAD^^</code>，当然往上100个版本写100个^比较容易数不过来，所以写成<code>HEAD~100</code>。</p>
+<p>如果我们以及回到了以前的版本，再使用<code>git log</code>，就看不到此<code>commit</code>后的信息了，好比你从21世纪坐时光穿梭机来到了19世纪，想再回去已经回不去了，怎么办呢？</p>
+<p>办法还是有的，我们只要找到我们想要回去的那个<code>commit</code>的<code>commit_id</code>即可，如果找不到了，可以试试<code>git reflog</code>，这个是查看命令历史的指令。</p>
+<p>实际上，版本回退的本质是指针<code>HEAD</code>指的对象变换了一下而已：</p>
+<p><img src="git_files/figure-html/8663a5bc-2-image.png" class="img-fluid"><img src="git_files/figure-html/8663a5bc-1-image-2.png" class="img-fluid"></p></li>
+<li><p>撤销修改</p>
+<p>假如你在<code>readme.txt</code>中修改了一些内容，但是在准备<code>add</code>之前发现了有明显的错误，这时候我们可以丢弃了工作区的修改内容，即使用<code>git checkout -- &lt;file&gt;</code></p>
+<p>命令git checkout – readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：</p>
+<p>一种是<code>readme.txt</code>自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
+<p>一种是<code>readme.txt</code>已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</p>
+<p>总之，就是让这个文件回到最近一次<code>git commit</code>或<code>git add</code>时的状态。</p>
+<p>但是如果以及<code>git add</code>到暂存区了，但是还没有<code>commit</code>，这时候我们可以使用<code>git reset HEAD &lt;file&gt;</code>来把暂存区的修改撤销掉（unstage），重新放回工作区.当我们用<code>HEAD</code>时，表示最新的版本。</p>
+<p>总结如下：</p>
+<p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令<code>git checkout -- file</code>。</p>
+<p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>(默认为mixed模式)，就回到了场景1，第二步按场景1操作。</p>
+<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p></li>
+<li><p>删除文件</p>
+<p>如果你使用<code>del</code>删除了某文件，这个时候，Git知道你删除了文件，因此，工作区和版本库就不一致了，<code>git status</code>命令会立刻告诉你哪些文件被删除了： ```bash $ git status On branch master Changes not staged for commit: (use “git add/rm <file>…” to update what will be committed) (use “git checkout – <file>…” to discard changes in working directory)</file></file></p>
+<pre><code> deleted:    test.txt</code></pre>
+<p>no changes added to commit (use “git add” and/or “git commit -a”) <code>现在你有两个选择，一是确实要从版本库中删除该文件，那就用命令`git rm`删掉，并且`git commit`：</code>bash $ git rm test.txt rm ‘test.txt’</p>
+<p>$ git commit -m “remove test.txt” [master d46f35e] remove test.txt 1 file changed, 1 deletion(-) delete mode 100644 test.txt ``<code>现在，文件就从版本库中被删除了。(tips:先手动删除文件，然后使用</code>git rm <file><code>和</code>git add <file>`效果是一样的。)</file></file></p>
+<p>另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本<code>git checkout -- test.txt</code> 。<code>git checkout</code>其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p></li>
+</ol>
+</section>
+</section>
+<section id="分支管理" class="level2">
+<h2 class="anchored" data-anchor-id="分支管理">分支管理</h2>
+<section id="分支branch" class="level3">
+<h3 class="anchored" data-anchor-id="分支branch">分支(Branch)</h3>
+<p>在前面的学习中，我们已经掌握了 Git 最基础的功能：创建版本（commit）,查看历史（log）,恢复和回退版本</p>
+<p>但是，到目前为止，我们的项目一直沿着一条路线向前发展.这样的设置导致每一次修改都会直接影响当前项目。</p>
+<p>这种方式在个人练习项目中没有太大问题，但是在真实的软件开发中，经常会遇到这样的情况，正在开发一个网站，目前版本已经可以正常运行。</p>
+<p>这时候，你想增加一个新的功能。如果直接在当前版本上修改，可能会出现新功能开发失败；原来的正常代码被破坏；想回到之前版本比较麻烦。</p>
+<p>有没有一种方法，可以在不影响当前项目的情况下，尝试新的开发方向？这就是 Git 的 Branch（分支）。</p>
+<p>在Git中，一个项目常常有一个默认的主要分支，以前默认是<code>master</code>,但是我们现在大多数项目都改为<code>main</code>,这也是为什么我们前面要改设置的原因，总得追逐大流:)</p>
+<p><code>main</code>常常代表的是正式版本的文件，其是稳定的，可以发布的。</p>
+<p>廖雪峰的教程中：</p>
+<p>每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即<code>master</code>分支。<code>HEAD</code>严格来说不是指向提交，而是指向<code>master</code>，<code>master</code>才是指向提交的，所以，<code>HEAD</code>指向的就是当前分支。</p>
+<p>一开始的时候，<code>master</code>分支是一条线，Git用<code>master</code>指向最新的提交，再用<code>HEAD</code>指向<code>master</code>，就能确定当前分支，以及当前分支的提交点:</p>
+<p><img src="git_files/figure-html/c45c14db-3-image.png" class="img-fluid"></p>
+<p>每次提交，<code>master</code>分支都会向前移动一步，这样，随着你不断提交，<code>master</code>分支的线也越来越长。</p>
+<p>当我们创建新的分支，例如<code>dev</code>时，Git新建了一个指针叫<code>dev</code>，指向<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上:</p>
+<p><img src="git_files/figure-html/c45c14db-1-image-2.png" class="img-fluid"></p>
+<p>Git创建一个分支很快，因为除了增加一个<code>dev</code>指针，改改<code>HEAD</code>的指向，工作区的文件都没有任何变化！</p>
+<p>不过，从现在开始，对工作区的修改和提交就是针对<code>dev</code>分支了，比如新提交一次后，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变：</p>
+<p><img src="git_files/figure-html/c45c14db-2-image-3.png" class="img-fluid"></p>
+<p>至于合并部分我们后面再讲。</p>
+<p>我们要如何查看我们现在有哪些branch呢？可以使用<code>git branch</code>来查看：</p>
+<p><img src="git_files/figure-html/1df5282d-2-image.png" class="img-fluid"></p>
+<p>其中的*表示当前所在分支。图中表明我们现在正在<code>main</code>分支。</p>
+<p>如何创建新的分支呢？可以使用<code>git branch 分支名</code>，即可，我们因为已经创立了<code>test</code>分支，就不做演示了。</p>
+<p>假设我们的<code>main</code>分支原本有A-&gt;B-&gt;C的历史，那么此时<code>test</code>也拥有相同的历史。但是注意,这时候并不会主动切换到我们新建的分支,还需要以下指令<code>git switch 分支名</code>,例如:</p>
+<p><img src="git_files/figure-html/1df5282d-1-image-2.png" class="img-fluid"></p>
+<p>这样切换到test分支,之后修改代码,就不会影响到我们的<code>main</code>分支了.这就是分支隔离。</p>
+<p>在实际开发中,我们更常用<code>git switch -c 分支名</code>这一串指令,其代表了创建与转化分支这两个功能.</p>
+<p>值得一提的是,我们前面说的<code>git checkout -- &lt;file&gt;</code>这个指令,如果没有了<code>--</code>,且后面跟着的是分支名,其也能起到转化分支的功能,即<code>switch</code>,要创建与转化同时进行的,即<code>git checkout -b 分支名</code>即可.</p>
+<p>在这我们推荐使用<code>switch</code>指令,防止我们忘记了<code>checkout</code>的撤销修改的功能</p>
+<p>我们来试试,如果我们在<code>test</code>分支上修改,会对我们的<code>main</code>分支有什么影响吗?如下图我们对我们的<code>readme.txt</code>文件做了一定的修改。</p>
+<p><img src="git_files/figure-html/76d393b0-2-image.png" class="img-fluid"></p>
+<p>此时我们<code>add+commit</code>，再切换回我们的<code>main</code>分支，发现，前面修改的内容都没了！</p>
+<p>因为那个提交是在<code>test</code>分支上，而<code>main</code>分支此刻的提交点并没有变：</p>
+<p><img src="git_files/figure-html/76d393b0-1-image-2.png" class="img-fluid"></p>
+<p>注意,我们这时候可以观察到,切换分支的时候,我们本地库的内容也会跟着变,即切换分支不仅改变 <code>HEAD</code> 指向，还会把该分支对应的 <code>commit</code> 内容检出（<code>checkout</code>）到工作区。</p>
+<p>因为切分支需要修改工作区内容。如果你的工作区里已经有自己没提交的修改，而目标分支又需要改这些文件，Git 就可能覆盖你的修改。因此 Git 会阻止切换，并提示类似：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> local changes would be overwritten by checkout</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>以上是我们对分支的一些初步理解与使用,下面我们开始讲如何把分支合并到<code>main</code>中,增加我们的新功能.</p>
+</section>
+<section id="分支合并与冲突" class="level3">
+<h3 class="anchored" data-anchor-id="分支合并与冲突">分支合并与冲突</h3>
+<p>在上一部分中，我们已经知道了 Branch 的作用：在不影响主分支的情况下，创建一条新的开发路线。</p>
+<p>当功能开发完成并测试没有问题之后，我们通常希望把这些修改重新放回 <code>main</code> 分支。这个过程就叫做分支合并(merge)</p>
+<p>简单来说，Branch 负责把不同工作分开，Merge 负责把已经完成的工作重新组合到一起。</p>
+<p>我们来简单的介绍一下merge是什么</p>
+<p>假设目前项目的状态如下:</p>
+<p><img src="git_files/figure-html/50c99a4a-1-Screenshot_2026-08-26-10-38-17-374_com.miui.creat.png" class="img-fluid"></p>
+<p>我们可以看出,<code>main</code>分支停留在了C,而<code>test</code>分支已经完成了D和E两次提交.如果此时我们想要开发的功能已经完成了,我们就希望让<code>main</code>也包含这些修改.</p>
+<p>我们首先要切换到要接受修改的分支,<code>git switch main</code>,然后执行<code>git merge test</code>即可:</p>
+<p><img src="git_files/figure-html/50c99a4a-2-image.png" class="img-fluid"></p>
+<p>如图中显示一般,我们是Fast-forward的合并方式,Git告诉我们，这次合并是“快进模式”，也就是直接把<code>main</code>指向<code>test</code>的当前提交，所以合并速度非常快。</p>
+<p>即因为创建<code>test</code>之后,<code>main</code>没有再继续产生任何新的提交,Git会发现,我们只要把我们的指针从C前移到E即可,这种合并叫做快进合并.它没有真正创建一个额外的“合并提交”，而只是让 <code>main</code> 指向了新的位置。</p>
+<p>但是,如果我们创建了<code>test</code>之后,<code>main</code>分支也进行了其他的修改呢?例如你在搞A功能,同事在搞B功能,他比你先搞好了,然后修改了<code>main</code>,这时候我们要怎么办?</p>
+<p>我们同样画一个简单的历史图:</p>
+<p><img src="git_files/figure-html/665a3eb4-1-Screenshot_2026-08-26-10-47-23-657_com.miui.creat.png" class="img-fluid"></p>
+<p>这时候两个分支已经真正产生了不同的历史.如果现在切换到<code>git switch main</code>,然后再<code>git merge test</code>.Git 会尝试把两边的修改组合起来.如果两个分支修改的是不同内容，Git 通常可以自动完成。最终产生一个新的版本,像一个环一样.</p>
+<p>这边我们先理解一下,merge到底在合并什么?</p>
+<p>实际上,Git并不是把两个文件夹合并到一起,而比较的是两个分支从共同祖先开始分别发生了哪些变化。以我们的历史图,<code>main</code>与<code>test</code>分支的共同祖先是<code>C</code>,Git会比较,从<code>C-&gt;E</code>发生了什么变化,从<code>C-&gt;G</code>又发生了什么变化,然后尝试把两边的修改组合起来。如果两边修改的是不同文件，通常非常简单。我们只需要把不同文件都改成修改后的版本即可:)</p>
+<p>Git 很容易判断这些修改互不干扰，因此可以自动合并。即使修改的是同一个文件，只要修改的是不同位置，Git 很多时候也可以自动处理。</p>
+<p>真正麻烦的是,两个分支修改了同一个文件中的同一部分内容,这时候就可能产生 Merge Conflict(合并冲突)。</p>
+<p>它出现的原因非常简单：Git 无法判断两份修改到底应该保留哪一个。</p>
+<p>我们这边举一个很简单的例子,假如C处,我们原本的<code>readme.txt</code>中最后一行是<code>eat apple</code>,经过更新,我们在<code>main</code>分支的E处修改这行为<code>eat red apple</code>,但是在<code>test</code>的G处,修改为<code>eat green apple</code>,现在两个分支都修改了同一行。</p>
+<p>如果这时候执行<code>git merge test</code>,Git 就会遇到一个问题,我要选择E处的修改呢,还是G处的修改呢?Git 不知道。因此它不会擅自帮你决定，而是暂停合并，把决定权交给开发者.</p>
+<p>我们下面来亲手制造一个Merge conflict,看看会发生什么</p>
+<p>我们对我们的<code>learngit_1</code>文件夹中的<code>readme.txt</code>做以下修改，对于<code>main</code>分支，其最后一行修改为<code>this is test for merge conflict</code>；而<code>test</code>分支，其最后一行修改为<code>this is test 4 merge conflict</code>. 我们将<code>test</code>分支合并到<code>main</code>分支试试：</p>
+<p><img src="git_files/figure-html/6de823da-1-image.png" class="img-fluid"></p>
+<p>可以看到Git 自动合并失败了，需要你手动解决冲突</p>
+<p>此时我们可以使用<code>git status</code>查看有哪些文件存在冲突，我们这样才有目标：</p>
+<p><img src="git_files/figure-html/1db942d6-2-image.png" class="img-fluid"></p>
+<p>可以看到，Git说<code>readme.txt</code>都修改了，并且 Git 无法自动决定结果，这时候我们打开<code>readme.txt</code>文件看看。</p>
+<p><img src="git_files/figure-html/1db942d6-1-image-2.png" class="img-fluid"></p>
+<p>这几行就是 Git 自动插入的冲突标记。</p>
+<p>Git 的冲突内容通常由两个部分组成：</p>
+<ol type="1">
+<li><p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 与 ======= 之间的部分：这段内容是现在这分支中存在的冲突内容。</p></li>
+<li><p>======= 与 &gt;&gt;&gt;&gt;&gt;&gt;&gt; 分支名 之间的部分：这段内容是将要合并进来的分支中存在的冲突内容。</p></li>
+</ol>
+<p>Git 实际上是在问你，这两个版本我都找到了，你决定最终应该长什么样</p>
+<p>此时我们只能手动解决冲突，我们自己选择保留哪一种内容，可以是<code>main</code>分支，也可以是<code>test</code>分支，甚至可以是你自己重新写的内容，解决冲突并不是“选择左边还是右边”，而是确定这个文件最终应该是什么样子。</p>
+<p>例如我们决定保留<code>main</code>分支下的内容，那么把冲突标记和另一边内容全部删除，最终文件中冲突部分只留下<code>this is test for merge conflict</code>即可。</p>
+<p>后面直接使用<code>git add</code>加<code>git commit</code>即可。这样整个 merge 才真正完成。</p>
+<p>值得注意的是，此部分同样可以使用VSCode，此处就不做介绍了，非常简单，自己尝试一下，一试就会:)</p>
+<p><img src="git_files/figure-html/e524d92a-1-image.png" class="img-fluid"></p>
+<p>如图，我们就可以看到我们的全过程图</p>
+<p>一般来说，现在<code>test</code>分支就已经没用了，我们可以直接删除即可，这也是一般的工作流程，指令是<code>git branch -d 分支名</code>,<code>-D</code>表示为强硬删除</p>
+<p>如果你在看到存在大量的merge后不想要继续merge怎么办，可以使用<code>git merge --abort</code></p>
+<p>如果想要学习更多的分支内容，请前往<a href="https://liaoxuefeng.com/books/git/branch/bug/index.html" target="_blank">廖雪峰的分支管理教程</a></p>
+</section>
+</section>
+<section id="github-1" class="level2">
+<h2 class="anchored" data-anchor-id="github-1">Github</h2>
+<section id="远程仓库remotesshpush-与-pull" class="level3">
+<h3 class="anchored" data-anchor-id="远程仓库remotesshpush-与-pull">远程仓库：Remote、SSH、Push 与 Pull</h3>
+<p>到目前为止，我们学习的 Git 操作基本都发生在自己的电脑上。无论是 commit、版本回退，还是创建和合并分支，本质上都只是在操作本地的 Git 仓库。</p>
+<p>但是我们最开始介绍 GitHub 的时候提到过，GitHub 可以理解为 Git 仓库的“云端”。如果我们希望把自己的项目保存到 GitHub，或者和其他人共同开发项目，就需要让本地 Git 仓库与 GitHub 上的远程仓库建立联系。</p>
+<p>这个过程其实可以简单的理解为：本地Git仓库push到Github远程仓库，而我们可以从Github远程仓库pull到本地的Git仓库。</p>
+<p>其中，本地仓库和 GitHub 仓库之间的关系由 <code>remote</code> 管理；<code>SSH</code> 用来证明“你是谁”；<code>push</code> 负责把本地提交上传到远程仓库；<code>pull</code> 则负责把远程仓库中的新内容同步回来。</p>
+<p>Git 中把 GitHub 上这样的仓库称为远程仓库（Remote Repository）。</p>
+<p>需要注意，远程仓库并不一定非要位于 GitHub。GitHub 只是目前非常常见的 Git 托管平台，其他 Git 服务器同样可以作为 Remote。</p>
+<p>不过本文使用 GitHub，所以后面提到远程仓库时，我们基本都指 GitHub 上的仓库。</p>
+<section id="在-github-创建一个远程仓库" class="level4">
+<h4 class="anchored" data-anchor-id="在-github-创建一个远程仓库">在 GitHub 创建一个远程仓库</h4>
+<p>首先，登录我们的Github账户，点击右上角的<code>+</code>,选择创建一个新的Repository：</p>
+<p><img src="git_files/figure-html/bb37f2d7-2-image.png" class="img-fluid"></p>
+<p>Repository名称可以随意填写，只要你觉得可以帮助你认清是哪个仓库即可，仓库还可以选择<code>Pubulic</code>或者<code>Private</code>，<code>Public</code> 表示其他人可以看到这个仓库，<code>Private</code> 则表示只有你自己以及被授权的用户可以访问。</p>
+<p>因为我们本地已经存在 <code>learngit_1</code> 仓库，所以这里建议暂时不要勾选自动创建 <code>README</code>、<code>.gitignore</code> 或 <code>License</code>，直接创建一个空仓库即可。这样可以避免本地仓库和 GitHub 仓库一开始就拥有不同的提交历史。</p>
+<p><img src="git_files/figure-html/bb37f2d7-1-image-2.png" class="img-fluid"></p>
+<p>一般可以看到两种常见形式HTTPS和SSH。</p>
+<p><img src="git_files/figure-html/a6bd7067-1-image.png" class="img-fluid"></p>
+<p>两种方式都可以连接 GitHub。本文主要使用 SSH，因此在真正连接远程仓库之前，我们先把 SSH 配置好。该图中下方的两块代码分别代表着，已经有本地库与还没有本地库的情况，我们选择下者，配置好SSH后直接输入对应代码即可。</p>
+</section>
+<section id="ssh让-github-知道你是谁" class="level4">
+<h4 class="anchored" data-anchor-id="ssh让-github-知道你是谁">SSH：让 GitHub 知道“你是谁”</h4>
+<p>假设你在自己的电脑上执行<code>git push</code>,告诉 GitHub，我要上传这个仓库，GitHub 怎么知道操作电脑的人真的是你？</p>
+<p>GitHub 需要一种更加可靠的身份验证方式，这里我们使用的就是 SSH Key。</p>
+<p>SSH Key 可以简单理解成一对互相对应的钥匙：你的电脑中存在私钥，而我们提供给Github公钥。当电脑尝试连接 GitHub 时，GitHub 可以通过这套机制确认：这个连接确实来自拥有对应私钥的用户</p>
+<p>我们可以在我们的主文件夹看看是否存在.ssh文件夹，里面应该有两个文件<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件,对应着私钥与公钥两种。如果没有的话，可以使用以下指令生成一个<code>ssh-keygen -t rsa -C "youremail@example.com"</code></p>
+<p>你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。记住，生成出来的私钥不能泄露出去，而公钥可以放心地告诉别人。我们上传给Github的也是公钥。</p>
+<p>我们可以使用VSCode等方法查看公钥的内容，然后直接复制完整内容。我们进入Settings，然后点击左侧栏Access中的SSH and GPG keys:</p>
+<p><img src="git_files/figure-html/606663fa-1-image.png" class="img-fluid"></p>
+<p>点击SHH keys块的右上角<code>New SSH key</code>, 然后输入一个你能认得的title与你的公钥即可。</p>
+<p>我们可以使用以下指令来查看自己是否成功，如果第一条指令不行就换成下面那条，记得输入yes：</p>
+<p><img src="git_files/figure-html/7446d765-1-image.png" class="img-fluid"></p>
+<p>如果出现了这种情况，请你在.ssh文件夹创建一个config，不然后面会有问题哦<sub></sub></p>
+<p>具体策略如下：从上到下输入：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd .ssh  <span class="co">#(进入该文件夹)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo Host github.com<span class="op">&gt;</span>config</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo     HostName ssh.github.com<span class="op">&gt;&gt;</span>config</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo     User git<span class="op">&gt;&gt;</span>config</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo     Port <span class="dv">443</span><span class="op">&gt;&gt;</span>config</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>然后检查一下内容：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> type config</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> github.com</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">HostName</span> ssh.github.com</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">User</span> git</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Port</span> 443</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>然后再检查一下文件名称：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dir</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>你应该能看到一个<code>config</code>而不是一个文件夹，千万不要变成文件夹啊😫</p>
+<p>需要注意的是，SSH 测试成功并不代表你真的“登录进了 GitHub 的服务器终端”。GitHub 只是通过 SSH 确认了你的身份，并不会给你提供普通的 Shell。</p>
+<p>到这里，我们的电脑已经具备了通过 SSH 与 GitHub 通信的能力。</p>
+</section>
+<section id="将本地仓库与远程仓库连接起来" class="level4">
+<h4 class="anchored" data-anchor-id="将本地仓库与远程仓库连接起来">将本地仓库与远程仓库连接起来</h4>
+<p>SSH 配置完成以后，我们回到之前的 <code>learngit_1</code>。然后使用<code>git remote add origin git@github.com:用户名/learngit_1.git</code>:</p>
+<p><img src="git_files/figure-html/a7607566-1-image.png" class="img-fluid"></p>
+<p>我们先介绍一下这串指令的含义： 1. <code>git remote</code> 表示管理远程仓库。 2. <code>add</code>表示增加一个远程仓库。 3. <code>origin</code> 是我们给这个远程仓库起的名字 4. <code>git@github.com:example/learngit_1.git</code> 才是真正的远程仓库地址。 &gt; 所以整句话可以理解成:给当前 Git 仓库添加一个名叫 origin 的远程仓库，它的地址是后面的 GitHub 地址。</p>
+<p>至于为什么给远程仓库起<code>origin</code>这个名字，是大家都习惯了，你起成<code>github</code>也是可以的</p>
+<p>我们可以使用<code>git remote</code>来查看我们的远程仓库，如果希望看到详细地址，可以使用<code>git remote -v</code>：</p>
+<p><img src="git_files/figure-html/c0fde836-1-image.png" class="img-fluid"></p>
+<p>fetch表示从这个地址获取内容。 push表示向这个地址上传内容。</p>
+<p>现在本地仓库和 GitHub 已经建立联系，但是 GitHub 仓库目前还是空的。这时候就需要push，可以把其简单理解为把本地仓库中的提交推送到远程仓库。</p>
+<p>第一次上传的时候，可以可以执行<code>git push -u origin main</code> 表示为上传到哪个远程仓库，上传哪个分支的内容。所以这句话就是：把本地的 <code>main</code> 分支推送到 <code>origin</code> 这个远程仓库。其中的<code>-u</code>的作用是以后 Git 就知道本地 <code>main</code> 默认应该推送到哪个远程分支。以后我们只需要<code>git push</code>即可。</p>
+<p><img src="git_files/figure-html/39298764-2-image.png" class="img-fluid"></p>
+<p>我们这时候刷新一下我们的Github的仓库页面：</p>
+<p><img src="git_files/figure-html/39298764-1-image-2.png" class="img-fluid"></p>
+<p>这就代表我们已经成功啦.</p>
+<p>我们以后想把我们的工作更新到远程仓库，其整个流程为:</p>
+<p>修改文件-&gt;git add-&gt;暂存区-&gt;git commit-&gt;本地Git仓库-&gt;git push-&gt;GitHub远程仓库</p>
+<p>我们前面学习过分支，那要如何把我们的分支也上传过去呢？我们同样可以执行<code>git push -u origin test</code>之后 GitHub 上就会出现对应的远程分支。 这样以后<code>git push</code>就会同时更新这两个分支的信息。</p>
+</section>
+<section id="pull把-github-的修改同步到本地" class="level4">
+<h4 class="anchored" data-anchor-id="pull把-github-的修改同步到本地">Pull：把 GitHub 的修改同步到本地</h4>
+<p>我们前面讲的是把本地的内容上传到远程仓库，肯定也要有操作可以把远程仓库的内容放到我们的本地来，这个操作就是<code>git pull</code>，例如有时候你的同伴已经在远程仓库完成了一次更新，你要再工作肯定是要继续新的仓库，旧的仓库就没用了。</p>
+<p>这样就会引出了前面说的冲突问题，如果已经有人在远端更新了仓库，你这时候使用<code>git push</code>，Git通常会拒绝，原因很简单：远程已经有了你本地不知道的新内容。</p>
+<p>如果 Git 允许你直接 Push，就可能覆盖其他人的工作。这时候我们通常需要先<code>git pull</code>，把远程变化同步下来，Git 会尝试把两边的修改进行合并。如果双方修改了同一部分内容，就可能出现上一章讲过的Merge Conflict，我们的解决方案与那部分一模一样，我们最后解决完成后git push即可。</p>
+<p><code>pull</code>是在做什么呢？</p>
+<p>实际上，它包含了两个操作，即<code>git fetch</code>+<code>git merge</code>，前者负责把远程仓库的最新信息获取回来，但不会直接修改你当前正在工作的分支。然后 Git 再把获取到的远程变化合并到当前分支。</p>
+<p>假如你正在修改<code>readme.txt</code>，但是还有没有commit，这时候进行<code>pull</code>，如果远程仓库恰好也修改了相关文件，就可能让情况变得比较复杂，所以我们在<code>pull</code>之前，最好先<code>git status</code>，确认一下自己的工作区状态，如果已经完成的差不多了，可以先<code>add+commit</code></p>
+<p>有时候我们想要修改我们的地址，如把SSH变成HTTPS：可以使用<code>git remote set-url origin 新地址</code>，但是如果要删除这个远程库链接，可以使用<code>git remote remove origin</code></p>
+</section>
+<section id="基于vscode的push与pull" class="level4">
+<h4 class="anchored" data-anchor-id="基于vscode的push与pull">基于VSCode的push与pull</h4>
+<p>前面的内容我们同样可以使用我们的VSCode，这边我们做简单的介绍：</p>
+<p>首先，我们要把本地库链接到Gitub，可以使用下图的按钮，直接使用即可，上侧输入的内容为你给远程仓库的命名，例如我们这边是<code>origin</code>:</p>
+<p><img src="git_files/figure-html/c2ddea5d-2-image.png" class="img-fluid"></p>
+<p>以及我们的<code>push</code>,<code>pull</code>,<code>fetch</code>操作：</p>
+<p><img src="git_files/figure-html/c2ddea5d-1-image-2.png" class="img-fluid"></p>
+<p>VSCode 并没有使用另一套版本控制系统，只是把这些 Git 操作变成了按钮。如果你的VSCode是英文的，应该可以更好的帮助你理解。</p>
+</section>
+</section>
+<section id="clone从远程仓库获取一个完整项目" class="level3">
+<h3 class="anchored" data-anchor-id="clone从远程仓库获取一个完整项目">Clone：从远程仓库获取一个完整项目</h3>
+<p>上一部分我们已经学会了如何把本地 Git 仓库连接到 GitHub，并使用<code>push</code> 和 <code>pull</code> 在本地仓库与远程仓库之间同步提交。但是前面的操作有一个前提：本地电脑中已经存在这个 Git 项目。</p>
+<p>如果现在换了一台电脑，或者你想参与别人的 GitHub 项目，本地连项目文件夹都没有，这时候就不能直接使用 <code>git pull</code>，因为本地还没有对应的 Git 仓库。这种情况下，就需要使用：<strong><code>git clone</code></strong></p>
+<p><code>clone</code> 的作用可以简单理解成：把一个远程 Git 仓库完整地复制到本地.这里的“完整”不仅包括项目文件，还包括这个仓库的 Git 历史、分支信息以及远程仓库配置。</p>
+<p>假如Github上已经有一个仓库：git@github.com:example/learngit_1.git</p>
+<p>我们希望把它下载到本地，只需要在准备存放项目的位置执行：git clone git@github.com:example/learngit_1.git</p>
+<p><img src="git_files/figure-html/baadf83e-2-image.png" class="img-fluid"></p>
+<p>我们可以直接在github中点击右上角的Code按钮，就可以获得地址了。</p>
+<p>Git 会自动创建：learngit_1/ ，并把远程仓库中的内容下载进去。我们可以进入这个项目，然后使用<code>git status</code>来查看其内容。此时你已经拥有了一个可以正常使用的本地 Git 仓库。</p>
+<p>我们可以尝试下载以下图中的仓库，这是一个Skill，感觉看上去不错：</p>
+<p><img src="git_files/figure-html/baadf83e-1-image-3.png" class="img-fluid"></p>
+<p>我们可以看到，我们获得了全部的信息，这非常完美，且我们以后也可以通过<code>pull</code>等方法进行更新啦。</p>
+<p>我们上面Code按钮中看到可以下载Zip，有的人会说，这不也是下载了整个文件夹吗，有什么区别？</p>
+<p>如果我们下载Zip，你得到的只是当前版本的文件，其中是没有.git的，因此也没有这个项目的完整 Git 历史。</p>
+<p>而使用<code>git clone</code> 获得的是项目文件+.git+Commit历史+分支信息+远程仓库配置。</p>
+<p>对的，我们<code>clone</code>以后，<code>Remote</code> 已经自动配置好了:</p>
+<p><img src="git_files/figure-html/b20f19d7-1-image.png" class="img-fluid"></p>
+<p>如果你拥有这个仓库的 <code>Push</code> 权限，也可以直接<code>git push</code>上传自己的提交。</p>
+<p>所以如果我们对于一个有权限的Github项目，如果换了一台新电脑，整个工作流程就是：</p>
+<p>从Github中clone下来项目， 然后在本地项目进行修改， 使用<code>git add .</code>+<code>git commit</code> ，最后使用<code>git push</code>把新的内容推到Github中去。</p>
+<p>如果希望 <code>Clone</code> 之后直接进入某个指定分支，可以使用:<code>git clone -b 分支名 仓库地址</code></p>
+</section>
+<section id="gitignore告诉-git-哪些文件不要管理" class="level3">
+<h3 class="anchored" data-anchor-id="gitignore告诉-git-哪些文件不要管理">.gitignore：告诉 Git 哪些文件不要管理</h3>
+<p>学习到这里还有一个非常实际的问题。Git 默认会看到项目目录中的大多数文件。</p>
+<p>但是实际开发中，并不是所有文件都应该提交到 Git 仓库。我们本地的仓库中可能有一些私密的信息，不应该随意的上传到Github中去，这时候就需要.gitignore</p>
+<p>.gitignore 是一个普通文本文件。它的作用是告诉 Git 哪些文件或文件夹应该被忽略. 我们可以在里面输入例如<code>node_modules/</code>等内容，这些就代表了要忽略上传的文件。</p>
+<p>基本写法：</p>
+<ol type="1">
+<li>如果想忽略一个文件：test.txt 那么test.txt不会被 Git 跟踪</li>
+<li>如果想忽略一个文件夹：node_modules/ 那么整个：node_modules文件夹都会被忽略。</li>
+<li>如果想忽略某一类文件：*.log 表示忽略所有：.log文件。例如debug.log或者error.log等。</li>
+</ol>
+<p>我们在这里举一个例子，假如我们写为：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>node_modules/</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>.env </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>*.log </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>temp/</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>表示为忽略整个node_modules与temp文件夹，.env表示忽略环境配置文件，*.log表示忽略所有日志文件。</p>
+<p>补充： 如果想要某一类中的某一个文件是可上传的，可以使用：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode txt code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>*.log</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>!important.log</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>这种写法。</p>
+<p>在这我们着重讲一个文件夹<code>node_modules</code>，这个文件夹往往是不会上传的，里面可能包含成千上万个依赖文件，而且体积很大。但是这些依赖通常已经记录在：<code>package.json</code>和<code>package-lock.json</code>中，clone之后，我们可以使用<code>npm install</code>生成自己的<code>node_modules</code>,因此没有必要把整个目录上传到 Git。类似的思想也适用于其他语言自动生成的文件。</p>
+<p><code>.gitignore</code> 主要作用于“还没有被 Git 跟踪”的文件。如果你已经使用<code>add和commit</code>进行跟踪了，已经进入版本控制的文件，不会因为后来加入 <code>.gitignore</code> 就自动停止跟踪。</p>
+<p>如果我们要取消追踪可以：</p>
+<p>现在<code>.gitignore</code>加入该文件，例如<code>config.txt</code>，然后执行<code>git rm --cached config.txt</code>，之后提交<code>git commit -m "stop tracking config.txt"</code>再<code>git push</code>即可。</p>
+<p>如果是文件夹的话，可以使用<code>git rm -r --cached node_modules</code>，即加入<code>-r</code>，其含义是递归处理整个目录。之后<code>git commit -m "remove node_modules from git"</code>即可。</p>
+<p><code>git check-ignore -v 文件名</code>可以告诉你是哪一条 <code>.gitignore</code> 规则忽略了它</p>
+<section id="使用-vs-code-clone-github-项目" class="level4">
+<h4 class="anchored" data-anchor-id="使用-vs-code-clone-github-项目">使用 VS Code Clone GitHub 项目</h4>
+<p><img src="git_files/figure-html/55eb4eaf-1-image.png" class="img-fluid"></p>
+<p>如图所示，我们可以直接获取即可，VSCode 会帮助我们执行 Clone，并询问是否打开这个项目。</p>
+</section>
+</section>
+</section>
+<section id="团队协作" class="level2">
+<h2 class="anchored" data-anchor-id="团队协作">团队协作</h2>
+<p>在真实的开发中，一个项目往往不会只有一个人来开发，我们可能有多个作者来分别负责一些功能，如果所有人都直接修改<code>main</code>分支，那么很容易出现问题，因此多人开发的时候，我们一般不会直接让所有人都直接修改<code>main</code>,而是开发自己的功能在分支后且push上去，这时候需要<code>pull request</code>，需要别人检查一下才会选择是否合并。</p>
+<p>我们下面会详细的讲述一下多人开发的流程</p>
+<p>假设我们在Github上有一个团队项目project，Alice 和 Bob 都拥有这个仓库的开发权限。</p>
+<p>第一次参与项目时，他们都先会<code>git clone git@github.com:example/project.git</code> 从而得到了自己的本地仓库。这时候虽然大家操作的是同一个 GitHub Repository，但每个人实际上都有自己独立的本地 Git 仓库。</p>
+<section id="第一步开始开发之前先同步-main" class="level5">
+<h5 class="anchored" data-anchor-id="第一步开始开发之前先同步-main">第一步：开始开发之前先同步 main</h5>
+<p>假设 Alice 准备开发登录功能。首先先应该进入<code>main</code>分支，然后同步Github中的最新内容：<code>git pull</code>,这一步是为了防止其本地库的<code>main</code>可能已经落后了。如果她一开始就是基于旧代码开发，后面更容易产生冲突。</p>
+<p>因此一个比较好的习惯就是：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> swtich main</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>先让自己的 <code>main</code>保持最新，再开始新的工作。</p>
+</section>
+<section id="第二步创建自己的功能分支" class="level5">
+<h5 class="anchored" data-anchor-id="第二步创建自己的功能分支">第二步：创建自己的功能分支</h5>
+<p>同步完成之后，不直接修改 <code>main</code>。而应该创建新的分支，如<code>git switch -c feature-login</code>,之后Alice 就在：feature-login中开发登录功能。这里的分支名通常会尽量描述自己的任务。如果是修复 Bug，也可能写成：fix-login-error等等，原则就是看名字就应该大概知道这个分支在做什么。</p>
+</section>
+<section id="第三步正常开发并-commit" class="level5">
+<h5 class="anchored" data-anchor-id="第三步正常开发并-commit">第三步：正常开发并 Commit</h5>
+<p>接下来和之前学习的 Git 操作完全一样。Alice 修改代码：<code>login.html, login.js</code>,然后我们可以查看状态<code>git status</code>，确定修改<code>git diff</code>,然后使用<code>git add .</code>+<code>git commit -m "add login page"</code>继续开发后，还可以继续add与commit。</p>
+<p>于是我们的历史可能会变成：</p>
+<p><img src="git_files/figure-html/9fb0c682-1-Screenshot_2026-08-26-19-41-55-728_com.miui.creat.png" class="img-fluid"></p>
+<p>这里的 D 和 E 都只存在于 Alice 的本地 <code>feature-login</code> 分支中。</p>
+</section>
+<section id="第四步把自己的-branch-push-到-github" class="level5">
+<h5 class="anchored" data-anchor-id="第四步把自己的-branch-push-到-github">第四步：把自己的 Branch Push 到 GitHub</h5>
+<p>现在登录功能开发完成。但是 GitHub 还不知道：feature-login这个分支。因此第一次Push的时候，可以<code>git push -u origin feature-login</code>，执行后这样 GitHub 上就出现了 Alice 的功能分支。后面也可以直接<code>git push</code>即可。</p>
+<p><img src="git_files/figure-html/4bb729c5-1-image.png" class="img-fluid"></p>
+<p>这里会产生一个问题，为什么不直接 Merge 到 main？即直接使用:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge feature-login </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>如果这是你自己的个人项目，这么做完全没有问题。但是多人协作中，我们通常希望：在代码真正进入 <code>main</code> 之前，让其他成员检查一下修改。这个请求就是<code>Pull Request</code>通常简称PR.</p>
+</section>
+<section id="创建pull-request" class="level4">
+<h4 class="anchored" data-anchor-id="创建pull-request">创建Pull Request</h4>
+<p>当我们执行了<code>git push -u origin feature-login</code>之后，进入Github Repository 页面，其往往会自动提示Compare &amp; pull request，点击进去就可以创建PR。</p>
+<p><img src="git_files/figure-html/739d8e05-1-image-2.png" class="img-fluid"></p>
+<p>当然也可以进入Pull requests页面，然后New pull request。</p>
+<p><img src="git_files/figure-html/739d8e05-3-image.png" class="img-fluid"></p>
+<p>接下来需要选择两个分支。[base: main &amp; compare: feature-login]</p>
+<p>这里的<code>base</code>表示为修改最终要进入哪个分支。而<code>compare</code>表示哪个分支提供新的修改。</p>
+<p><img src="git_files/figure-html/739d8e05-2-image-3.png" class="img-fluid"></p>
+<p>Title 应该简单说明这次修改完成了什么。而 Description 可以说明具体的工作内容。Pull Request 的目的不是写很多文字，而是让负责 Review 的成员能够快速知道：“这次修改是干什么的？”</p>
+<p>我们可以在github上直接看到如图所示内容，即改变了什么：</p>
+<p><img src="git_files/figure-html/d8ad9b60-1-image.png" class="img-fluid"></p>
+<p>如果经过你的检查，我们可以通过此次更改了：</p>
+<p><img src="git_files/figure-html/d1b02c18-1-image.png" class="img-fluid"></p>
+<p>如果你觉得没通过，可以给他一些意见，让他重新修改一下。</p>
+<p>Alice 不需要重新创建 Pull Request。她只需要回到自己的：<code>feature-login</code>，继续修改，然后重新add、commit、push即可。新的 commit 会自动出现在原来的 Pull Request 中。故Pull Request 是跟着分支走的，而不是只对应一次 commit。</p>
+<p>我们在<code>push</code>之前，可能存在一个问题，就是多人开发时，很可能在 Alice 开发登录功能期间，<code>main</code> 已经继续发生变化。例如在他开发期间，bob的功能已经进入了<code>main</code>，且推进了两个版本了，这时候我们本地的<code>main</code>版本太低了。</p>
+<p>如果双方修改的内容互不影响，GitHub 可能仍然可以直接合并。但是如果双方修改了同一个文件的同一部分，就可能出现：<code>Merge Conflict</code>GitHub 会提示这个 Pull Request 不能直接合并。这时候就需要先解决冲突。</p>
+<p>我们先简单尝试一下，这时候我们在我们的本地中创建第二个分支<code>test_2</code>即可，我们看看我们修改相同部分以后会出现什么输出呢？</p>
+<p><img src="git_files/figure-html/e8462f75-1-image.png" class="img-fluid"></p>
+<p>我们可以看到，已经出错了。</p>
+<p>我们有一种比较简单的方法：</p>
+<p>先切回<code>git switch main</code>；获取最新的<code>mian</code>:<code>git pull</code>；然后回到自己的分支：<code>git switch test_2</code>;新的 <code>main</code> 合并进来：<code>git merge main</code>,现在如果有冲突，就按照前面 Merge Conflict 一章的方法解决。修改成最终想要的结果,然后add, commit, push 即可。</p>
+<p><img src="git_files/figure-html/b107a453-1-image.png" class="img-fluid"></p>
+<p>这时候我们就可以成功PR了</p>
+<p><img src="git_files/figure-html/9f296db0-1-image.png" class="img-fluid"></p>
+<p>如图，我们可以我们已经成功修改了，且存在了三个branch，如果不想要的分支，merge完可以直接删除啦。</p>
+</section>
+<section id="如果没有仓库写权限怎么办fork" class="level4">
+<h4 class="anchored" data-anchor-id="如果没有仓库写权限怎么办fork">如果没有仓库写权限怎么办？Fork</h4>
+<p>针对于我们没有操作权限的仓库，应该怎么办呢？ 这时候就需要Fork</p>
+<p>Fork 可以简单理解成：在自己的 GitHub 账号中复制一份别人的仓库。</p>
+<p><img src="git_files/figure-html/b0ef4744-1-image.png" class="img-fluid"></p>
+<p>之后，你的Github中就会出现对应的仓库了，这两个仓库是独立的，现在你可以自由的push到你自己的仓库中去。</p>
+<p>Fork的一个基本流程：</p>
+<p>例如你希望给一个开源项目修复 Bug。</p>
+<p>首先，先把别人的仓库fork到我们自己仓库。然后 Clone 自己的 Fork，修改后在 GitHub 上创建 Pull Request。然后项目维护者就可以检查你的代码。如果他们认为修改没有问题，就可以把你的 PR Merge 到原项目。这就是很多开源项目接受外部贡献的方式。</p>
+<p>如果还是没懂的话，可以前往 <a href="https://www.bilibili.com/video/BV1oZAdeHEKx/" target="_blank">傻子也能做开源</a>这个视频看看详细教程</p>
+</section>
+</section>
+<section id="tag与release-给重要版本一个名字" class="level2">
+<h2 class="anchored" data-anchor-id="tag与release-给重要版本一个名字">Tag与Release ：给重要版本一个名字</h2>
+<p>我们前面的学习可以知道，每执行一次<code>commit</code>，Git就会保存一个新的版本，随着项目不断开发，提交历史可能会越来越长。</p>
+<p>如果现在我们想找到某个重要版本，例如：“第一个正式发布的版本”，我们前面说可以通过<code>git log</code>找到它对应的 commit hash。但是这种方式并不直观。我们可能更希望直接把它称为：v1.0.0这就是 Git 中 <code>Tag（标签）</code> 的作用</p>
+<p>Tag 就是给某个重要 commit 起一个固定而且容易理解的名字。</p>
+<p>前面的commit是一些普通存档，tag就是在普通存档中再选择一些重要存档。</p>
+<p>可以使用<code>git tag</code>查看当前仓库已经存在的tag，如果已经存在了一定规则，我们可以查找<code>git tag -l "v1.*"</code>这样就可以查看所有<code>v1.x</code>的标签了。</p>
+<p>我们要如何创建tag呢？ 我们可以对我们现在的commit版本，直接使用<code>git tag v1.0.0</code>他就会认为我们现在的版本是<code>v1.0.0</code></p>
+<p>如果要给过去的版本创建tag，我们只需要知道其<code>commit-id</code>即可，我们使用<code>git tag v1.0.0 commit-id</code>即可</p>
+<p>常见的tag分为两种：Lightweight Tag &amp; Annotated Tag</p>
+<p>我们前面使用的就是Lightweight Tag，它本质上是一个指向某个 commit 的名字。如果希望tag本身还包括创建者；创建时间；说明信息。</p>
+<p>其指令为<code>git tag -a v1.0.0 -m "Release version 1.0.0"</code></p>
+<p>在正式项目中，如果 Tag 是用于软件发布，通常更推荐使用 Annotated Tag，因为它能够保存更多关于这个版本的信息。</p>
+<p>如果你希望查看<code>V1.0.0</code>, 可以使用<code>git show v1.0.0</code></p>
+<p>且我们要清楚一点，tag不会自动上传到Github，因此我们需要单独 Push Tag，例如<code>git push origin v1.0.0</code>意思是把本地的 <code>v1.0.0 Tag</code> 上传到 <code>origin</code>远程仓库。 且可以一次push多个tag，即<code>git push origin --tags</code></p>
+<p>如果创建错了，可以使用<code>git tag -d v1.0</code>来删除tag。我们可以使用<code>git push origin --delete v1.0</code>删除远程的tag</p>
+<p><code>Release</code>是 GitHub 在 Tag 基础上提供的“正式发布页面”。</p>
+<p>GitHub Releases 页面，一个 v1.0.0 Release 中包含版本标题、更新说明和下载文件 ，是基于某个 Tag 创建一个更加完整的发布页面。</p>
+<p>GitHub Release 不仅可以写版本说明，还可以附加文件。这样用户进入：release之后，可以直接下载已经编译好的程序。如果没有手动上传文件，GitHub 通常也会根据 Tag 提供对应源代码的归档下载，例如：(Source code (zip)),(Source code (tar.gz))</p>
+<p><img src="git_files/figure-html/0a14540c-1-image.png" class="img-fluid"></p>
+<p>我们如图就可以发布我们的release，记得在里面选择好版本号以及修改的内容。</p>
+<p>一般来说版本号是v1.0.0，代表着vMAJOR.MINOR.PATCH</p>
+<ol type="1">
+<li>PATCH：一般是出现了一个小bug，我们修复一下，并没有增加新的主要功能。</li>
+<li>MINOR：增加兼容的新功能，但原来的功能仍然可以正常使用</li>
+<li>MAJOR：产生较大的不兼容变化，如果软件进行了一次非常大的改版，使原有接口或使用方式发生明显的不兼容变化，就可能提升主版本号</li>
+</ol>
+<p>可能后面还会跟着Alpha、Beta 和 Release Candidate，如v2.0.0-Alpha，v2.0.0-beta，v2.0.0-rc.1等等</p>
+<ol type="1">
+<li>Alpha一般表示：非常早期的测试版本，功能可能还不完整。</li>
+<li>Beta一般表示：功能基本完成，但仍需要较多测试。</li>
+<li>RC：可以理解成：候选正式版本，如果没有发现严重问题，就可能成为最终版本。</li>
+</ol>
+<p>这可以帮助我们理解一些开源项目，选择合适的稳定的版本其实更好哦~</p>
+</section>
+<section id="git常用命令速查" class="level2">
+<h2 class="anchored" data-anchor-id="git常用命令速查">Git常用命令速查</h2>
+<p>下面整理了本教程中最常用的 Git 命令。实际使用时不需要一次全部记住，只需要知道“遇到某种情况应该找哪一类命令”即可。对于不确定当前仓库状态的情况，优先使用 <code>git status</code> 查看，再决定下一步操作。</p>
+<section id="git-基础配置" class="level3">
+<h3 class="anchored" data-anchor-id="git-基础配置">Git 基础配置</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git --version</code></td>
+<td>安装 Git 后检查是否安装成功</td>
+<td>查看当前电脑安装的 Git 版本</td>
+</tr>
+<tr class="even">
+<td><code>git config --global user.name "用户名"</code></td>
+<td>第一次使用 Git 时</td>
+<td>设置 Git 提交记录中使用的用户名</td>
+</tr>
+<tr class="odd">
+<td><code>git config --global user.email "邮箱"</code></td>
+<td>第一次使用 Git 时</td>
+<td>设置 Git 提交记录中使用的邮箱</td>
+</tr>
+<tr class="even">
+<td><code>git config --global user.name</code></td>
+<td>想确认当前配置的用户名时</td>
+<td>查看全局 Git 用户名</td>
+</tr>
+<tr class="odd">
+<td><code>git config --global user.email</code></td>
+<td>想确认当前配置的邮箱时</td>
+<td>查看全局 Git 邮箱</td>
+</tr>
+<tr class="even">
+<td><code>git config --list</code></td>
+<td>想查看当前 Git 配置信息时</td>
+<td>查看 Git 当前使用的各种配置</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="创建与查看-git-仓库" class="level3">
+<h3 class="anchored" data-anchor-id="创建与查看-git-仓库">创建与查看 Git 仓库</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git init</code></td>
+<td>已经有一个本地项目，希望开始使用 Git 管理</td>
+<td>在当前目录创建 Git 仓库，并生成 <code>.git</code> 目录</td>
+</tr>
+<tr class="even">
+<td><code>git status</code></td>
+<td>不确定当前 Git 状态，或准备进行 add、commit、restore 等操作之前</td>
+<td>查看当前分支、工作区修改、暂存区内容以及未跟踪文件</td>
+</tr>
+<tr class="odd">
+<td><code>git status -s</code></td>
+<td>希望快速查看项目状态时</td>
+<td>以更简洁的形式显示 Git 状态</td>
+</tr>
+<tr class="even">
+<td><code>git log</code></td>
+<td>想查看项目以前的提交记录</td>
+<td>查看 Commit 历史，包括 Commit ID、作者、时间和提交信息</td>
+</tr>
+<tr class="odd">
+<td><code>git log --oneline</code></td>
+<td>提交历史较长，希望快速查看时</td>
+<td>每个 Commit 只显示一行，主要显示短 Commit ID 和提交信息</td>
+</tr>
+<tr class="even">
+<td><code>git log --graph --oneline --all</code></td>
+<td>项目存在多个分支，希望观察提交关系时</td>
+<td>用简单的图形方式显示所有分支的提交历史</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="添加与提交修改" class="level3">
+<h3 class="anchored" data-anchor-id="添加与提交修改">添加与提交修改</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git add 文件名</code></td>
+<td>只准备提交某一个文件</td>
+<td>把指定文件的当前修改加入暂存区</td>
+</tr>
+<tr class="even">
+<td><code>git add .</code></td>
+<td>当前项目的修改基本都准备一起提交</td>
+<td>把当前目录及其子目录中的修改加入暂存区</td>
+</tr>
+<tr class="odd">
+<td><code>git add -A</code></td>
+<td>希望把新增、修改和删除全部加入暂存区</td>
+<td>将整个仓库中的所有变化加入暂存区</td>
+</tr>
+<tr class="even">
+<td><code>git commit -m "提交说明"</code></td>
+<td>暂存区内容确认无误后</td>
+<td>把暂存区中的内容正式保存为一个新的 Commit</td>
+</tr>
+<tr class="odd">
+<td><code>git commit</code></td>
+<td>希望使用编辑器输入更完整的提交说明时</td>
+<td>创建 Commit，并打开默认编辑器填写 Commit Message</td>
+</tr>
+<tr class="even">
+<td><code>git commit --amend</code></td>
+<td>刚刚完成 Commit，但提交说明写错或漏掉少量文件时</td>
+<td>修改最近一次 Commit。已经 Push 的 Commit 不建议随意使用</td>
+</tr>
+<tr class="odd">
+<td><code>git diff</code></td>
+<td>文件修改后，希望知道具体改了什么</td>
+<td>查看工作区相对于暂存区发生的变化</td>
+</tr>
+<tr class="even">
+<td><code>git diff --staged</code></td>
+<td>已经执行 <code>git add</code>，希望确认即将提交什么</td>
+<td>查看暂存区相对于最近一次 Commit 的变化</td>
+</tr>
+<tr class="odd">
+<td><code>git diff HEAD</code></td>
+<td>希望一次查看所有尚未提交的修改时</td>
+<td>查看当前工作区和最近一次 Commit 之间的整体差异</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="撤销工作区修改" class="level3">
+<h3 class="anchored" data-anchor-id="撤销工作区修改">撤销工作区修改</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git restore 文件名</code></td>
+<td>文件修改错了，而且还没有 Commit，希望直接放弃修改</td>
+<td>把文件恢复为暂存区或最近一次 Commit 中的状态</td>
+</tr>
+<tr class="even">
+<td><code>git restore .</code></td>
+<td>当前所有未提交修改都不需要了</td>
+<td>恢复当前目录下所有可以恢复的文件。执行前应谨慎确认</td>
+</tr>
+<tr class="odd">
+<td><code>git restore --staged 文件名</code></td>
+<td>文件已经执行 <code>git add</code>，但暂时不想提交</td>
+<td>把文件从暂存区移出，但保留工作区中的实际修改</td>
+</tr>
+<tr class="even">
+<td><code>git restore --staged .</code></td>
+<td>一次 add 了很多文件，现在希望全部取消暂存</td>
+<td>清空这些文件的暂存状态，但保留文件修改</td>
+</tr>
+<tr class="odd">
+<td><code>git restore --source CommitID 文件名</code></td>
+<td>希望让某个文件恢复成历史版本中的内容</td>
+<td>从指定 Commit 中取出该文件，放到当前工作区</td>
+</tr>
+<tr class="even">
+<td><code>git restore --source v1.0.0 文件名</code></td>
+<td>希望恢复某个 Tag 对应版本中的文件</td>
+<td>将指定 Tag 中的文件内容恢复到当前工作区</td>
+</tr>
+</tbody>
+</table>
+<p>需要特别注意，<code>git restore 文件名</code> 可能直接丢弃尚未保存的本地修改，所以在执行之前最好先使用：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>确认这些修改确实不再需要。</p>
+<hr>
+</section>
+<section id="删除文件" class="level3">
+<h3 class="anchored" data-anchor-id="删除文件">删除文件</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git rm 文件名</code></td>
+<td>文件不再需要，希望同时从本地和 Git 中删除</td>
+<td>删除文件并把删除操作加入暂存区</td>
+</tr>
+<tr class="even">
+<td><code>git rm -r 文件夹</code></td>
+<td>希望删除整个已经被 Git 跟踪的目录</td>
+<td>递归删除目录并记录删除操作</td>
+</tr>
+<tr class="odd">
+<td><code>git rm --cached 文件名</code></td>
+<td>文件本地还要保留，但不希望 Git 继续管理</td>
+<td>从 Git 跟踪记录中移除文件，但不会删除本地文件</td>
+</tr>
+<tr class="even">
+<td><code>git rm -r --cached 文件夹</code></td>
+<td>某个目录已经被 Git 跟踪，现在想加入 <code>.gitignore</code></td>
+<td>停止跟踪整个目录，但保留本地目录</td>
+</tr>
+<tr class="odd">
+<td><code>git restore 文件名</code></td>
+<td>文件被误删，而且删除还没有 Commit</td>
+<td>从 Git 中恢复误删除的文件</td>
+</tr>
+</tbody>
+</table>
+<p>例如 <code>node_modules/</code> 已经错误地提交过，即使后来加入 <code>.gitignore</code>，Git 仍然会继续跟踪它。此时可以：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">-r</span> <span class="at">--cached</span> node_modules</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>然后再 Commit。</p>
+<hr>
+</section>
+<section id="查看与恢复历史版本" class="level3">
+<h3 class="anchored" data-anchor-id="查看与恢复历史版本">查看与恢复历史版本</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git show CommitID</code></td>
+<td>想查看某一次 Commit 具体修改了什么</td>
+<td>显示指定 Commit 的作者、时间和代码变化</td>
+</tr>
+<tr class="even">
+<td><code>git show HEAD</code></td>
+<td>想查看最近一次 Commit</td>
+<td>显示当前 HEAD 所在 Commit 的详细信息</td>
+</tr>
+<tr class="odd">
+<td><code>git show HEAD~1</code></td>
+<td>想查看上一个 Commit</td>
+<td>查看当前版本之前一个版本的详细信息</td>
+</tr>
+<tr class="even">
+<td><code>git switch --detach CommitID</code></td>
+<td>只是想临时查看或测试某个历史版本</td>
+<td>进入指定历史版本，但不会移动当前分支</td>
+</tr>
+<tr class="odd">
+<td><code>git switch main</code></td>
+<td>查看历史版本之后希望回到主分支</td>
+<td>重新切换到 main 分支</td>
+</tr>
+<tr class="even">
+<td><code>git restore --source CommitID 文件名</code></td>
+<td>只希望恢复某个旧版本中的一个文件</td>
+<td>把指定历史版本中的文件复制到当前工作区</td>
+</tr>
+</tbody>
+</table>
+<p>其中：</p>
+<p><code>HEAD</code> 可以理解为 Git 当前所在的位置。</p>
+<p>而：</p>
+<p><code>HEAD~1</code> 表示当前 Commit 的上一个 Commit。</p>
+<p><code>HEAD~2</code> 表示再向前两个 Commit。</p>
+<hr>
+</section>
+<section id="版本回退与撤销-commit" class="level3">
+<h3 class="anchored" data-anchor-id="版本回退与撤销-commit">版本回退与撤销 Commit</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git revert CommitID</code></td>
+<td>某个已经提交、甚至已经 Push 的 Commit 出现问题</td>
+<td>创建一个新的 Commit，用相反修改撤销指定 Commit，不删除原有历史</td>
+</tr>
+<tr class="even">
+<td><code>git reset --soft CommitID</code></td>
+<td>Commit 提交得不好，希望重新整理提交，但保留暂存区内容</td>
+<td>移动 HEAD，同时保留工作区和暂存区</td>
+</tr>
+<tr class="odd">
+<td><code>git reset CommitID</code></td>
+<td>希望取消后面的 Commit，但保留文件修改</td>
+<td>移动 HEAD，并取消暂存，工作区修改仍保留</td>
+</tr>
+<tr class="even">
+<td><code>git reset --mixed CommitID</code></td>
+<td>与普通 <code>git reset</code> 相同</td>
+<td>移动 HEAD，重置暂存区，保留工作区文件</td>
+</tr>
+<tr class="odd">
+<td><code>git reset --hard CommitID</code></td>
+<td>确定不要当前版本以及本地修改，希望彻底回到旧版本</td>
+<td>同时恢复 HEAD、暂存区和工作区，危险性较高</td>
+</tr>
+<tr class="even">
+<td><code>git reset --hard HEAD~1</code></td>
+<td>希望彻底退回上一个 Commit</td>
+<td>删除当前工作区修改，并让当前分支回到上一个 Commit</td>
+</tr>
+</tbody>
+</table>
+<p><code>reset --hard</code> 是本教程中需要格外谨慎的命令之一。它可能让未 Commit 的修改直接消失。</p>
+<p>如果修改已经上传到 GitHub，并且其他人可能已经获取这些 Commit，一般更推荐：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> revert CommitID</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>而不是随意重写历史。</p>
+<hr>
+</section>
+<section id="branch-分支操作" class="level3">
+<h3 class="anchored" data-anchor-id="branch-分支操作">Branch 分支操作</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git branch</code></td>
+<td>想知道当前有哪些本地分支</td>
+<td>查看所有本地 Branch，<code>*</code> 表示当前所在分支</td>
+</tr>
+<tr class="even">
+<td><code>git branch 分支名</code></td>
+<td>希望创建一个新分支，但暂时不切换</td>
+<td>从当前位置创建新的 Branch</td>
+</tr>
+<tr class="odd">
+<td><code>git switch 分支名</code></td>
+<td>希望切换到已经存在的分支</td>
+<td>切换当前工作分支</td>
+</tr>
+<tr class="even">
+<td><code>git switch -c 分支名</code></td>
+<td>开始开发一个新功能时</td>
+<td>创建新分支并立即切换过去</td>
+</tr>
+<tr class="odd">
+<td><code>git branch -d 分支名</code></td>
+<td>功能分支已经 Merge 完成，不再需要</td>
+<td>安全删除本地分支，如果未合并 Git 通常会拒绝</td>
+</tr>
+<tr class="even">
+<td><code>git branch -D 分支名</code></td>
+<td>确定不再需要一个尚未 Merge 的分支</td>
+<td>强制删除本地分支，应谨慎使用</td>
+</tr>
+<tr class="odd">
+<td><code>git branch -a</code></td>
+<td>希望同时看到本地和远程分支</td>
+<td>显示本地 Branch 和远程跟踪 Branch</td>
+</tr>
+</tbody>
+</table>
+<p>实际开发新功能时，一个非常常见的操作是：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch <span class="at">-c</span> feature-login</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>也就是先更新主分支，再从最新版本创建自己的功能分支。</p>
+<hr>
+</section>
+<section id="merge-与冲突处理" class="level3">
+<h3 class="anchored" data-anchor-id="merge-与冲突处理">Merge 与冲突处理</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git merge 分支名</code></td>
+<td>某个功能分支开发完成，希望合并到当前分支</td>
+<td>把指定分支的修改合并进当前分支</td>
+</tr>
+<tr class="even">
+<td><code>git status</code></td>
+<td>Merge 发生 Conflict 时</td>
+<td>查看哪些文件存在冲突</td>
+</tr>
+<tr class="odd">
+<td><code>git add 冲突文件</code></td>
+<td>手动处理完冲突以后</td>
+<td>告诉 Git 该文件中的冲突已经解决</td>
+</tr>
+<tr class="even">
+<td><code>git commit</code></td>
+<td>冲突全部解决并暂存以后</td>
+<td>完成 Merge Commit</td>
+</tr>
+<tr class="odd">
+<td><code>git merge --abort</code></td>
+<td>Merge 出现大量问题，希望取消本次合并</td>
+<td>尝试恢复到执行 Merge 之前的状态</td>
+</tr>
+</tbody>
+</table>
+<p>例如需要把：</p>
+<p><code>feature-login</code></p>
+<p>合并进：</p>
+<p><code>main</code></p>
+<p>应该先：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>再：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge feature-login</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>需要注意，<code>git merge feature-login</code> 的意思并不是“切换到 feature-login”，而是：</p>
+<blockquote class="blockquote">
+<p>把 <code>feature-login</code> 合并进我当前所在的分支。</p>
+</blockquote>
+<hr>
+</section>
+<section id="ssh-与-github-身份验证" class="level3">
+<h3 class="anchored" data-anchor-id="ssh-与-github-身份验证">SSH 与 GitHub 身份验证</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ls ~/.ssh</code></td>
+<td>配置 SSH 之前</td>
+<td>查看电脑是否已经存在 SSH Key</td>
+</tr>
+<tr class="even">
+<td><code>ssh-keygen -t ed25519 -C "邮箱"</code></td>
+<td>第一次通过 SSH 连接 GitHub</td>
+<td>创建一对新的 SSH 公钥与私钥</td>
+</tr>
+<tr class="odd">
+<td><code>cat ~/.ssh/id_ed25519.pub</code></td>
+<td>SSH Key 创建完成后</td>
+<td>查看公钥内容，用于添加到 GitHub</td>
+</tr>
+<tr class="even">
+<td><code>ssh -T git@github.com</code></td>
+<td>GitHub SSH 配置完成以后</td>
+<td>测试电脑是否可以通过 SSH 成功认证 GitHub</td>
+</tr>
+</tbody>
+</table>
+<p>其中：</p>
+<p><code>id_ed25519</code></p>
+<p>通常是私钥，不应该发送给别人。</p>
+<p>而：</p>
+<p><code>id_ed25519.pub</code></p>
+<p>是公钥，可以添加到 GitHub 的 <code>SSH and GPG keys</code> 中。</p>
+<hr>
+</section>
+<section id="remote-远程仓库" class="level3">
+<h3 class="anchored" data-anchor-id="remote-远程仓库">Remote 远程仓库</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git remote</code></td>
+<td>想查看当前仓库连接了哪些远程仓库</td>
+<td>显示远程仓库名称</td>
+</tr>
+<tr class="even">
+<td><code>git remote -v</code></td>
+<td>想查看远程仓库具体地址</td>
+<td>查看远程仓库名称以及 Fetch、Push 地址</td>
+</tr>
+<tr class="odd">
+<td><code>git remote add origin 仓库地址</code></td>
+<td>本地仓库第一次连接 GitHub</td>
+<td>添加一个名为 <code>origin</code> 的远程仓库</td>
+</tr>
+<tr class="even">
+<td><code>git remote set-url origin 新地址</code></td>
+<td>GitHub 仓库地址写错或者发生变化</td>
+<td>修改 <code>origin</code> 对应的远程地址</td>
+</tr>
+<tr class="odd">
+<td><code>git remote remove origin</code></td>
+<td>不再需要当前 Remote</td>
+<td>删除名为 <code>origin</code> 的远程仓库配置</td>
+</tr>
+</tbody>
+</table>
+<p>其中：</p>
+<p><code>origin</code></p>
+<p>只是远程仓库常用的默认名称，并不是 GitHub 强制要求的特殊关键字。</p>
+<hr>
+</section>
+<section id="push-上传代码" class="level3">
+<h3 class="anchored" data-anchor-id="push-上传代码">Push 上传代码</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git push -u origin main</code></td>
+<td>main 第一次上传到 GitHub</td>
+<td>把本地 main Push 到 origin，并建立上游关系</td>
+</tr>
+<tr class="even">
+<td><code>git push</code></td>
+<td>已经配置好上游分支以后</td>
+<td>把当前分支的新 Commit 上传到远程</td>
+</tr>
+<tr class="odd">
+<td><code>git push -u origin 分支名</code></td>
+<td>新建的功能分支第一次上传</td>
+<td>把本地 Branch 上传到 GitHub，并建立远程跟踪关系</td>
+</tr>
+<tr class="even">
+<td><code>git push origin 分支名</code></td>
+<td>明确指定需要上传哪个分支时</td>
+<td>将指定分支 Push 到 origin</td>
+</tr>
+<tr class="odd">
+<td><code>git push origin --delete 分支名</code></td>
+<td>远程功能分支已经不再需要</td>
+<td>删除 GitHub 上的指定远程分支</td>
+</tr>
+</tbody>
+</table>
+<p>例如新建：</p>
+<p><code>feature-login</code></p>
+<p>后，第一次上传：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin feature-login</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>以后继续提交后，只需要：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>即可。</p>
+<hr>
+</section>
+<section id="pull-与-fetch" class="level3">
+<h3 class="anchored" data-anchor-id="pull-与-fetch">Pull 与 Fetch</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git pull</code></td>
+<td>开始工作前，希望获取 GitHub 最新代码</td>
+<td>获取远程分支的最新提交并合并进当前分支</td>
+</tr>
+<tr class="even">
+<td><code>git pull origin main</code></td>
+<td>希望明确从 origin 的 main 获取内容</td>
+<td>获取并合并指定远程分支</td>
+</tr>
+<tr class="odd">
+<td><code>git fetch</code></td>
+<td>希望查看远程最新变化，但暂时不想修改当前分支</td>
+<td>获取远程仓库的新 Commit 和分支信息，但不自动 Merge</td>
+</tr>
+<tr class="even">
+<td><code>git fetch origin</code></td>
+<td>只希望更新指定 Remote 的信息</td>
+<td>从 origin 获取最新远程信息</td>
+</tr>
+</tbody>
+</table>
+<p>可以简单理解：</p>
+<p><code>git fetch</code></p>
+<p>负责“把远程信息拿回来”。</p>
+<p>而：</p>
+<p><code>git pull</code></p>
+<p>通常可以粗略理解为：</p>
+<pre class="text"><code>fetch + merge</code></pre>
+<p>所以 <code>pull</code> 有可能产生 Merge Conflict，而 <code>fetch</code> 本身不会直接修改当前工作分支。</p>
+<hr>
+</section>
+<section id="clone-获取项目" class="level3">
+<h3 class="anchored" data-anchor-id="clone-获取项目">Clone 获取项目</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git clone 仓库地址</code></td>
+<td>本地还没有项目，第一次从 GitHub 获取仓库</td>
+<td>下载项目文件、Git 历史、分支信息，并自动配置 origin</td>
+</tr>
+<tr class="even">
+<td><code>git clone -b 分支名 仓库地址</code></td>
+<td>Clone 后希望直接进入指定分支</td>
+<td>Clone 仓库，并切换到指定 Branch</td>
+</tr>
+<tr class="odd">
+<td><code>git clone 仓库地址 文件夹名</code></td>
+<td>不希望使用默认 Repository 名作为本地目录</td>
+<td>Clone 仓库并指定本地保存目录名称</td>
+</tr>
+</tbody>
+</table>
+<p>需要区分：</p>
+<p><code>git clone</code></p>
+<p>通常用于第一次获取整个仓库。</p>
+<p>而：</p>
+<p><code>git pull</code></p>
+<p>通常用于本地已经有仓库以后继续同步最新内容。</p>
+<hr>
+</section>
+<section id="gitignore-与停止跟踪文件" class="level3">
+<h3 class="anchored" data-anchor-id="gitignore-与停止跟踪文件">.gitignore 与停止跟踪文件</h3>
+<p><code>.gitignore</code> 本身不是 Git 命令，而是 Git 仓库中的一个配置文件。常见规则如下：</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>node_modules/</code></td>
+<td>Node.js 项目</td>
+<td>忽略整个 <code>node_modules</code> 目录</td>
+</tr>
+<tr class="even">
+<td><code>.env</code></td>
+<td>项目包含环境变量、Token、API Key 等</td>
+<td>忽略 <code>.env</code> 文件</td>
+</tr>
+<tr class="odd">
+<td><code>*.log</code></td>
+<td>项目运行时会生成日志</td>
+<td>忽略所有 <code>.log</code> 文件</td>
+</tr>
+<tr class="even">
+<td><code>temp/</code></td>
+<td>项目存在临时目录</td>
+<td>忽略整个 <code>temp</code> 目录</td>
+</tr>
+<tr class="odd">
+<td><code>*.pyc</code></td>
+<td>Python 项目</td>
+<td>忽略所有 <code>.pyc</code> 缓存文件</td>
+</tr>
+<tr class="even">
+<td><code>__pycache__/</code></td>
+<td>Python 项目</td>
+<td>忽略 Python 缓存目录</td>
+</tr>
+<tr class="odd">
+<td><code>!important.log</code></td>
+<td>已经忽略 <code>*.log</code>，但某个日志文件需要保留</td>
+<td>使用 <code>!</code> 重新允许某个文件被 Git 管理</td>
+</tr>
+<tr class="even">
+<td><code>git check-ignore -v 文件名</code></td>
+<td>某个文件没有出现在 <code>git status</code> 中，不知道为什么</td>
+<td>查看是哪条 <code>.gitignore</code> 规则忽略了该文件</td>
+</tr>
+<tr class="odd">
+<td><code>git rm --cached 文件名</code></td>
+<td>文件已经被 Git 跟踪，但现在希望忽略</td>
+<td>停止跟踪文件，同时保留本地文件</td>
+</tr>
+<tr class="even">
+<td><code>git rm -r --cached 文件夹</code></td>
+<td>一个已经被 Git 跟踪的目录现在需要忽略</td>
+<td>停止跟踪整个目录，同时保留本地目录</td>
+</tr>
+</tbody>
+</table>
+<p>需要特别记住：</p>
+<blockquote class="blockquote">
+<p><code>.gitignore</code> 不会自动停止跟踪已经 Commit 过的文件。</p>
+</blockquote>
+<p>因此已经跟踪的文件，需要先使用：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">--cached</span> 文件名</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>停止跟踪。</p>
+<hr>
+</section>
+<section id="tag-标签管理" class="level3">
+<h3 class="anchored" data-anchor-id="tag-标签管理">Tag 标签管理</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>指令</th>
+<th>常用情况</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git tag</code></td>
+<td>想查看项目有哪些版本标签</td>
+<td>查看所有本地 Tag</td>
+</tr>
+<tr class="even">
+<td><code>git tag v1.0.0</code></td>
+<td>当前 Commit 是一个重要版本</td>
+<td>给当前 Commit 创建 Lightweight Tag</td>
+</tr>
+<tr class="odd">
+<td><code>git tag -a v1.0.0 -m "Release version 1.0.0"</code></td>
+<td>准备正式发布软件版本</td>
+<td>创建带有作者、时间和说明的 Annotated Tag</td>
+</tr>
+<tr class="even">
+<td><code>git tag v1.0.0 CommitID</code></td>
+<td>想给以前的某个 Commit 补 Tag</td>
+<td>给指定历史 Commit 创建标签</td>
+</tr>
+<tr class="odd">
+<td><code>git show v1.0.0</code></td>
+<td>想查看某个版本对应的 Commit</td>
+<td>查看 Tag 及其对应提交的详细信息</td>
+</tr>
+<tr class="even">
+<td><code>git tag -d v1.0.0</code></td>
+<td>本地 Tag 创建错误</td>
+<td>删除本地 Tag</td>
+</tr>
+<tr class="odd">
+<td><code>git push origin v1.0.0</code></td>
+<td>创建 Tag 后希望 GitHub 也拥有它</td>
+<td>上传指定 Tag</td>
+</tr>
+<tr class="even">
+<td><code>git push origin --tags</code></td>
+<td>本地存在多个 Tag，希望一起上传</td>
+<td>把本地 Tag 推送到远程</td>
+</tr>
+<tr class="odd">
+<td><code>git push origin --delete v1.0.0</code></td>
+<td>远程 Tag 创建错误</td>
+<td>删除 GitHub 中的指定 Tag</td>
+</tr>
+<tr class="even">
+<td><code>git switch --detach v1.0.0</code></td>
+<td>希望查看或测试某个正式版本</td>
+<td>临时切换到 Tag 对应的历史状态</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+// 主题切换逻辑
+(function() {
+  'use strict';
+  
+  const STORAGE_KEY = 'site-theme';
+  
+  function getStoredTheme() {
+    return localStorage.getItem(STORAGE_KEY);
+  }
+  
+  function setStoredTheme(theme) {
+    localStorage.setItem(STORAGE_KEY, theme);
+  }
+  
+  function getPreferredTheme() {
+    const stored = getStoredTheme();
+    if (stored) return stored;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      document.body.classList.add('quarto-dark');
+      document.body.classList.remove('quarto-light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      document.body.classList.remove('quarto-dark');
+      document.body.classList.add('quarto-light');
+    }
+  }
+  
+  // 查找主题切换按钮的多种方式
+  function findToggleButton() {
+    // 方式1: 通过图标类名查找
+    const icon = document.querySelector('i.bi-circle-half, .bi-circle-half');
+    if (icon) {
+      const btn = icon.closest('a');
+      if (btn) return btn;
+    }
+    
+    // 方式2: 通过 aria-label 查找
+    const btnByLabel = document.querySelector('[aria-label="切换主题"], [aria-label="Toggle theme"]');
+    if (btnByLabel) return btnByLabel;
+    
+    // 方式3: 通过 data-theme-toggle 属性查找
+    const btnByAttr = document.querySelector('[data-theme-toggle]');
+    if (btnByAttr) return btnByAttr;
+    
+    // 方式4: 查找导航栏中包含 circle-half 图标的链接
+    const navLinks = document.querySelectorAll('.navbar a.nav-link');
+    for (const link of navLinks) {
+      if (link.querySelector('.bi-circle-half') || link.querySelector('i[class*="circle"]')) {
+        return link;
+      }
+    }
+    
+    return null;
+  }
+  
+  // 绑定点击事件
+  function bindToggleButton() {
+    const toggleBtn = findToggleButton();
+    if (toggleBtn) {
+      toggleBtn.id = 'theme-toggle';
+      // 移除可能的默认行为
+      toggleBtn.setAttribute('href', '#');
+      
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const isDark = document.documentElement.classList.contains('dark');
+        const newTheme = isDark ? 'light' : 'dark';
+        applyTheme(newTheme);
+        setStoredTheme(newTheme);
+        // 触发自定义事件以便其他组件响应
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
+      });
+      
+      return true;
+    }
+    return false;
+  }
+  
+  // 初始化主题
+  const initialTheme = getPreferredTheme();
+  applyTheme(initialTheme);
+  setStoredTheme(initialTheme);
+  
+  // 立即尝试绑定
+  if (!bindToggleButton()) {
+    // 如果立即绑定失败，等待DOM加载完成后重试
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindToggleButton);
+    } else {
+      // 延迟一点时间后重试
+      setTimeout(bindToggleButton, 100);
+    }
+  }
+  
+  // 监听系统主题变化
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    if (!getStoredTheme()) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+})();
+</script>
+<script>
+
+// Listing 年份分组：将 Quarto listing 文章按年份分组，并在侧边栏添加年份导航
+
+(function() {
+
+  'use strict';
+
+
+
+  function groupListingByYear() {
+
+    var listing = document.querySelector('.quarto-listing');
+
+    if (!listing) return;
+
+
+
+    var posts = listing.querySelectorAll('.quarto-post');
+
+    if (posts.length === 0) return;
+
+
+
+    // 收集每个文章的年份
+
+    var yearGroups = {};
+
+    var postArray = Array.prototype.slice.call(posts);
+
+
+
+    postArray.forEach(function(post) {
+
+      var dateEl = post.querySelector('.listing-date, .date');
+
+      var dateText = dateEl ? dateEl.textContent.trim() : '';
+
+      var year = '';
+
+
+
+      // 尝试从日期文本中提取年份
+
+      var match = dateText.match(/(\d{4})/);
+
+      if (match) {
+
+        year = match[1];
+
+      } else {
+
+        // 尝试从 metadata 属性中获取
+
+        var meta = post.querySelector('.metadata');
+
+        if (meta) {
+
+          var metaMatch = meta.textContent.match(/(\d{4})/);
+
+          if (metaMatch) year = metaMatch[1];
+
+        }
+
+      }
+
+
+
+      if (!year) year = '其他';
+
+
+
+      if (!yearGroups[year]) {
+
+        yearGroups[year] = [];
+
+      }
+
+      yearGroups[year].push(post);
+
+    });
+
+
+
+    // 按年份降序排序
+
+    var sortedYears = Object.keys(yearGroups).sort(function(a, b) {
+
+      return parseInt(b) - parseInt(a);
+
+    });
+
+
+
+    if (sortedYears.length <= 1 && sortedYears[0] === '其他') return;
+
+
+
+    // 创建年份分组
+
+    var listingContainer = posts[0].parentElement;
+
+
+
+    sortedYears.forEach(function(year) {
+
+      var yearHeader = document.createElement('h2');
+
+      yearHeader.className = 'listing-year-header';
+
+      yearHeader.id = 'year-' + year;
+
+      yearHeader.textContent = year;
+
+      yearHeader.style.cssText = 'font-size:1.4rem;font-weight:600;color:var(--text);margin-top:2rem;margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:2px solid var(--accent-soft);';
+
+
+
+      // 在该年份的第一个文章前插入标题
+
+      var firstPost = yearGroups[year][0];
+
+      listingContainer.insertBefore(yearHeader, firstPost);
+
+
+
+      // 为该年份的所有文章添加 data-year 属性
+
+      yearGroups[year].forEach(function(post) {
+
+        post.setAttribute('data-year', year);
+
+      });
+
+    });
+
+
+
+    // 在侧边栏添加年份导航
+
+    var sidebar = document.querySelector('#quarto-margin-sidebar, .margin-sidebar');
+
+    if (sidebar) {
+
+      var yearNav = document.createElement('nav');
+
+      yearNav.className = 'listing-year-nav';
+
+      yearNav.innerHTML = '<h3 class="listing-year-title" style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:0.4rem;margin-bottom:0.6rem;">Years</h3>';
+
+
+
+      var yearList = document.createElement('ul');
+
+      yearList.style.cssText = 'list-style:none;padding-left:0;';
+
+
+
+      sortedYears.forEach(function(year) {
+
+        var li = document.createElement('li');
+
+        var a = document.createElement('a');
+
+        a.href = '#year-' + year;
+
+        a.textContent = year;
+
+        a.style.cssText = 'color:var(--muted);text-decoration:none;font-size:0.85rem;display:block;padding:0.2rem 0.5rem;border-radius:4px;transition:all 0.2s ease;';
+
+        a.addEventListener('mouseenter', function() {
+
+          a.style.color = 'var(--accent)';
+
+          a.style.background = 'var(--accent-soft)';
+
+        });
+
+        a.addEventListener('mouseleave', function() {
+
+          a.style.color = 'var(--muted)';
+
+          a.style.background = 'transparent';
+
+        });
+
+        li.appendChild(a);
+
+        yearList.appendChild(li);
+
+      });
+
+
+
+      yearNav.appendChild(yearList);
+
+
+
+      // 插入到侧边栏顶部（在分类筛选之前）
+
+      var firstChild = sidebar.firstElementChild;
+
+      if (firstChild) {
+
+        sidebar.insertBefore(yearNav, firstChild);
+
+      } else {
+
+        sidebar.appendChild(yearNav);
+
+      }
+
+    }
+
+  }
+
+
+
+  // 等待 Quarto listing 渲染完成后执行
+
+  function init() {
+
+    // 立即尝试
+
+    if (document.querySelector('.quarto-post')) {
+
+      groupListingByYear();
+
+      return;
+
+    }
+
+
+
+    // 使用 MutationObserver 等待 listing 渲染
+
+    var observer = new MutationObserver(function(mutations, obs) {
+
+      if (document.querySelector('.quarto-post')) {
+
+        groupListingByYear();
+
+        obs.disconnect();
+
+      }
+
+    });
+
+
+
+    observer.observe(document.body, {
+
+      childList: true,
+
+      subtree: true
+
+    });
+
+
+
+    // 超时后停止观察
+
+    setTimeout(function() {
+
+      observer.disconnect();
+
+      if (document.querySelector('.quarto-post') && !document.querySelector('.listing-year-header')) {
+
+        groupListingByYear();
+
+      }
+
+    }, 5000);
+
+  }
+
+
+
+  if (document.readyState === 'loading') {
+
+    document.addEventListener('DOMContentLoaded', init);
+
+  } else {
+
+    init();
+
+  }
+
+})();
+
+</script>
+
+<script>
+/**
+ * Image Lightbox v2.0
+ * Features:
+ *   - Click any image in main.content to zoom
+ *   - Wheel/pinch zoom, drag pan, double-tap toggle
+ *   - Swipe gestures, keyboard nav, ESC close
+ *   - Loading spinner, zoom indicator, image counter
+ */
+(function() {
+  'use strict';
+
+  var modal = null;
+  var modalImg = null;
+  var overlay = null;
+  var closeBtn = null;
+  var zoomIndicator = null;
+  var counter = null;
+  var loadingSpinner = null;
+
+  var images = [];
+  var currentIndex = 0;
+  var scale = 1;
+  var translateX = 0;
+  var translateY = 0;
+  var isDragging = false;
+  var dragStartX = 0;
+  var dragStartY = 0;
+  var dragStartTranslateX = 0;
+  var dragStartTranslateY = 0;
+  var initialPinchDistance = 0;
+  var initialScale = 1;
+  var animFrame = null;
+
+  function init() {
+    images = Array.prototype.slice.call(
+      document.querySelectorAll('main.content img')
+    ).filter(function(img) {
+      return !img.closest('.no-lightbox') && img.src;
+    });
+
+    if (images.length === 0) return;
+
+    buildModal();
+    bindEvents();
+  }
+
+  function buildModal() {
+    modal = document.createElement('div');
+    modal.className = 'lightbox-modal';
+    modal.innerHTML =
+      '<div class="lb-overlay"></div>' +
+      '<div class="lb-container">' +
+        '<img class="lb-image" alt="">' +
+      '</div>' +
+      '<div class="lb-loading"></div>' +
+      '<button class="lb-close" aria-label="关闭">&times;</button>' +
+      '<div class="lb-controls">' +
+        '<span class="lb-zoom-indicator">100%</span>' +
+        '<span class="lb-counter"></span>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+    overlay = modal.querySelector('.lb-overlay');
+    modalImg = modal.querySelector('.lb-image');
+    closeBtn = modal.querySelector('.lb-close');
+    zoomIndicator = modal.querySelector('.lb-zoom-indicator');
+    counter = modal.querySelector('.lb-counter');
+    loadingSpinner = modal.querySelector('.lb-loading');
+  }
+
+  function bindEvents() {
+    images.forEach(function(img, index) {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        open(index);
+      });
+    });
+
+    overlay.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
+    modalImg.addEventListener('dblclick', onDoubleClick);
+    modalImg.addEventListener('wheel', onWheel, { passive: false });
+
+    modalImg.addEventListener('touchstart', onTouchStart, { passive: false });
+    modalImg.addEventListener('touchmove', onTouchMove, { passive: false });
+    modalImg.addEventListener('touchend', onTouchEnd);
+
+    modalImg.addEventListener('mousedown', onDragStart);
+    window.addEventListener('mousemove', onDragMove);
+    window.addEventListener('mouseup', onDragEnd);
+
+    document.addEventListener('keydown', onKeyDown);
+
+    modal.addEventListener('transitionend', function(e) {
+      if (e.target === modal && modal.classList.contains('visible')) {
+        modal.style.opacity = '1';
+      }
+    });
+  }
+
+  function open(index) {
+    currentIndex = index;
+    var img = images[index];
+
+    modalImg.src = img.src;
+    modalImg.alt = img.alt || '';
+    modalImg.style.transform = '';
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+
+    updateZoomIndicator();
+    updateCounter();
+    showLoading(true);
+
+    modal.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+
+    modalImg.addEventListener('load', function onLoad() {
+      showLoading(false);
+      modalImg.removeEventListener('load', onLoad);
+    });
+  }
+
+  function close() {
+    modal.classList.remove('visible');
+    modalImg.style.transform = '';
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+    document.body.style.overflow = '';
+  }
+
+  function onDoubleClick() {
+    if (scale === 1) {
+      setScale(2);
+    } else {
+      setScale(1);
+    }
+  }
+
+  function onWheel(e) {
+    e.preventDefault();
+    var delta = e.deltaY > 0 ? -0.15 : 0.15;
+    var newScale = Math.max(0.5, Math.min(5, scale + delta));
+    setScale(newScale);
+  }
+
+  function setScale(newScale) {
+    scale = Math.round(newScale * 100) / 100;
+    applyTransform();
+    updateZoomIndicator();
+  }
+
+  function applyTransform() {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    animFrame = requestAnimationFrame(function() {
+      modalImg.style.transform =
+        'translate(' + translateX + 'px, ' + translateY + 'px) ' +
+        'scale(' + scale + ')';
+    });
+  }
+
+  function updateZoomIndicator() {
+    if (zoomIndicator) {
+      zoomIndicator.textContent = Math.round(scale * 100) + '%';
+      zoomIndicator.style.opacity = scale === 1 ? '0.5' : '1';
+    }
+  }
+
+  function updateCounter() {
+    if (counter && images.length > 1) {
+      counter.textContent = (currentIndex + 1) + ' / ' + images.length;
+      counter.style.display = 'inline';
+    } else if (counter) {
+      counter.style.display = 'none';
+    }
+  }
+
+  function showLoading(show) {
+    if (!loadingSpinner) return;
+    if (show) {
+      loadingSpinner.style.display = 'block';
+    } else {
+      loadingSpinner.style.display = 'none';
+    }
+  }
+
+  function onDragStart(e) {
+    if (scale <= 1) return;
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragStartTranslateX = translateX;
+    dragStartTranslateY = translateY;
+    modalImg.style.transition = 'none';
+  }
+
+  function onDragMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    var deltaX = e.clientX - dragStartX;
+    var deltaY = e.clientY - dragStartY;
+    translateX = dragStartTranslateX + deltaX;
+    translateY = dragStartTranslateY + deltaY;
+    applyTransform();
+  }
+
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    modalImg.style.transition = '';
+  }
+
+  function onTouchStart(e) {
+    e.preventDefault();
+    if (e.touches.length === 2) {
+      var dist = getTouchDistance(e.touches[0], e.touches[1]);
+      initialPinchDistance = dist;
+      initialScale = scale;
+    } else if (e.touches.length === 1 && scale > 1) {
+      isDragging = true;
+      dragStartX = e.touches[0].clientX;
+      dragStartY = e.touches[0].clientY;
+      dragStartTranslateX = translateX;
+      dragStartTranslateY = translateY;
+      modalImg.style.transition = 'none';
+    }
+  }
+
+  function onTouchMove(e) {
+    e.preventDefault();
+    if (e.touches.length === 2) {
+      var dist = getTouchDistance(e.touches[0], e.touches[1]);
+      if (initialPinchDistance > 0) {
+        var ratio = dist / initialPinchDistance;
+        setScale(Math.max(0.5, Math.min(5, initialScale * ratio)));
+      }
+    } else if (e.touches.length === 1 && isDragging) {
+      var deltaX = e.touches[0].clientX - dragStartX;
+      var deltaY = e.touches[0].clientY - dragStartY;
+      translateX = dragStartTranslateX + deltaX;
+      translateY = dragStartTranslateY + deltaY;
+      applyTransform();
+    }
+  }
+
+  function onTouchEnd() {
+    isDragging = false;
+    initialPinchDistance = 0;
+    modalImg.style.transition = '';
+  }
+
+  function getTouchDistance(t1, t2) {
+    var dx = t1.clientX - t2.clientX;
+    var dy = t1.clientY - t2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function onKeyDown(e) {
+    if (!modal.classList.contains('visible')) return;
+
+    if (e.key === 'Escape') {
+      close();
+    } else if (e.key === 'ArrowRight') {
+      navigate(1);
+    } else if (e.key === 'ArrowLeft') {
+      navigate(-1);
+    } else if (e.key === '+' || e.key === '=') {
+      setScale(Math.min(5, scale + 0.25));
+    } else if (e.key === '-' || e.key === '_') {
+      setScale(Math.max(0.5, scale - 0.25));
+    } else if (e.key === '0') {
+      setScale(1);
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    }
+  }
+
+  function navigate(direction) {
+    if (images.length <= 1) return;
+    currentIndex = (currentIndex + direction + images.length) % images.length;
+    open(currentIndex);
+  }
+
+  function injectStyles() {
+    if (document.getElementById('lightbox-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'lightbox-styles';
+    style.textContent =
+      '.lightbox-modal{' +
+      'position:fixed;inset:0;z-index:9999;' +
+      'display:flex;align-items:center;justify-content:center;' +
+      'opacity:0;visibility:hidden;' +
+      'transition:opacity 0.35s cubic-bezier(0.2,0.8,0.2,1),visibility 0s 0.35s;' +
+      'user-select:none;-webkit-user-select:none;' +
+      '}' +
+      '.lightbox-modal.visible{' +
+      'opacity:1;visibility:visible;' +
+      'transition:opacity 0.35s cubic-bezier(0.2,0.8,0.2,1),visibility 0s 0s;' +
+      '}' +
+      '.lb-overlay{' +
+      'position:absolute;inset:0;' +
+      'background:rgba(0,0,0,0.88);' +
+      'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);' +
+      '}' +
+      '.lb-container{' +
+      'position:relative;max-width:92vw;max-height:85vh;' +
+      'display:flex;align-items:center;justify-content:center;' +
+      '}' +
+      '.lb-image{' +
+      'max-width:92vw;max-height:85vh;' +
+      'object-fit:contain;' +
+      'border-radius:8px;' +
+      'box-shadow:0 20px 60px rgba(0,0,0,0.5);' +
+      'transform-origin:center center;' +
+      'transition:transform 0.25s cubic-bezier(0.2,0.8,0.2,1);' +
+      'cursor:zoom-out;' +
+      '-webkit-user-drag:none;' +
+      '}' +
+      '.lb-image:not([src]),.lb-image[src=""]{display:none;}' +
+      '.lb-close{' +
+      'position:absolute;top:24px;right:24px;' +
+      'width:42px;height:42px;border-radius:50%;' +
+      'background:rgba(255,255,255,0.12);' +
+      'border:1px solid rgba(255,255,255,0.2);' +
+      'color:#ffffff;font-size:24px;font-weight:300;' +
+      'cursor:pointer;display:flex;align-items:center;justify-content:center;' +
+      'line-height:1;padding:0;' +
+      'transition:all 0.2s ease;' +
+      'z-index:10;' +
+      '}' +
+      '.lb-close:hover{' +
+      'background:rgba(255,255,255,0.22);' +
+      'transform:scale(1.06);' +
+      '}' +
+      '.lb-controls{' +
+      'position:absolute;bottom:28px;left:50%;' +
+      'transform:translateX(-50%);' +
+      'display:flex;gap:16px;align-items:center;' +
+      'z-index:10;' +
+      '}' +
+      '.lb-zoom-indicator,.lb-counter{' +
+      'background:rgba(255,255,255,0.1);' +
+      'border:1px solid rgba(255,255,255,0.15);' +
+      'color:#ffffff;font-size:13px;font-weight:500;' +
+      'padding:6px 12px;border-radius:9999px;' +
+      'letter-spacing:0.02em;' +
+      'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);' +
+      '}' +
+      '.lb-counter{display:none;}' +
+      '.lb-loading{' +
+      'display:none;' +
+      'position:absolute;top:50%;left:50%;' +
+      'transform:translate(-50%,-50%);' +
+      'width:32px;height:32px;' +
+      'border:3px solid rgba(255,255,255,0.15);' +
+      'border-top-color:#ffffff;' +
+      'border-radius:50%;' +
+      'animation:lb-spin 0.8s linear infinite;' +
+      'z-index:5;' +
+      '}' +
+      '@keyframes lb-spin{' +
+      'to{transform:translate(-50%,-50%) rotate(360deg);}' +
+      '}' +
+      '@media (max-width:600px){' +
+      '.lb-close{top:14px;right:14px;width:38px;height:38px;font-size:22px;}' +
+      '.lb-controls{bottom:18px;gap:10px;}' +
+      '.lb-zoom-indicator,.lb-counter{font-size:12px;padding:5px 10px;}' +
+      '}';
+    document.head.appendChild(style);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      injectStyles();
+      setTimeout(init, 150);
+    });
+  } else {
+    injectStyles();
+    setTimeout(init, 150);
+  }
+
+  document.addEventListener('page:navigate', function() {
+    if (modal && modal.classList.contains('visible')) {
+      close();
+    }
+    setTimeout(init, 300);
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2024–2026 Ning Yan</p>
+</div>   
+    <div class="nav-footer-center">
+<p>个人学习笔记站点</p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
