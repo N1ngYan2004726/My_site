@@ -364,12 +364,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="如何更新版本库">如何更新版本库</h2>
 <section id="工作区暂存区版本库" class="level3">
 <h3 class="anchored" data-anchor-id="工作区暂存区版本库">工作区、暂存区、版本库</h3>
-<p>在这部分，我们先介绍一下工作区、暂存区、版本库这三个概念： 1. 工作区(Working Directory): 就是你在电脑里能看到的目录，比如我的<code>My_site</code>文件夹就是一个工作区： <img src="git_files/figure-html/417d466b-2-image.png" class="img-fluid"> 2. 版本库(Repository): 工作区有一个隐藏目录<code>.git</code>，这个不算工作区，而是Git的版本库。</p>
-<pre><code>什么是版本库呢？版本库又名仓库（Repository），你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
-
-Git的版本库里存了很多东西，其中最重要的就是称为`stage`（或者叫`index`）的暂存区，还有Git为我们自动创建的第一个分支`main`(一般来说是`master`，此处是`main`是因为我们前面安装Git的时候设置的)，以及指向`main`的一个指针叫`HEAD`。
-
-![](git_files/figure-html/417d466b-1-image-2.png)</code></pre>
+<p>在这部分，我们先介绍一下工作区、暂存区、版本库这三个概念： 1. 工作区(Working Directory): 就是你在电脑里能看到的目录，比如我的<code>My_site</code>文件夹就是一个工作区：</p>
+<pre><code>![](git_files/figure-html/417d466b-2-image.png)</code></pre>
+<ol start="2" type="1">
+<li><p>版本库(Repository): 工作区有一个隐藏目录<code>.git</code>，这个不算工作区，而是Git的版本库。</p>
+<p>什么是版本库呢？版本库又名仓库（Repository），你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
+<p>Git的版本库里存了很多东西，其中最重要的就是称为<code>stage</code>（或者叫<code>index</code>）的暂存区，还有Git为我们自动创建的第一个分支<code>main</code>(一般来说是<code>master</code>，此处是<code>main</code>是因为我们前面安装Git的时候设置的)，以及指向<code>main</code>的一个指针叫<code>HEAD</code>。</p>
+<p><img src="git_files/figure-html/417d466b-1-image-2.png" class="img-fluid"></p></li>
+</ol>
 <p>我们可以简单的理解为，我们本地库的内容，会通过Git上传到版本库的暂存区，即<code>stage</code>，然后再转移到我们指针<code>HEAD</code>指着的分支，默认为<code>main</code></p>
 </section>
 <section id="使用命令行进行一次提交" class="level3">
