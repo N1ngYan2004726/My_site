@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>这时候，你可能会想：“有没有一种方法，可以记录每一次修改，并且让我随时回到之前正常的版本？”</p>
 <p>这就是 Git 要解决的问题。</p>
 <p>如果你玩过 Steam 游戏，可以把 Git 理解成游戏中的存档系统。游戏中的存档可以记录你当前的进度，当你做出了错误选择或者遇到无法解决的问题时，可以读取之前的存档重新开始。例如下图：</p>
-<p><img src="git_files/figure-html/f641d0e5-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/f641d0e5-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>Git 的作用也是类似的。</p>
 <p>在开发过程中，每当你完成一个重要阶段，都可以保存当前项目的状态。这个保存过程在 Git 中叫做 commit（提交）。不同的 commit 就像不同时间创建的游戏存档，它们记录着项目在不同阶段的状态。</p>
 <p>因此，简单来说：Git 是一个帮助我们记录代码变化、管理项目历史的版本控制工具。以官方的定义来说，Git是目前世界上最先进的<strong>分布式版本控制系统</strong>。</p>
@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="github" class="level3">
 <h3 class="anchored" data-anchor-id="github">Github</h3>
 <p>GitHub 可以理解为 Git 的“云端仓库”。如果把 Git 比作电脑中的游戏存档，那么 GitHub 就类似 Steam 的云存档功能。如下图：</p>
-<p><img src="git_files/figure-html/1a5cfa8d-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/1a5cfa8d-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>游戏存档原本只保存在你的电脑里，通过云同步之后，你可以在另一台电脑继续游戏。Git 也是一样。你可以把本地 Git 仓库上传到 GitHub，让代码保存在远程服务器中。</p>
 <p>很多初学者会认为 GitHub 就是 Git，其实它们的关系更像是“工具”和“平台”的关系。</p>
 <p>Git 是负责管理版本的工具，它关注的是：“我的代码经历了哪些变化？”.而 GitHub 是提供远程存储和协作功能的平台，它关注的是：“如何让这些代码可以被保存、分享，并且让多人一起开发？”</p>
@@ -367,11 +367,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>在这部分，我们先介绍一下工作区、暂存区、版本库这三个概念：</p>
 <ol type="1">
 <li><p>工作区(Working Directory): 就是你在电脑里能看到的目录，比如我的<code>My_site</code>文件夹就是一个工作区：</p>
-<p><img src="git_files/figure-html/417d466b-2-image.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/417d466b-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>版本库(Repository): 工作区有一个隐藏目录<code>.git</code>，这个不算工作区，而是Git的版本库。</p>
 <p>什么是版本库呢？版本库又名仓库（Repository），你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。</p>
 <p>Git的版本库里存了很多东西，其中最重要的就是称为<code>stage</code>（或者叫<code>index</code>）的暂存区，还有Git为我们自动创建的第一个分支<code>main</code>(一般来说是<code>master</code>，此处是<code>main</code>是因为我们前面安装Git的时候设置的)，以及指向<code>main</code>的一个指针叫<code>HEAD</code>。</p>
-<p><img src="git_files/figure-html/417d466b-1-image-2.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/417d466b-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 </ol>
 <p>我们可以简单的理解为，我们本地库的内容，会通过Git上传到版本库的暂存区，即<code>stage</code>，然后再转移到我们指针<code>HEAD</code>指着的分支，默认为<code>main</code></p>
 </section>
@@ -384,10 +384,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>然后使用<code>cd xxxx</code>进入我们新建的文件夹。</p>
 <p>可以使用<code>cd</code>,显示当前目录。</p>
 <p>此处我们新建文件夹<code>learngit_1</code>：</p>
-<p><img src="git_files/figure-html/f79fef3f-4-image.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/f79fef3f-4-image.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>把目录变成Git可以管理的仓库</p>
 <p>我们可以通过<code>git init</code>来执行这个事情,输入即可,输出如下：</p>
-<p><img src="git_files/figure-html/f79fef3f-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/f79fef3f-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>瞬间Git就把仓库建好了，而且告诉你是一个空的仓库（empty Git repository），细心的读者可以发现当前目录下多了一个<code>.git</code>的目录，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。</p>
 <p>如果你没有看到<code>.git</code>目录，那是因为这个目录默认是隐藏的，用<code>dir /a</code>命令就可以看见</p></li>
 <li><p>更改并上传文件库内容</p>
@@ -395,11 +395,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>一定要放到<code>learngit_1</code>目录下（子目录也行），因为这是一个Git仓库，放到其他地方Git再厉害也找不到这个文件。</p>
 <p>和把大象放到冰箱需要3步相比，把一个文件放到Git仓库只需要两步。</p>
 <p>第一步，用命令<code>git add</code>告诉Git，把文件添加到仓库:</p>
-<p><img src="git_files/figure-html/f79fef3f-2-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/f79fef3f-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>一般来说，这个指令是<code>git add readme.txt</code>,但是如果我们想要直接上传该文件夹内的全部修改，可以使用<code>git add .</code>。</p>
 <p>执行上面的命令，没有任何显示，这就对了，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p>
 <p>第二步，用命令<code>git commit</code>告诉Git，把文件提交到仓库：</p>
-<p><img src="git_files/figure-html/f79fef3f-3-image-4.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/f79fef3f-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>简单解释一下<code>git commit</code>命令，<code>-m</code>后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。</p>
 <p>嫌麻烦不想输入-m “xxx”行不行？确实有办法可以这么干，但是强烈不建议你这么干，因为输入说明对自己对别人阅读都很重要。</p>
 <p><code>git commit</code>命令执行成功后会告诉你，<code>1 file changed</code>：1个文件被改动（我们新添加的<code>readme.txt</code>文件）；<code>1 insertions</code>：插入了一行内容（<code>readme.txt</code>有一行内容）。</p></li>
@@ -412,15 +412,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><p>创建空目录</p>
 <p>相同的，我们也要新建一个文件夹来解释我们的流程，此处新建的文件夹为<code>learngit_2</code>:</p>
-<p><img src="git_files/figure-html/f8fb43ca-4-image.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/f8fb43ca-4-image.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>把目录改成Git管理的仓库 我们可以根据下图的箭头，点击<code>源代码管理</code>按钮进入此界面，然后点击<code>初始化仓库</code>，这一步与我们前面的<code>git init</code>的效果完全一致：</p>
-<p><img src="git_files/figure-html/f8fb43ca-1-image-2.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/f8fb43ca-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>更改并上传文件库内容</p>
 <p>现在我们同样可以编写一个<code>readme.txt</code>文件，内容同样随意，例如此处我们填写如下：</p>
-<p><img src="git_files/figure-html/f8fb43ca-2-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/f8fb43ca-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看到，我们的<code>源代码管理</code>按钮右下角出现了一个数字”1”，这代表了现在的本地库与版本库内容存在一处差异。“未追踪”的含义是，这个文件是新建的，这些内容推荐读者多尝试一下，就能理解其含义了。</p>
 <p>这之后我们就可以点击<code>源代码管理</code>按钮，进入界面以后，如下图所示：</p>
-<p><img src="git_files/figure-html/f8fb43ca-3-image-4.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/f8fb43ca-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看到更改的内容，红框处的内容等价于我们<code>commit</code>后面跟着的备注，提交可以等价于<code>git add .</code>+<code>git commit</code>，我们只需要点击一次就可以上传成功了，非常方便。</p></li>
 </ol>
 </section>
@@ -432,28 +432,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="查看修改" class="level4">
 <h4 class="anchored" data-anchor-id="查看修改">查看修改</h4>
 <p>我们首先介绍一下<code>git status</code>这个指令，可以查看在你上次提交之后是否有对文件进行再次修改，我们在我们的<code>learngit_1</code>文件夹修改一下我们的<code>readme.txt</code>文件，且再新建一个文件<code>test.txt</code>，看看输出结果是怎么样的呢:</p>
-<p><img src="git_files/figure-html/6ad7aa7b-4-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/6ad7aa7b-4-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以看出，如果我们还没有把我们的本地库内容放入暂存区(stage)，现在显示的是红色的文件，且它会显示我们是修改哪些文件。如果我们使用<code>git add .</code> 以后，再使用<code>git status</code>呢：</p>
-<p><img src="git_files/figure-html/6ad7aa7b-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/6ad7aa7b-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看出来，文件名变成绿色了，它会告诉你，哪些是修改的文件，哪些是新的文件。这时候，我们再使用<code>git commit</code>之后呢？我们再看看结果：</p>
-<p><img src="git_files/figure-html/6ad7aa7b-2-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/6ad7aa7b-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>Git告诉我们当前没有需要提交的修改，而且，工作目录是干净（working tree clean）的。</p>
 <p>上面的内容是通过命令行来观察的，我们要怎么使用VSCode来查看呢？非常简单，我们直接点击<code>源代码管理</code>后，如图框选的内容就是我们使用<code>git status</code>后能看到的信息，后面的点就是来解释这个文件是什么状态:</p>
-<p><img src="git_files/figure-html/6ad7aa7b-3-image-4.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/6ad7aa7b-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这个指令就介绍到这，非常的简单且基础。</p>
 </section>
 <section id="比较差异" class="level4">
 <h4 class="anchored" data-anchor-id="比较差异">比较差异</h4>
 <p>此处我们介绍指令<code>git diff</code>, 是 Git 中一个非常重要的命令，用来查看代码或文件的差异（difference）。简单来说，它告诉你：“哪些地方被修改了？修改前是什么？修改后是什么？”</p>
 <p>我们先基于我们的<code>learngit_1</code>来简单介绍一下，如果我们同时修改了<code>readme.txt</code>与<code>test.txt</code>文件，使用<code>git diff</code>:</p>
-<p><img src="git_files/figure-html/9942570c-3-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/9942570c-3-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>通过此处我们就可以很好的看清楚，我们文件的修改内容是什么了。如果我们<code>add</code>以后呢：</p>
-<p><img src="git_files/figure-html/9942570c-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/9942570c-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看到什么都没有了，我们一般来说，<code>git diff</code> 默认看还没<code>git add</code>的修改，<code>git diff --staged</code> 看已经 <code>git add</code>、准备 <code>commit</code> 的修改，<code>git diff HEAD</code> 看从上一次 <code>commit</code>到现在的全部修改。</p>
 <p>在VSCode中，我们可以直接点击更改的文件，其可以自动查看差别：</p>
-<p><img src="git_files/figure-html/9942570c-2-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/9942570c-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>假如我们以及commit以后，我们使用<code>git diff -staged</code>就能看我们暂存区与我们版本库之间的差别了：</p>
-<p><img src="git_files/figure-html/df78e0dc-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/df78e0dc-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以看出，完全没有差别，我们有一个结论：commit 后，暂存区会更新为新的 HEAD 状态，因此暂存区和最新提交保持一致，不再存在等待提交的修改。暂存区不会保留“未提交的变化”，但仍然保存当前提交对应的文件索引。所以我们才能得到这个指令输出结果:)</p>
 <p>确实会很绕啊:(</p>
 </section>
@@ -461,10 +461,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="查看历史">查看历史</h4>
 <p>此部分我们介绍我们的指令<code>git log</code>，其是 Git 中最常用的命令之一，用于查看提交历史记录。它可以显示提交的详细信息，包括提交哈希值、作者、日期和提交信息。通过添加不同的参数，可以自定义输出格式、筛选条件等:</p>
 <p>我们就可以看到我们三次commit的历史信息了：</p>
-<p><img src="git_files/figure-html/5f76e0b1-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/5f76e0b1-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>git log命令显示从最近到最远的提交日志，如果嫌输出信息太多，看得眼花缭乱的，可以试试加上–pretty=oneline参数：</p>
 <p>在VSCode中，我们可以查看此部分内容：</p>
-<p><img src="git_files/figure-html/5f76e0b1-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/5f76e0b1-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>其可以显示我们现在分支指的方向，以及所有我们在<code>git log</code>中可以获得的信息。</p>
 </section>
 </section>
@@ -483,27 +483,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>你本地修改了一个文件，但是发现改错了： 例如，你原本的内容是<code>Hello Git</code>,现在改成了<code>Hello World</code>,但是在<code>add</code>之前，你突然觉得还是原来版本更好，但是现在以及改了，这时候你希望放弃当前修改，恢复到上一次 commit 的状态</p>
 <p>可以使用<code>git restore</code>, 其修复的是工作区文件。也就是说，它只能恢复没有提交的修改。</p>
 <p>我们使用我们的<code>learngit_1</code>中的<code>readme.txt</code>文件，我们修改且保存如下：</p>
-<p><img src="git_files/figure-html/5b933be7-4-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/5b933be7-4-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>但是我们这个时候后悔了，其中的<code>this is forth sentence for learngit_1</code>是新增的内容，我们现在其实很方便的就可以回溯，但是只是做一个简单的案例，此时我们可以使用<code>git diff</code>看到我们的差别，然后直接使用<code>git restore</code>，结果如下图：</p>
-<p><img src="git_files/figure-html/5b933be7-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/5b933be7-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以看出来<code>git restore</code>与<code>git add</code>后面的含义一致，我们直接使用<code>git restore .</code>即可。我们现在回<code>learngit_1</code>中的<code>readme.txt</code>文件：</p>
-<p><img src="git_files/figure-html/5b933be7-2-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/5b933be7-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看到，神奇的恢复了！</p>
 <p>在VSCode中即更简单，我们可以直接放弃文件的更改即可，按钮如图：</p>
-<p><img src="git_files/figure-html/5b933be7-3-image-4.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/5b933be7-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>如果修改了文件且<code>add</code>了，突然发现不应该提交这个文件，怎么办？</p>
 <p>这时候不能使用<code>git restore &lt;file&gt;</code>因为他会直接恢复文件内容，这样我们修改后的内容也不见了，正确的应该是<code>git restore --staged &lt;file&gt;</code>，这个操作非常安全。</p></li>
 <li><p>删除后的文件的恢复</p>
 <p>例如我们的文件夹<code>learngit_1</code> ，我们删除其中的文件<code>test.txt</code>，可以使用<code>git status</code>查看其状态:</p>
-<p><img src="git_files/figure-html/9b54a213-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/9b54a213-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以看到，该文件已经被删除了，我们分以下两种情况：</p>
 <p>一.还没有提交<code>commit</code>，我们可以使用<code>git restore &lt;file&gt;</code>:</p>
-<p><img src="git_files/figure-html/9b54a213-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/9b54a213-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>即从上次<code>commit</code>中恢复文件。</p>
 <p>二.我们已经提交了删除，即已经<code>commit</code>了，此时我们可以查看历史<code>log</code>，假设我们想恢复的文件在版本commit-1，其哈希值为abc123…,我们可以使用<code>git checkout abc123 -- &lt;file&gt;</code>或者<code>git restore --source abc123 &lt;file&gt;</code>来恢复文件</p></li>
 <li><p>查看某个历史版本的代码</p>
 <p>我们可以使用<code>log</code>查看commit对应的哈希值以后，使用<code>git show commit-id</code>，Git会显示修改时间，作者，以及内容等。如:</p>
-<p><img src="git_files/figure-html/1e6622eb-1-image.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/1e6622eb-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>版本回退</p>
 <p>我们现在想要的是将项目直接回到过去，可能我们现在的项目历史是:A-&gt;B-&gt;C-&gt;D,我们发布D以后发现，D出现了很大的错误，需要重新回到C，这就是版本回退。</p>
 <p>我们一般可以使用<code>git reset --hard commit_id</code>来进行版本回退。其中有三种模式：</p>
@@ -516,7 +516,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>如果我们以及回到了以前的版本，再使用<code>git log</code>，就看不到此<code>commit</code>后的信息了，好比你从21世纪坐时光穿梭机来到了19世纪，想再回去已经回不去了，怎么办呢？</p>
 <p>办法还是有的，我们只要找到我们想要回去的那个<code>commit</code>的<code>commit_id</code>即可，如果找不到了，可以试试<code>git reflog</code>，这个是查看命令历史的指令。</p>
 <p>实际上，版本回退的本质是指针<code>HEAD</code>指的对象变换了一下而已：</p>
-<p><img src="git_files/figure-html/8663a5bc-2-image.png" class="img-fluid"><img src="git_files/figure-html/8663a5bc-1-image-2.png" class="img-fluid"></p></li>
+<p><img src="git_files/figure-html/8663a5bc-2-image.png" class="img-fluid" loading="lazy" decoding="async"><img src="git_files/figure-html/8663a5bc-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>撤销修改</p>
 <p>假如你在<code>readme.txt</code>中修改了一些内容，但是在准备<code>add</code>之前发现了有明显的错误，这时候我们可以丢弃了工作区的修改内容，即使用<code>git checkout -- &lt;file&gt;</code></p>
 <p>命令git checkout – readme.txt意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：</p>
@@ -551,29 +551,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>廖雪峰的教程中：</p>
 <p>每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即<code>master</code>分支。<code>HEAD</code>严格来说不是指向提交，而是指向<code>master</code>，<code>master</code>才是指向提交的，所以，<code>HEAD</code>指向的就是当前分支。</p>
 <p>一开始的时候，<code>master</code>分支是一条线，Git用<code>master</code>指向最新的提交，再用<code>HEAD</code>指向<code>master</code>，就能确定当前分支，以及当前分支的提交点:</p>
-<p><img src="git_files/figure-html/c45c14db-3-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/c45c14db-3-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>每次提交，<code>master</code>分支都会向前移动一步，这样，随着你不断提交，<code>master</code>分支的线也越来越长。</p>
 <p>当我们创建新的分支，例如<code>dev</code>时，Git新建了一个指针叫<code>dev</code>，指向<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上:</p>
-<p><img src="git_files/figure-html/c45c14db-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/c45c14db-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>Git创建一个分支很快，因为除了增加一个<code>dev</code>指针，改改<code>HEAD</code>的指向，工作区的文件都没有任何变化！</p>
 <p>不过，从现在开始，对工作区的修改和提交就是针对<code>dev</code>分支了，比如新提交一次后，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变：</p>
-<p><img src="git_files/figure-html/c45c14db-2-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/c45c14db-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>至于合并部分我们后面再讲。</p>
 <p>我们要如何查看我们现在有哪些branch呢？可以使用<code>git branch</code>来查看：</p>
-<p><img src="git_files/figure-html/1df5282d-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/1df5282d-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>其中的*表示当前所在分支。图中表明我们现在正在<code>main</code>分支。</p>
 <p>如何创建新的分支呢？可以使用<code>git branch 分支名</code>，即可，我们因为已经创立了<code>test</code>分支，就不做演示了。</p>
 <p>假设我们的<code>main</code>分支原本有A-&gt;B-&gt;C的历史，那么此时<code>test</code>也拥有相同的历史。但是注意,这时候并不会主动切换到我们新建的分支,还需要以下指令<code>git switch 分支名</code>,例如:</p>
-<p><img src="git_files/figure-html/1df5282d-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/1df5282d-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这样切换到test分支,之后修改代码,就不会影响到我们的<code>main</code>分支了.这就是分支隔离。</p>
 <p>在实际开发中,我们更常用<code>git switch -c 分支名</code>这一串指令,其代表了创建与转化分支这两个功能.</p>
 <p>值得一提的是,我们前面说的<code>git checkout -- &lt;file&gt;</code>这个指令,如果没有了<code>--</code>,且后面跟着的是分支名,其也能起到转化分支的功能,即<code>switch</code>,要创建与转化同时进行的,即<code>git checkout -b 分支名</code>即可.</p>
 <p>在这我们推荐使用<code>switch</code>指令,防止我们忘记了<code>checkout</code>的撤销修改的功能</p>
 <p>我们来试试,如果我们在<code>test</code>分支上修改,会对我们的<code>main</code>分支有什么影响吗?如下图我们对我们的<code>readme.txt</code>文件做了一定的修改。</p>
-<p><img src="git_files/figure-html/76d393b0-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/76d393b0-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>此时我们<code>add+commit</code>，再切换回我们的<code>main</code>分支，发现，前面修改的内容都没了！</p>
 <p>因为那个提交是在<code>test</code>分支上，而<code>main</code>分支此刻的提交点并没有变：</p>
-<p><img src="git_files/figure-html/76d393b0-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/76d393b0-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>注意,我们这时候可以观察到,切换分支的时候,我们本地库的内容也会跟着变,即切换分支不仅改变 <code>HEAD</code> 指向，还会把该分支对应的 <code>commit</code> 内容检出（<code>checkout</code>）到工作区。</p>
 <p>因为切分支需要修改工作区内容。如果你的工作区里已经有自己没提交的修改，而目标分支又需要改这些文件，Git 就可能覆盖你的修改。因此 Git 会阻止切换，并提示类似：</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> local changes would be overwritten by checkout</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
@@ -586,15 +586,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>简单来说，Branch 负责把不同工作分开，Merge 负责把已经完成的工作重新组合到一起。</p>
 <p>我们来简单的介绍一下merge是什么</p>
 <p>假设目前项目的状态如下:</p>
-<p><img src="git_files/figure-html/50c99a4a-1-Screenshot_2026-08-26-10-38-17-374_com.miui.creat.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/50c99a4a-1-Screenshot_2026-08-26-10-38-17-374_com.miui.creat.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看出,<code>main</code>分支停留在了C,而<code>test</code>分支已经完成了D和E两次提交.如果此时我们想要开发的功能已经完成了,我们就希望让<code>main</code>也包含这些修改.</p>
 <p>我们首先要切换到要接受修改的分支,<code>git switch main</code>,然后执行<code>git merge test</code>即可:</p>
-<p><img src="git_files/figure-html/50c99a4a-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/50c99a4a-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如图中显示一般,我们是Fast-forward的合并方式,Git告诉我们，这次合并是“快进模式”，也就是直接把<code>main</code>指向<code>test</code>的当前提交，所以合并速度非常快。</p>
 <p>即因为创建<code>test</code>之后,<code>main</code>没有再继续产生任何新的提交,Git会发现,我们只要把我们的指针从C前移到E即可,这种合并叫做快进合并.它没有真正创建一个额外的“合并提交”，而只是让 <code>main</code> 指向了新的位置。</p>
 <p>但是,如果我们创建了<code>test</code>之后,<code>main</code>分支也进行了其他的修改呢?例如你在搞A功能,同事在搞B功能,他比你先搞好了,然后修改了<code>main</code>,这时候我们要怎么办?</p>
 <p>我们同样画一个简单的历史图:</p>
-<p><img src="git_files/figure-html/665a3eb4-1-Screenshot_2026-08-26-10-47-23-657_com.miui.creat.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/665a3eb4-1-Screenshot_2026-08-26-10-47-23-657_com.miui.creat.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这时候两个分支已经真正产生了不同的历史.如果现在切换到<code>git switch main</code>,然后再<code>git merge test</code>.Git 会尝试把两边的修改组合起来.如果两个分支修改的是不同内容，Git 通常可以自动完成。最终产生一个新的版本,像一个环一样.</p>
 <p>这边我们先理解一下,merge到底在合并什么?</p>
 <p>实际上,Git并不是把两个文件夹合并到一起,而比较的是两个分支从共同祖先开始分别发生了哪些变化。以我们的历史图,<code>main</code>与<code>test</code>分支的共同祖先是<code>C</code>,Git会比较,从<code>C-&gt;E</code>发生了什么变化,从<code>C-&gt;G</code>又发生了什么变化,然后尝试把两边的修改组合起来。如果两边修改的是不同文件，通常非常简单。我们只需要把不同文件都改成修改后的版本即可:)</p>
@@ -605,12 +605,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>如果这时候执行<code>git merge test</code>,Git 就会遇到一个问题,我要选择E处的修改呢,还是G处的修改呢?Git 不知道。因此它不会擅自帮你决定，而是暂停合并，把决定权交给开发者.</p>
 <p>我们下面来亲手制造一个Merge conflict,看看会发生什么</p>
 <p>我们对我们的<code>learngit_1</code>文件夹中的<code>readme.txt</code>做以下修改，对于<code>main</code>分支，其最后一行修改为<code>this is test for merge conflict</code>；而<code>test</code>分支，其最后一行修改为<code>this is test 4 merge conflict</code>. 我们将<code>test</code>分支合并到<code>main</code>分支试试：</p>
-<p><img src="git_files/figure-html/6de823da-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/6de823da-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以看到Git 自动合并失败了，需要你手动解决冲突</p>
 <p>此时我们可以使用<code>git status</code>查看有哪些文件存在冲突，我们这样才有目标：</p>
-<p><img src="git_files/figure-html/1db942d6-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/1db942d6-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以看到，Git说<code>readme.txt</code>都修改了，并且 Git 无法自动决定结果，这时候我们打开<code>readme.txt</code>文件看看。</p>
-<p><img src="git_files/figure-html/1db942d6-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/1db942d6-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这几行就是 Git 自动插入的冲突标记。</p>
 <p>Git 的冲突内容通常由两个部分组成：</p>
 <ol type="1">
@@ -622,7 +622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>例如我们决定保留<code>main</code>分支下的内容，那么把冲突标记和另一边内容全部删除，最终文件中冲突部分只留下<code>this is test for merge conflict</code>即可。</p>
 <p>后面直接使用<code>git add</code>加<code>git commit</code>即可。这样整个 merge 才真正完成。</p>
 <p>值得注意的是，此部分同样可以使用VSCode，此处就不做介绍了，非常简单，自己尝试一下，一试就会:)</p>
-<p><img src="git_files/figure-html/e524d92a-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/e524d92a-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如图，我们就可以看到我们的全过程图</p>
 <p>一般来说，现在<code>test</code>分支就已经没用了，我们可以直接删除即可，这也是一般的工作流程，指令是<code>git branch -d 分支名</code>,<code>-D</code>表示为强硬删除</p>
 <p>如果你在看到存在大量的merge后不想要继续merge怎么办，可以使用<code>git merge --abort</code></p>
@@ -643,12 +643,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="在-github-创建一个远程仓库" class="level4">
 <h4 class="anchored" data-anchor-id="在-github-创建一个远程仓库">在 GitHub 创建一个远程仓库</h4>
 <p>首先，登录我们的Github账户，点击右上角的<code>+</code>,选择创建一个新的Repository：</p>
-<p><img src="git_files/figure-html/bb37f2d7-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/bb37f2d7-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>Repository名称可以随意填写，只要你觉得可以帮助你认清是哪个仓库即可，仓库还可以选择<code>Pubulic</code>或者<code>Private</code>，<code>Public</code> 表示其他人可以看到这个仓库，<code>Private</code> 则表示只有你自己以及被授权的用户可以访问。</p>
 <p>因为我们本地已经存在 <code>learngit_1</code> 仓库，所以这里建议暂时不要勾选自动创建 <code>README</code>、<code>.gitignore</code> 或 <code>License</code>，直接创建一个空仓库即可。这样可以避免本地仓库和 GitHub 仓库一开始就拥有不同的提交历史。</p>
-<p><img src="git_files/figure-html/bb37f2d7-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/bb37f2d7-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>一般可以看到两种常见形式HTTPS和SSH。</p>
-<p><img src="git_files/figure-html/a6bd7067-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/a6bd7067-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>两种方式都可以连接 GitHub。本文主要使用 SSH，因此在真正连接远程仓库之前，我们先把 SSH 配置好。该图中下方的两块代码分别代表着，已经有本地库与还没有本地库的情况，我们选择下者，配置好SSH后直接输入对应代码即可。</p>
 </section>
 <section id="ssh让-github-知道你是谁" class="level4">
@@ -659,10 +659,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>我们可以在我们的主文件夹看看是否存在.ssh文件夹，里面应该有两个文件<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件,对应着私钥与公钥两种。如果没有的话，可以使用以下指令生成一个<code>ssh-keygen -t rsa -C "youremail@example.com"</code></p>
 <p>你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。记住，生成出来的私钥不能泄露出去，而公钥可以放心地告诉别人。我们上传给Github的也是公钥。</p>
 <p>我们可以使用VSCode等方法查看公钥的内容，然后直接复制完整内容。我们进入Settings，然后点击左侧栏Access中的SSH and GPG keys:</p>
-<p><img src="git_files/figure-html/606663fa-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/606663fa-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>点击SHH keys块的右上角<code>New SSH key</code>, 然后输入一个你能认得的title与你的公钥即可。</p>
 <p>我们可以使用以下指令来查看自己是否成功，如果第一条指令不行就换成下面那条，记得输入yes：</p>
-<p><img src="git_files/figure-html/7446d765-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/7446d765-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如果出现了这种情况，请你在.ssh文件夹创建一个config，不然后面会有问题哦<sub></sub></p>
 <p>具体策略如下：从上到下输入：</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd .ssh  <span class="co">#(进入该文件夹)</span></span>
@@ -685,17 +685,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="将本地仓库与远程仓库连接起来" class="level4">
 <h4 class="anchored" data-anchor-id="将本地仓库与远程仓库连接起来">将本地仓库与远程仓库连接起来</h4>
 <p>SSH 配置完成以后，我们回到之前的 <code>learngit_1</code>。然后使用<code>git remote add origin git@github.com:用户名/learngit_1.git</code>:</p>
-<p><img src="git_files/figure-html/a7607566-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/a7607566-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们先介绍一下这串指令的含义： 1. <code>git remote</code> 表示管理远程仓库。 2. <code>add</code>表示增加一个远程仓库。 3. <code>origin</code> 是我们给这个远程仓库起的名字 4. <code>git@github.com:example/learngit_1.git</code> 才是真正的远程仓库地址。 &gt; 所以整句话可以理解成:给当前 Git 仓库添加一个名叫 origin 的远程仓库，它的地址是后面的 GitHub 地址。</p>
 <p>至于为什么给远程仓库起<code>origin</code>这个名字，是大家都习惯了，你起成<code>github</code>也是可以的</p>
 <p>我们可以使用<code>git remote</code>来查看我们的远程仓库，如果希望看到详细地址，可以使用<code>git remote -v</code>：</p>
-<p><img src="git_files/figure-html/c0fde836-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/c0fde836-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>fetch表示从这个地址获取内容。 push表示向这个地址上传内容。</p>
 <p>现在本地仓库和 GitHub 已经建立联系，但是 GitHub 仓库目前还是空的。这时候就需要push，可以把其简单理解为把本地仓库中的提交推送到远程仓库。</p>
 <p>第一次上传的时候，可以可以执行<code>git push -u origin main</code> 表示为上传到哪个远程仓库，上传哪个分支的内容。所以这句话就是：把本地的 <code>main</code> 分支推送到 <code>origin</code> 这个远程仓库。其中的<code>-u</code>的作用是以后 Git 就知道本地 <code>main</code> 默认应该推送到哪个远程分支。以后我们只需要<code>git push</code>即可。</p>
-<p><img src="git_files/figure-html/39298764-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/39298764-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们这时候刷新一下我们的Github的仓库页面：</p>
-<p><img src="git_files/figure-html/39298764-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/39298764-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这就代表我们已经成功啦.</p>
 <p>我们以后想把我们的工作更新到远程仓库，其整个流程为:</p>
 <p>修改文件-&gt;git add-&gt;暂存区-&gt;git commit-&gt;本地Git仓库-&gt;git push-&gt;GitHub远程仓库</p>
@@ -715,9 +715,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="基于vscode的push与pull">基于VSCode的push与pull</h4>
 <p>前面的内容我们同样可以使用我们的VSCode，这边我们做简单的介绍：</p>
 <p>首先，我们要把本地库链接到Gitub，可以使用下图的按钮，直接使用即可，上侧输入的内容为你给远程仓库的命名，例如我们这边是<code>origin</code>:</p>
-<p><img src="git_files/figure-html/c2ddea5d-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/c2ddea5d-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>以及我们的<code>push</code>,<code>pull</code>,<code>fetch</code>操作：</p>
-<p><img src="git_files/figure-html/c2ddea5d-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/c2ddea5d-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>VSCode 并没有使用另一套版本控制系统，只是把这些 Git 操作变成了按钮。如果你的VSCode是英文的，应该可以更好的帮助你理解。</p>
 </section>
 </section>
@@ -728,17 +728,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>clone</code> 的作用可以简单理解成：把一个远程 Git 仓库完整地复制到本地.这里的“完整”不仅包括项目文件，还包括这个仓库的 Git 历史、分支信息以及远程仓库配置。</p>
 <p>假如Github上已经有一个仓库：git@github.com:example/learngit_1.git</p>
 <p>我们希望把它下载到本地，只需要在准备存放项目的位置执行：git clone git@github.com:example/learngit_1.git</p>
-<p><img src="git_files/figure-html/baadf83e-2-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/baadf83e-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以直接在github中点击右上角的Code按钮，就可以获得地址了。</p>
 <p>Git 会自动创建：learngit_1/ ，并把远程仓库中的内容下载进去。我们可以进入这个项目，然后使用<code>git status</code>来查看其内容。此时你已经拥有了一个可以正常使用的本地 Git 仓库。</p>
 <p>我们可以尝试下载以下图中的仓库，这是一个Skill，感觉看上去不错：</p>
-<p><img src="git_files/figure-html/baadf83e-1-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/baadf83e-1-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看到，我们获得了全部的信息，这非常完美，且我们以后也可以通过<code>pull</code>等方法进行更新啦。</p>
 <p>我们上面Code按钮中看到可以下载Zip，有的人会说，这不也是下载了整个文件夹吗，有什么区别？</p>
 <p>如果我们下载Zip，你得到的只是当前版本的文件，其中是没有.git的，因此也没有这个项目的完整 Git 历史。</p>
 <p>而使用<code>git clone</code> 获得的是项目文件+.git+Commit历史+分支信息+远程仓库配置。</p>
 <p>对的，我们<code>clone</code>以后，<code>Remote</code> 已经自动配置好了:</p>
-<p><img src="git_files/figure-html/b20f19d7-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/b20f19d7-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如果你拥有这个仓库的 <code>Push</code> 权限，也可以直接<code>git push</code>上传自己的提交。</p>
 <p>所以如果我们对于一个有权限的Github项目，如果换了一台新电脑，整个工作流程就是：</p>
 <p>从Github中clone下来项目， 然后在本地项目进行修改， 使用<code>git add .</code>+<code>git commit</code> ，最后使用<code>git push</code>把新的内容推到Github中去。</p>
@@ -773,7 +773,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>git check-ignore -v 文件名</code>可以告诉你是哪一条 <code>.gitignore</code> 规则忽略了它</p>
 <section id="使用-vs-code-clone-github-项目" class="level4">
 <h4 class="anchored" data-anchor-id="使用-vs-code-clone-github-项目">使用 VS Code Clone GitHub 项目</h4>
-<p><img src="git_files/figure-html/55eb4eaf-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/55eb4eaf-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如图所示，我们可以直接获取即可，VSCode 会帮助我们执行 Clone，并询问是否打开这个项目。</p>
 </section>
 </section>
@@ -800,13 +800,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h5 class="anchored" data-anchor-id="第三步正常开发并-commit">第三步：正常开发并 Commit</h5>
 <p>接下来和之前学习的 Git 操作完全一样。Alice 修改代码：<code>login.html, login.js</code>,然后我们可以查看状态<code>git status</code>，确定修改<code>git diff</code>,然后使用<code>git add .</code>+<code>git commit -m "add login page"</code>继续开发后，还可以继续add与commit。</p>
 <p>于是我们的历史可能会变成：</p>
-<p><img src="git_files/figure-html/9fb0c682-1-Screenshot_2026-08-26-19-41-55-728_com.miui.creat.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/9fb0c682-1-Screenshot_2026-08-26-19-41-55-728_com.miui.creat.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这里的 D 和 E 都只存在于 Alice 的本地 <code>feature-login</code> 分支中。</p>
 </section>
 <section id="第四步把自己的-branch-push-到-github" class="level5">
 <h5 class="anchored" data-anchor-id="第四步把自己的-branch-push-到-github">第四步：把自己的 Branch Push 到 GitHub</h5>
 <p>现在登录功能开发完成。但是 GitHub 还不知道：feature-login这个分支。因此第一次Push的时候，可以<code>git push -u origin feature-login</code>，执行后这样 GitHub 上就出现了 Alice 的功能分支。后面也可以直接<code>git push</code>即可。</p>
-<p><img src="git_files/figure-html/4bb729c5-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/4bb729c5-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这里会产生一个问题，为什么不直接 Merge 到 main？即直接使用:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> switch main </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge feature-login </span>
@@ -816,36 +816,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="创建pull-request" class="level4">
 <h4 class="anchored" data-anchor-id="创建pull-request">创建Pull Request</h4>
 <p>当我们执行了<code>git push -u origin feature-login</code>之后，进入Github Repository 页面，其往往会自动提示Compare &amp; pull request，点击进去就可以创建PR。</p>
-<p><img src="git_files/figure-html/739d8e05-1-image-2.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/739d8e05-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>当然也可以进入Pull requests页面，然后New pull request。</p>
-<p><img src="git_files/figure-html/739d8e05-3-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/739d8e05-3-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>接下来需要选择两个分支。[base: main &amp; compare: feature-login]</p>
 <p>这里的<code>base</code>表示为修改最终要进入哪个分支。而<code>compare</code>表示哪个分支提供新的修改。</p>
-<p><img src="git_files/figure-html/739d8e05-2-image-3.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/739d8e05-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>Title 应该简单说明这次修改完成了什么。而 Description 可以说明具体的工作内容。Pull Request 的目的不是写很多文字，而是让负责 Review 的成员能够快速知道：“这次修改是干什么的？”</p>
 <p>我们可以在github上直接看到如图所示内容，即改变了什么：</p>
-<p><img src="git_files/figure-html/d8ad9b60-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/d8ad9b60-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如果经过你的检查，我们可以通过此次更改了：</p>
-<p><img src="git_files/figure-html/d1b02c18-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/d1b02c18-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如果你觉得没通过，可以给他一些意见，让他重新修改一下。</p>
 <p>Alice 不需要重新创建 Pull Request。她只需要回到自己的：<code>feature-login</code>，继续修改，然后重新add、commit、push即可。新的 commit 会自动出现在原来的 Pull Request 中。故Pull Request 是跟着分支走的，而不是只对应一次 commit。</p>
 <p>我们在<code>push</code>之前，可能存在一个问题，就是多人开发时，很可能在 Alice 开发登录功能期间，<code>main</code> 已经继续发生变化。例如在他开发期间，bob的功能已经进入了<code>main</code>，且推进了两个版本了，这时候我们本地的<code>main</code>版本太低了。</p>
 <p>如果双方修改的内容互不影响，GitHub 可能仍然可以直接合并。但是如果双方修改了同一个文件的同一部分，就可能出现：<code>Merge Conflict</code>GitHub 会提示这个 Pull Request 不能直接合并。这时候就需要先解决冲突。</p>
 <p>我们先简单尝试一下，这时候我们在我们的本地中创建第二个分支<code>test_2</code>即可，我们看看我们修改相同部分以后会出现什么输出呢？</p>
-<p><img src="git_files/figure-html/e8462f75-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/e8462f75-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以看到，已经出错了。</p>
 <p>我们有一种比较简单的方法：</p>
 <p>先切回<code>git switch main</code>；获取最新的<code>mian</code>:<code>git pull</code>；然后回到自己的分支：<code>git switch test_2</code>;新的 <code>main</code> 合并进来：<code>git merge main</code>,现在如果有冲突，就按照前面 Merge Conflict 一章的方法解决。修改成最终想要的结果,然后add, commit, push 即可。</p>
-<p><img src="git_files/figure-html/b107a453-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/b107a453-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这时候我们就可以成功PR了</p>
-<p><img src="git_files/figure-html/9f296db0-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/9f296db0-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如图，我们可以我们已经成功修改了，且存在了三个branch，如果不想要的分支，merge完可以直接删除啦。</p>
 </section>
 <section id="如果没有仓库写权限怎么办fork" class="level4">
 <h4 class="anchored" data-anchor-id="如果没有仓库写权限怎么办fork">如果没有仓库写权限怎么办？Fork</h4>
 <p>针对于我们没有操作权限的仓库，应该怎么办呢？ 这时候就需要Fork</p>
 <p>Fork 可以简单理解成：在自己的 GitHub 账号中复制一份别人的仓库。</p>
-<p><img src="git_files/figure-html/b0ef4744-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/b0ef4744-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>之后，你的Github中就会出现对应的仓库了，这两个仓库是独立的，现在你可以自由的push到你自己的仓库中去。</p>
 <p>Fork的一个基本流程：</p>
 <p>例如你希望给一个开源项目修复 Bug。</p>
@@ -872,7 +872,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><code>Release</code>是 GitHub 在 Tag 基础上提供的“正式发布页面”。</p>
 <p>GitHub Releases 页面，一个 v1.0.0 Release 中包含版本标题、更新说明和下载文件 ，是基于某个 Tag 创建一个更加完整的发布页面。</p>
 <p>GitHub Release 不仅可以写版本说明，还可以附加文件。这样用户进入：release之后，可以直接下载已经编译好的程序。如果没有手动上传文件，GitHub 通常也会根据 Tag 提供对应源代码的归档下载，例如：(Source code (zip)),(Source code (tar.gz))</p>
-<p><img src="git_files/figure-html/0a14540c-1-image.png" class="img-fluid"></p>
+<p><img src="git_files/figure-html/0a14540c-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们如图就可以发布我们的release，记得在里面选择好版本号以及修改的内容。</p>
 <p>一般来说版本号是v1.0.0，代表着vMAJOR.MINOR.PATCH</p>
 <ol type="1">

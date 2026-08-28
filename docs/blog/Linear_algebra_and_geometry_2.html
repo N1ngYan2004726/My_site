@@ -250,10 +250,10 @@ x &amp; y
 <p>可以得出： <span class="math display">Av = \begin{bmatrix}a &amp; b \\ c &amp; d\end{bmatrix}
 \begin{bmatrix}x\\ y \end{bmatrix} = \begin{bmatrix}ax+by\\ cx+dy \end{bmatrix}</span> <span class="math display">=x\begin{bmatrix}a\\ c \end{bmatrix}+y\begin{bmatrix}b\\ d \end{bmatrix}</span> <span class="math display">=x{A\begin{bmatrix} 1 \\ 0 \end{bmatrix}}+y{A\begin{bmatrix} 0 \\ 1 \end{bmatrix}}</span> 从这我们可以看出，一个矩阵可以变换为任意新矩阵或向量</p>
 <p>我们再用一个具体的例子来说明：</p>
-<p><img src="./imgs/5.png" class="img-fluid"></p>
+<p><img src="./imgs/5.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以看出，矩阵本质上是把基向量进行了转化，本例中的基向量<span class="math inline">(1, 0)➡(1, -1)</span>, <span class="math inline">(0, 1)➡(2, 3)</span></p>
 <p>具体情况如图：</p>
-<p><img src="./imgs/6.png" class="img-fluid"></p>
+<p><img src="./imgs/6.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>我们可以得到以下结论，矩阵对空间进行了倾斜，旋转，缩放，但是只能做线性变换！</p>
 但是，有的矩阵，如$ B =
 <span class="math display">\begin{bmatrix}
@@ -286,7 +286,7 @@ x &amp; y
 <p>$ rank(A) = 最大线性无关列数 $</p>
 <p>rank就是有多少个真正不同的方向。</p>
 <p>下面我们用几个例子来解释其具体含义。</p>
-<p><img src="./imgs/7.jpg" class="img-fluid"></p>
+<p><img src="./imgs/7.jpg" class="img-fluid" loading="lazy" decoding="async"></p>
 </section>
 <section id="可逆性" class="level2">
 <h2 class="anchored" data-anchor-id="可逆性">可逆性</h2>
@@ -321,11 +321,11 @@ $ 与$ B =
 <h2 class="anchored" data-anchor-id="行列式">行列式</h2>
 <p>行列式的物理意义就是，面积的变化比例</p>
 <p>回到矩阵线性变化的那部分内容，我们利用矩阵A，转化了基向量。其面积会发生什么变化呢？</p>
-<p>如图： <img src="./imgs/6.png" class="img-fluid"> 我们可以看出来，原本是一个单位正方形，<span class="math inline">S = 1</span>,<br>
+<p>如图： <img src="./imgs/6.png" class="img-fluid" loading="lazy" decoding="async"> 我们可以看出来，原本是一个单位正方形，<span class="math inline">S = 1</span>,<br>
 变换后，是一个平行四边形<span class="math inline">S' = \lvert ad-bc \rvert = 5</span></p>
 <p>即矩阵<span class="math inline">A</span>把空间扩大了五倍。</p>
 <p>故有以下总结：</p>
-<p><img src="./imgs/8.png" class="img-fluid"></p>
+<p><img src="./imgs/8.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>因此我们可以得出，<span class="math inline">det(A)=0</span>的时候，其rank&lt;n，且是不可逆的。</p>
 </section>
 <section id="一些常见操作" class="level2">

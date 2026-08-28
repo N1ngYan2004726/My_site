@@ -272,7 +272,7 @@ y
 <section id="寻找特征值" class="level2">
 <h2 class="anchored" data-anchor-id="寻找特征值">寻找特征值</h2>
 <p>根据前言，<span class="math inline">Av=\lambda v</span>，我们可以得到<span class="math inline">(A-\lambda I)v=0</span>,其中的<span class="math inline">v</span>肯定不是零向量，故<span class="math inline">A-\lambda I</span>必须把某方向压缩为0，即<span class="math inline">det(A-\lambda I)=0</span></p>
-<p>我们利用一个例子来简单讲解一下<span class="math inline">\lambda</span>的求解过程： <img src="./imgs/9.png" class="img-fluid"></p>
+<p>我们利用一个例子来简单讲解一下<span class="math inline">\lambda</span>的求解过程： <img src="./imgs/9.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>可以得到以下结论： 1. 特征向量就是在矩阵作用下，保持方向的特殊方向。 2. 特征值，就是这个方向被矩阵伸缩的倍数，如果为负值，即反向(翻转)</p>
 </section>
 <section id="矩阵分解" class="level1">
@@ -292,7 +292,7 @@ y
 </ol>
 <p>根据前面的推理： <span class="math display">AW=A[v_1, v_2]=[\lambda_1v_1, \lambda_2v_2]=W\Sigma</span> 可以得到： <span class="math display">A=W \Sigma W^{-1}</span></p>
 <p>怎么理解呢？ 1. 对于<span class="math inline">W^{-1}</span>: 作用是改变坐标，把普通坐标系，转化到特征向量坐标系； 2. 对于<span class="math inline">\Sigma</span>: 作用是沿着特征向量方向进行缩放； 3. 对于<span class="math inline">W</span>:作用是转化回原本的坐标</p>
-<p><img src="./imgs/10.png" class="img-fluid"></p>
+<p><img src="./imgs/10.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <section id="对特征分解进行运算" class="level2">
 <h2 class="anchored" data-anchor-id="对特征分解进行运算">对特征分解进行运算</h2>
 <p>矩阵的幂：<br>
@@ -331,7 +331,7 @@ y
 <section id="gershgorin-圆盘定理" class="level2">
 <h2 class="anchored" data-anchor-id="gershgorin-圆盘定理">Gershgorin 圆盘定理</h2>
 <p>对于一个规模很大的矩阵，特征值往往很难求出，针对这种情况，我们只需要知道大概的数值即可。 具体内容见下图：</p>
-<p><img src="./imgs/11.png" class="img-fluid"></p>
+<p><img src="./imgs/11.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>值得注意的是，这种方法仅仅适用于对角元素明显大于其他部分元素的情景。</p>
 <p>我们有一些小结论：</p>
 <ol type="1">

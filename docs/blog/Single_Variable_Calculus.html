@@ -242,7 +242,7 @@ window.Quarto = {
 </ol>
 <p>这就是梯度下降，我们最需要了解到的微分学。</p>
 <p>我们先考虑只有一种权重的情况：</p>
-<p><img src="./imgs/12.png" class="img-fluid"></p>
+<p><img src="./imgs/12.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>其中左图是[0, 3]这个尺度下的图像，函数是波浪形，高度非线性；中间的图是[1.75, 2.25]这个尺度下的图像，图像近似抛物线；右图在[2, 2.01]上几乎是一条直线。</p>
 <p>因此我们可以得到一个结论，任何复杂的函数，在足够小的局部领域内，都是近似线性的。</p>
 <p>利用这一直觉，我们可以定义差商： <span class="math display">差商=\frac{f(x+\varepsilon)-f(x)}{\varepsilon}</span></p>
@@ -267,15 +267,15 @@ window.Quarto = {
 <p>此处重点是链式法则，反向传播的本质就是不断应用链式法则，从输出层向输入层逐层求导。</p>
 <p>一个简单的实战：求<span class="math inline">\frac{d}{dx}\log (1+(x-1)^{10})</span>: <span class="math display">\frac{d}{dx} \log (...)=\frac{1}{1+(x-1)^{10}}·10(x-1)^9·1</span></p>
 <hr>
-<p>在点<span class="math inline">(x_0, f(x_0))</span>处，斜率为<span class="math inline">f'(x_0)</span>,切线的方程为： <span class="math display">y=f'(x_0)(x-x_0)+f(x_0)</span> 这意味着在<span class="math inline">x_0</span>附近： <span class="math display">f(x)≈f(x_0)+f'(x_0)(x-x_0)</span> <img src="./imgs/13.png" class="img-fluid"></p>
+<p>在点<span class="math inline">(x_0, f(x_0))</span>处，斜率为<span class="math inline">f'(x_0)</span>,切线的方程为： <span class="math display">y=f'(x_0)(x-x_0)+f(x_0)</span> 这意味着在<span class="math inline">x_0</span>附近： <span class="math display">f(x)≈f(x_0)+f'(x_0)(x-x_0)</span> <img src="./imgs/13.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如上图所示，我们可以获得一个复杂函数各点的切线方程，我们可以拥有一个经典近似，当<span class="math inline">x_0</span>趋于0的时候，认为<span class="math inline">\sin x= x</span></p>
 <hr>
 <p>简单来说，导数求导完以后，也是一个函数，可以继续求导，故我们可以得到高阶导数<span class="math inline">f^{(m)}(x)</span></p>
 <p>如二阶导数<span class="math inline">f''(x)</span>描述的是变化速度本身的变化速度，即曲率，我们有以下几种情况：</p>
 <ol type="1">
-<li><p><span class="math inline">f''(x)&gt;0</span>, 说明导数不断增加，函数向上弯，有一个最低点，叫凹函数。 <img src="./imgs/14.png" class="img-fluid"></p></li>
-<li><p><span class="math inline">f''(x)&lt;0</span>, 说明导数不断下降，函数下弯曲，有一个最高点，叫凸函数。 <img src="./imgs/15.png" class="img-fluid"></p></li>
-<li><p><span class="math inline">f''(x)=0</span>, 说明是直线。 <img src="./imgs/16.png" class="img-fluid"></p></li>
+<li><p><span class="math inline">f''(x)&gt;0</span>, 说明导数不断增加，函数向上弯，有一个最低点，叫凹函数。 <img src="./imgs/14.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
+<li><p><span class="math inline">f''(x)&lt;0</span>, 说明导数不断下降，函数下弯曲，有一个最高点，叫凸函数。 <img src="./imgs/15.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
+<li><p><span class="math inline">f''(x)=0</span>, 说明是直线。 <img src="./imgs/16.png" class="img-fluid" loading="lazy" decoding="async"></p></li>
 </ol>
 <p>我们使用导数来更新参数，那么二阶导的作用是什么呢？</p>
 <p>在机器学习中，优化算法不仅仅关心一阶导数<span class="math inline">\nabla f</span>, 还关心Hessian矩阵，他是二阶导数矩阵即<span class="math inline">f''</span></p>

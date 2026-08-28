@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Deepseek Harness 安装教程 + 插件安装方法">
+<meta name="description" content="本文讲解了截止至2026年,AI时代出现的一些概念">
 
-<title>Deepseek Harness 安装教程 – N1ngYan</title>
+<title>AI是什么 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,41 +26,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -110,6 +75,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -179,13 +187,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">该页面内容</h2>
    
   <ul>
-  <li><a href="#deepseek-harness-安装" id="toc-deepseek-harness-安装" class="nav-link active" data-scroll-target="#deepseek-harness-安装">Deepseek Harness 安装</a>
-  <ul class="collapse">
-  <li><a href="#node.js-环境准备" id="toc-node.js-环境准备" class="nav-link" data-scroll-target="#node.js-环境准备">1. Node.js 环境准备</a></li>
-  <li><a href="#deepseek-harness-安装-1" id="toc-deepseek-harness-安装-1" class="nav-link" data-scroll-target="#deepseek-harness-安装-1">2. DeepSeek Harness 安装</a></li>
-  <li><a href="#deepseek-harness-使用配置" id="toc-deepseek-harness-使用配置" class="nav-link" data-scroll-target="#deepseek-harness-使用配置">3. Deepseek Harness 使用配置</a></li>
-  <li><a href="#插件安装讲解" id="toc-插件安装讲解" class="nav-link" data-scroll-target="#插件安装讲解">4. 插件安装讲解</a></li>
-  </ul></li>
+  <li><a href="#ai到底是什么" id="toc-ai到底是什么" class="nav-link active" data-scroll-target="#ai到底是什么">AI到底是什么</a></li>
+  <li><a href="#machine-learning让机器从数据中学习" id="toc-machine-learning让机器从数据中学习" class="nav-link" data-scroll-target="#machine-learning让机器从数据中学习">Machine Learning：让机器从数据中学习</a></li>
+  <li><a href="#deep-learning机器学习的一次巨大升级" id="toc-deep-learning机器学习的一次巨大升级" class="nav-link" data-scroll-target="#deep-learning机器学习的一次巨大升级">Deep Learning：机器学习的一次巨大升级</a></li>
+  <li><a href="#transformer今天-llm-世界的关键转折点" id="toc-transformer今天-llm-世界的关键转折点" class="nav-link" data-scroll-target="#transformer今天-llm-世界的关键转折点">Transformer：今天 LLM 世界的关键转折点</a></li>
+  <li><a href="#llmlarge-language-model" id="toc-llmlarge-language-model" class="nav-link" data-scroll-target="#llmlarge-language-model">LLM：Large Language Model</a></li>
+  <li><a href="#rag" id="toc-rag" class="nav-link" data-scroll-target="#rag">RAG</a></li>
+  <li><a href="#tool-calling让-llm-不只是说还能调用" id="toc-tool-calling让-llm-不只是说还能调用" class="nav-link" data-scroll-target="#tool-calling让-llm-不只是说还能调用">Tool Calling：让 LLM 不只是说，还能调用</a></li>
+  <li><a href="#llm-tools-agent-的起点" id="toc-llm-tools-agent-的起点" class="nav-link" data-scroll-target="#llm-tools-agent-的起点">LLM + Tools = Agent 的起点</a></li>
+  <li><a href="#model-context-protocol" id="toc-model-context-protocol" class="nav-link" data-scroll-target="#model-context-protocol">Model Context Protocol</a></li>
+  <li><a href="#harness" id="toc-harness" class="nav-link" data-scroll-target="#harness">Harness</a></li>
+  <li><a href="#guardrails为什么-agent-越强安全越重要" id="toc-guardrails为什么-agent-越强安全越重要" class="nav-link" data-scroll-target="#guardrails为什么-agent-越强安全越重要">Guardrails：为什么 Agent 越强，安全越重要？</a></li>
+  <li><a href="#observabilityai-系统也需要监控" id="toc-observabilityai-系统也需要监控" class="nav-link" data-scroll-target="#observabilityai-系统也需要监控">Observability：AI 系统也需要监控</a></li>
+  <li><a href="#额外补充skill" id="toc-额外补充skill" class="nav-link" data-scroll-target="#额外补充skill">额外补充：Skill</a></li>
   </ul>
 </nav>
     </div>
@@ -194,15 +208,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Deepseek Harness 安装教程</h1>
+<h1 class="title">AI是什么</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">Harness</div>
+    <div class="quarto-category">AI</div>
+    <div class="quarto-category">essay</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Deepseek Harness 安装教程 + 插件安装方法
+    本文讲解了截止至2026年,AI时代出现的一些概念
   </div>
 </div>
 
@@ -213,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">发布于</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2026年8月16日</p>
+      <p class="date">2026年8月27日</p>
     </div>
   </div>
   
@@ -225,101 +240,202 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="deepseek-harness-安装" class="level2">
-<h2 class="anchored" data-anchor-id="deepseek-harness-安装">Deepseek Harness 安装</h2>
-<section id="node.js-环境准备" class="level3">
-<h3 class="anchored" data-anchor-id="node.js-环境准备">1. Node.js 环境准备</h3>
-<p>安装 DeepSeek Harness 之前，需要先安装 Node.js 运行环境。Node.js 是 Harness 的底层依赖，提供了必要的运行时支持。前往：https://nodejs.org/zh-cn/download <img src="./imgs/d-1.png" class="img-fluid" loading="lazy" decoding="async"> 红框是确定好自己的设备型号，我们选择箭头处的MSI安装方法即可，一路按照默认通过即可(担心内存问题可以自己改一下路径)</p>
-<p>我们按Win+R打开”运行”，然后打开cmd或者powershell都可以，如图：</p>
-<p><img src="./imgs/d-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
-<p>在里面输入：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>node <span class="at">-v</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>npm <span class="at">-v</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>只要输出版本号，就说明了Node.js安装成功。</p>
-<p><img src="./imgs/d-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>很多人第一次接触 AI，会同时看到一堆名词：ML、DL、Transformer、LLM、Embedding、RAG、Tool Calling、Agent、MCP、Harness……</p>
+<p>它们看起来像完全不同的技术，实际上可以把它们理解成一条逐渐堆起来的技术链：</p>
+<p>ML → DL → Transformer → LLM → RAG / Tools / Memory → Agent → Harness → 完整 AI 应用</p>
+<p>这篇文章的目标不是教你训练模型，而是建立一张AI 世界地图：你看见一个 AI 产品、一个 AI Agent 或一篇 AI 技术文章时，能够知道它到底由什么组成、每一层在解决什么问题，以及自己什么时候应该用它。</p>
+<section id="ai到底是什么" class="level3">
+<h3 class="anchored" data-anchor-id="ai到底是什么">AI到底是什么</h3>
+<p>AI,全称Artificial Intelligence,中文名称人工智能,其实是一个非常大的概念。</p>
+<p>其实AI早在上世纪50 60年代就已经出现了。1956年的Dartmouth会议标志着人工智能作为一个研究领域正式诞生。</p>
+<p>可能有的读者学习过机器学习或者深度学习,认为这就是AI,实则不然。我们一般认为:<strong>让机器表现出需要人类智能才能完成的行为的能力</strong>。这就算<strong>人工智能</strong>了,至于机器内部是死记硬背、逻辑推理、统计学习还是神经网络，并不影响它是否被称为 AI。</p>
+<p>我们简单的把AI分为两块,一块是基于机器学习的,一块是基于人类设定的规则的一些方法,例如规则系统。</p>
 </section>
-<section id="deepseek-harness-安装-1" class="level3">
-<h3 class="anchored" data-anchor-id="deepseek-harness-安装-1">2. DeepSeek Harness 安装</h3>
-<p>Node.js 安装完成后，就可以安装 DeepSeek Harness 了。Harness 通过 npm 包管理器分发，使用 npx 命令可以直接运行而无需全局安装。</p>
-<p>在命令行中输入以下命令：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>npx @deepseek<span class="at">-ai/dsh</span> web</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p><img src="./imgs/d-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
-<p>这表明 Harness 已成功启动，并监听在 3080 端口。我们直接在浏览器中搜索这个网址即可(每次使用Deepseek Harness都要保证终端开着)</p>
-<p>每次使用的时候，都是打开cmd 然后输入</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>npx @deepseek<span class="at">-ai/dsh</span> web</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>就可以打开网站了，如果觉得太长的话，可以使用</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>npm install <span class="at">-g</span> @deepseek<span class="at">-ai/dsh</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>把dsh安装到全局，这样之后可以直接使用dsh web 打开网站。</p>
-<p>打开以后，会要求我们填入API，这时候我们直接去Deepseek的官方购买即可。https://platform.deepseek.com/usage</p>
-<p><img src="./imgs/d-5.png" class="img-fluid" loading="lazy" decoding="async"></p>
-<p>API页：</p>
-<p><img src="./imgs/d-6.png" class="img-fluid" loading="lazy" decoding="async"></p>
-<p>后面回到Deepseek Harness中填入API即可开始使用。</p>
+<section id="machine-learning让机器从数据中学习" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning让机器从数据中学习">Machine Learning：让机器从数据中学习</h3>
+<p>在早期的AI时代，我们主要流行的是符号人工智能，思路很简单：把人类的知识和逻辑，用计算机能理解的符号手动编写进去，但是这种方式有一个致命的缺点，我们拥有着太多的规则，可能规则之上还有规则，根本编写不完。这也是AI早期陷入瓶颈的原因之一。</p>
+<p>传统的编程都是基于”规则+数据 <span class="math inline">\rightarrow</span> 结果”</p>
+<p>但是机器学习不想这样，既然规则人工写不完，就让机器自己学习吧！这就是学习二字的由来，我们依据”历史数据+正确答案”的组合，通过训练，得到一个模型，使其在获得新的数据时，可以预测出大概率正确的答案。</p>
+<p>这就是机器学习的核心思想。模型本质上是在学习一个输入到输出之间的映射关系。这也是为什么机器学习模型可以泛化到没有见过的数据。</p>
 </section>
-<section id="deepseek-harness-使用配置" class="level3">
-<h3 class="anchored" data-anchor-id="deepseek-harness-使用配置">3. Deepseek Harness 使用配置</h3>
-<p>我们可以自己选择文件夹，作为工作区来使用，且拥有四种预设模式：标准模式、PTC模式、极简模式、创造模式，各个模式的适用范围自己探索吧。</p>
-<p>对于配置API，也可以打开”C:/Users/你的用户名/.dsh/settings.yaml”这个文件，然后直接把以下内容复制粘贴到原文件内容的下面：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span><span class="kw">:</span><span class="at"> llm-deepseek</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">'@deepseek-ai/dsh-llm-deepseek'</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">config</span><span class="kw">:</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apiKeyEnv</span><span class="kw">:</span><span class="at"> DEEPSEEK_API_KEY</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">baseURL</span><span class="kw">:</span><span class="at"> https://api.deepseek.com</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">thinking</span><span class="kw">:</span><span class="at"> enabled</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">reasoningEffort</span><span class="kw">:</span><span class="at"> high</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">maxTokens</span><span class="kw">:</span><span class="at"> </span><span class="dv">256000</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">streamIdleTimeoutMs</span><span class="kw">:</span><span class="at"> </span><span class="dv">300000</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">retryPolicy</span><span class="kw">:</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> always</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">backoff</span><span class="kw">:</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">initialDelayMs</span><span class="kw">:</span><span class="at"> </span><span class="dv">500</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">maxDelayMs</span><span class="kw">:</span><span class="at"> </span><span class="dv">10000</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">jitterRatio</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.1</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">defaultContextWindow</span><span class="kw">:</span><span class="at"> </span><span class="dv">1000000</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">models</span><span class="kw">:</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> deepseek-v4-flash</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> DeepSeek-V4-Flash</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> private-reasoner</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Company-hosted reasoning model</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">contextWindow</span><span class="kw">:</span><span class="at"> </span><span class="dv">512000</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>配置完Yaml文件后，还需要设置系统环境变量。在 Windows 系统中，打开”系统属性”→“环境变量”，在系统变量中新建一个变量,变量名为DEEPSEEK_API_KEY，变量值为你在 DeepSeek 官网获取的 API Key：</p>
-<p><img src="./imgs/d-7.png" class="img-fluid" loading="lazy" decoding="async"></p>
-<p>设置完成后，重启 Harness 服务使配置生效。</p>
+<section id="deep-learning机器学习的一次巨大升级" class="level3">
+<h3 class="anchored" data-anchor-id="deep-learning机器学习的一次巨大升级">Deep Learning：机器学习的一次巨大升级</h3>
+<p>Deep Learning，深度学习，应该很多读者都听过其大名。但是其本质上，是Machine Learning 的一个重要分支，核心使用多层神经网络从数据中自动学习复杂表示。</p>
+<p>深度学习是<strong>使用具有很多层的神经网络</strong>学习复杂的数据模型。</p>
+<p><img src="ai_map_files/figure-html/c4aeca11-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>这是一个非常简单的深度学习模型，我们把图片中的像素数据逐步转换成我们想要的输出，其中的连线是权重，可以理解为，这个两个位置之间应该传输多少信息过去？</p>
+<p>训练的本质就是找一组参数，让模型预测结果越来越正确。如果错误了，就调整参数，循环多次就会得到我们想要的模型了。当然这边说的很简单，实际上会遇到许多问题，我们这边是针对小白的讲解，就不深讲了。</p>
+<p>实际上深度学习发展过程中遇到过两次寒冬，第一次是大家发现，吹的很厉害的感知机，实际上无法解决线性不可分问题，例如XOR异或问题，如下图所示，你能用一条线把同一类的点分到同一侧吗？</p>
+<p><img src="ai_map_files/figure-html/3008e720-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>第二次是在硬件计算能力不足、训练数据不足以及网络深度受限时，BP算法会面临梯度消失或振荡等问题。加之80年代后期到90年代初期专家系统热潮退却，资金和人力投入也随之骤降，引发了第二次AI寒冬。</p>
+<p>那深度学习为什么在现在这个时代这么强大呢？</p>
+<p>大概有三个原因：</p>
+<ol type="1">
+<li>数据：互联网产生了大量的数据，例如文本，图片，视频，代码，语音等，这些都是深度学习训练的重要燃料</li>
+<li>算力：尤其是GPU,TPU等发展，神经网络的大量计算，本质上是简单的矩阵运算。GPU的发展很大的程度上促进了AI的发展</li>
+<li>模型：研发出了许多模型，如CNN,RNN,LSTM,Transformer，Diffusion等，其中 Transformer 对今天的生成式 AI 影响最大。</li>
+</ol>
 </section>
-<section id="插件安装讲解" class="level3">
-<h3 class="anchored" data-anchor-id="插件安装讲解">4. 插件安装讲解</h3>
-<p>一般来说，我们需要加入一些插件来优化我们的使用体验，而我们一般是使用Github</p>
-<p>可以使用：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dsh</span> plugin <span class="at">--profile</span> web add <span class="st">"github:用户名/仓库名#path:/子目录"</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>后面那个直接从code中复制出来即可。</p>
-<p>首次安装会自动初始化 profile。 以 web profile 为例，安装后会在 profile 的 package.json 中自动追加 dsh.profile.bundles 列表：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"dsh-profile-web"</span><span class="fu">,</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"private"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"dependencies"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"@deepseek-ai/dsh-base"</span><span class="fu">:</span> <span class="st">"版本号"</span><span class="fu">,</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"你的插件名"</span><span class="fu">:</span> <span class="st">"link:/本地路径"</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"dsh"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"profile"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"bundles"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"@deepseek-ai/dsh-base"</span><span class="ot">,</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"你的插件名"</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>移除插件可以使用：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dsh</span> plugin <span class="at">--profile</span> web remove 插件包名</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>这会同时移除 dependencies 依赖和 bundles 列表中的对应层。</p>
-<p>注：有的插件要求pnpm，可以直接使用以下指令：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>npm install <span class="at">-g</span> pnpm</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>查看版本同样的指令：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode cmd code-with-copy"><code class="sourceCode dosbat"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pnpm -<span class="at">-version</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>实际上，每次下载插件可以点开其github主页看看readme,一般都会指导你怎么安装<sub></sub></p>
+<section id="transformer今天-llm-世界的关键转折点" class="level3">
+<h3 class="anchored" data-anchor-id="transformer今天-llm-世界的关键转折点">Transformer：今天 LLM 世界的关键转折点</h3>
+<p>2017年，Google发布了一篇论文：《Attention Is All You Need》,提出了Transformer，今天绝大多数主流 LLM 都建立在类似 Transformer 的架构思想上。</p>
+<p>Transfomer中存在一个重要机制叫:<strong>Attention</strong></p>
+<p>可以简单理解成,模型在处理一个词时，会动态判断上下文哪些信息最重要。例如”小明把苹果放在桌子上，因为它很重。“，这时候模型就需要判断，它是指的前面的哪个词？Attention 就帮助模型建立这种关系</p>
+<p>模型需要根据上下文计算相关性。Attention 就是在帮助模型处理这样的关系。</p>
+<p>Transformer 非常适合：大规模训练，并行计算，学习长距离上下文关系，扩展模型规模以及处理语言等序列数据。</p>
+<p>于是出现了一个极其重要的趋势：我们使用更多的数据，更大的模型，更多的计算，更好的训练方式得到更强的模型能力，这条路线后来发展出了今天大家熟悉的LLM</p>
+</section>
+<section id="llmlarge-language-model" class="level3">
+<h3 class="anchored" data-anchor-id="llmlarge-language-model">LLM：Large Language Model</h3>
+<p>LLM = Large Language Model，大语言模型。</p>
+<p>例如今天大家熟悉的各种 GPT、Claude、Gemini、Deepseek、Kimi 等，都属于大型语言模型家族中的不同模型或系列。</p>
+<p>最简单的理解：LLM 是一个经过海量文本和其他数据训练，能够理解和生成自然语言的模型。我们一般都用过简单的LLM模型，你可以输入<code>帮我写一个 Python 快速排序</code>，一般的LLM模型都可以帮你直接输出<code>Python代码</code>。这是我们最常用到的AI形式。</p>
+<p>很多 AI 小白第一次使用 ChatGPT 时，会觉得：它是不是背后连接了互联网，所以什么都知道？</p>
+<p>我们可以说不全是，因为有的模型还是可以链接互联网补充，但是其最基层的核心工作方式是<strong>根据已经学到的参数和当前输入上下文，对下一步最可能产生的内容进行预测和生成。</strong>实际上输出概率最大的内容，模型并不知道其具体内容。</p>
+<p>我们可以粗略的理解LLM模型：</p>
+<ol type="1">
+<li>我们使用training data 对我们的模型进行训练，获得合适的model parameters</li>
+<li>在我们拥有合适的model parameters时，当我们输入给模型一些提示词(prompt),且模型会结合上下文内容(context)，模型就会输出合适的结果。</li>
+</ol>
+<p>因此，LLM 可能存在：知识截止问题，幻觉，数据缺失，私有数据不知道，最新信息不知道等问题。如果你常常与AI聊天，这些问题一般都会遇到过。于是，我们需要另外的技术。</p>
+</section>
+<section id="rag" class="level3">
+<h3 class="anchored" data-anchor-id="rag">RAG</h3>
+<section id="rag给-llm-开卷考试" class="level4">
+<h4 class="anchored" data-anchor-id="rag给-llm-开卷考试">RAG：给 LLM “开卷考试”</h4>
+<p>RAG = Retrieval-Augmented Generation，中文通常叫检索增强生成。这是理解现代 AI 应用非常重要的一步。</p>
+<p>一句话理解：不要要求 LLM 把所有知识都记在脑子里，而是在回答之前，先从外部知识库找到相关信息，再让 LLM 基于这些信息回答。</p>
+<p>也可以把它理解成LLM + 检索。</p>
+</section>
+<section id="为什么需要-rag" class="level4">
+<h4 class="anchored" data-anchor-id="为什么需要-rag">为什么需要 RAG？</h4>
+<p>我们来举一个简单的例子给你详细分析一下RAG的具体作用是什么。</p>
+<p>假设你的公司有1000 份 PDF；500 份内部文档；10000 条知识库记录；100 个产品说明。</p>
+<p>我们使用普通的LLM模型，可能你会问他：“我们公司的退款政策是什么？”，有可能你的公司是一个非常大的公司，你有可能能获得你想要的答案，但是一般来说也不完全，或者版本不够新。</p>
+<p>RAG想要解决的问题就是这类问题。</p>
+<ol type="1">
+<li>他们会把用户的问题放入Retriever(检索器)，其负责从外部知识库中召回与问题最相关的文档片段。</li>
+<li>然后当我们找到相关的文档以后，RAG会把相关的文档内容放入context中</li>
+<li>这时候我们再把我们获得的信息放入LLM中，得到我们想要的输出。</li>
+</ol>
+</section>
+<section id="rag-并不是把整个数据库塞给-llm" class="level4">
+<h4 class="anchored" data-anchor-id="rag-并不是把整个数据库塞给-llm">RAG 并不是把整个数据库塞给 LLM</h4>
+<p>通常我们的文本LLM并不能理解，他一般要通过Chunking讲文本内容转换成几块内容，然后再使用Embedding。</p>
+<p>这个操作可以简单的理解为：<strong>把文本、图片等信息转换成一个能够表达语义关系的向量。</strong></p>
+<p>通常 LLM 会通过 Tokenization 将文本切分为 Token，再经过 Embedding 层转为向量表示。在 RAG 系统中，长文档先经过 Chunking（分块） 处理，然后每一段分别通过 Embedding 模型编码为向量存入向量数据库。当用户提问时，问题也会被编码为向量，Retriever 通过在向量空间中搜索近邻来召回相关文档片段。</p>
+<p>我们例如有两个词，一个是”苹果手机”，一个是”iPhone”，虽然字面完全不同，但语义非常接近。Embedding 的目标之一，就是让这种语义关系能够体现在向量空间中。当然我们这边弱化了Chunking的作用。你只需要理解，我们会把模型无法理解的语言转化为模型可以理解的向量。</p>
+<p>于是可以做，把用户问题Embedding成一个向量，然后我们搜索相关的向量，找到相关的文档。这一步就是retriever要做的事。</p>
+<p>我们如何能找到相关的向量呢？这时候我们就要引入一个概念：Vector Database（向量数据库），其就是帮助我们高效保存和搜索这些向量。其可以查询时计算向量间的距离（如余弦相似度）， 返回最相似的 Top-K 结果</p>
+</section>
+<section id="rag-解决什么问题" class="level4">
+<h4 class="anchored" data-anchor-id="rag-解决什么问题">RAG 解决什么问题？</h4>
+<p>其一般适用于私有知识，例如公司内部 Wiki，产品文档等；以及一些经常变化的数据，如最新政策，新闻等；以及希望回答有依据的问题，例如根据公司的员工手册回答： “试用期可以请多少天病假吗？”，这时候RAG 比单纯问 LLM更加合理。</p>
+<p>但是要注意，RAG可能会发生检索错误的情况，拿到了错误的文档，LLM 基于错误信息生成，仍然得到错误答案。所以RAG 本身并不等于准确。更高质量的RAG需要考虑其他更深层的方法，此处就不多赘述了，因为我们的文章只是简单科普用的，如果有兴趣可以自行前往搜查。</p>
+</section>
+</section>
+<section id="tool-calling让-llm-不只是说还能调用" class="level3">
+<h3 class="anchored" data-anchor-id="tool-calling让-llm-不只是说还能调用">Tool Calling：让 LLM 不只是说，还能调用</h3>
+<p>到这里，我们遇到另一个重大变化。</p>
+<p>通常来说，普通的LLM，只会根据用户的输入，得到输出的文本。但是如果用户问：“帮我查一下今天上海天气。”LLM 单靠自己可能无法获得实时天气。所以我们可以给它一个工具，例如为<code>get_weather(city)</code>，然后我们可以得到以下的流程：</p>
+<ol type="1">
+<li>User把问题发给LLM，LLM发现这个问题调用工具<code>get_weather(city)</code>；</li>
+<li>调用<code>get_weather(city)</code>后，获得天气，并告诉给LLM；</li>
+<li>LLM 最终回答，告诉User最终的答案</li>
+</ol>
+<p>这就叫Tool Calling 或者 Function Calling，它是理解 Agent 的关键。</p>
+<p>一个Tool，本质上就是：LLM 可以调用的外部能力。</p>
+<p>例如搜索网页，查询数据库，发送邮件，执行python，操作浏览器等等。可以把LLM想成大脑，而Tool就是手和脚了，虽然你是问的LLM，但是真正执行的是外部工具/API/程序。</p>
+</section>
+<section id="llm-tools-agent-的起点" class="level3">
+<h3 class="anchored" data-anchor-id="llm-tools-agent-的起点">LLM + Tools = Agent 的起点</h3>
+<p>Agent 最简单的理解：一个能够使用 LLM 进行决策，并调用工具与外部环境交互，从而完成目标的软件系统。</p>
+<p>OpenAI 对 Agent 的定义也强调：Agent 不只是生成答案，而是能够代表用户执行任务，并通过模型、工具和指令共同完成工作。</p>
+<p>我们在这假设一个情形，你可能说：“帮我安排下周去北京的商务旅行。”</p>
+<p>一个Agent可能就需要：</p>
+<ol type="1">
+<li>查询你的日历</li>
+<li>查询航班</li>
+<li>查询酒店</li>
+<li>比较价格</li>
+<li>检查会议时间</li>
+<li>形成旅行方案</li>
+<li>等待你的确认</li>
+<li>预订</li>
+<li>写入日历</li>
+</ol>
+<p>这样就可以完成一个简单的任务了。</p>
+<p>Agent 的核心不是会聊天，而是能够为了完成目标<strong>持续采取行动</strong>。OpenAI 当前的 Agent 指南也把模型、工具和 instructions 视为 Agent 的核心基础组件，并强调 Agent 通常通过循环不断调用模型和工具，直到满足完成条件。</p>
+<section id="workflow-和-agent-又是什么关系" class="level4">
+<h4 class="anchored" data-anchor-id="workflow-和-agent-又是什么关系">Workflow 和 Agent 又是什么关系？</h4>
+<p>这个区别非常重要。假设我们需要生成一份市场报告。</p>
+<p>对于Workflow，我们是提前规定：Step 1：搜索新闻；Step 2：提取文章；Step 3：总结；Step 4：生成报告。每一步都是程序写死的。</p>
+<p>这就叫Workflow。Anthropic 对两者的一个经典区分是：Workflow 的路径主要由预先定义的代码控制，而 Agent 则允许 LLM <strong>动态决定</strong>下一步怎么做、调用什么工具。</p>
+</section>
+<section id="所以-agent-的智能来自哪里" class="level4">
+<h4 class="anchored" data-anchor-id="所以-agent-的智能来自哪里">所以 Agent 的智能来自哪里？</h4>
+<p>我们前面可能容易产生误解，Agent 本身是不是一个新的超级模型？其实不是的。</p>
+<p>一个Agent往往是：</p>
+<p><img src="ai_map_files/figure-html/bc1b2972-1-Screenshot_2026-08-27-21-47-24-937_com.miui.creat.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>所以：Agent 的能力 = 模型能力 + 工具能力 + 上下文 + 状态 + 编排 + 安全机制 + 环境。</p>
+<p>这也解释了一个非常现实的问题：同一个 LLM，可以做出完全不同能力的 Agent。因为外围系统完全不同。</p>
+</section>
+<section id="memoryagent-为什么需要记忆" class="level4">
+<h4 class="anchored" data-anchor-id="memoryagent-为什么需要记忆">Memory：Agent 为什么需要记忆？</h4>
+<p>我们简单的说，LLM+Memory可以提供更长期的连续任务能力。</p>
+<p>但需要注意的是，Memory 并不等于把所有历史对话永久塞进 Prompt。</p>
+<p>真正的生产系统通常会对历史信息进行选择，然后进行内容压缩后，存储，需要时进行检索，注入context。我们可以发现，这其实与RAG在思想上其实有很强的相似性，只是提供的信息变成LLM自己生成的信息。</p>
+<p>但是，RAG重点是：“我去哪里找知识？”,例如公司知识库，产品文档，网页，数据库等。</p>
+<p>而Memory重点是：“我记得关于这个任务的什么信息？”，例如用户偏好，过去的任务，当前任务状态，之前做过的决策。</p>
+<p>两者可以结合，RAG用于查知识，Memory用于记事情。</p>
+</section>
+</section>
+<section id="model-context-protocol" class="level3">
+<h3 class="anchored" data-anchor-id="model-context-protocol">Model Context Protocol</h3>
+<p>Model Context Protocol(MCP)，可以把它理解成一种：让 AI 模型/Agent 更标准化地连接外部工具和数据源的协议。</p>
+<p>传统方式可能是：GitHub API，Google Drive API等等，当工具越来越多之后，连接会越来越复杂。MCP 的目标之一就是让工具、资源和模型之间的连接变得更加标准化。</p>
+<p>可以的粗略理解为：MCP 并不是 Agent 本身。更接近于Agent 连接外部世界的一种标准接口。</p>
+<p>Anthropic 的 Agent 指南也把 MCP 作为连接第三方工具生态的一种方式，并把它放在“增强型 LLM”向 Agent 系统扩展的工具连接层中。</p>
+</section>
+<section id="harness" class="level3">
+<h3 class="anchored" data-anchor-id="harness">Harness</h3>
+<p>“Harness” 是最近 Agent 领域越来越常见，但也最容易被误解的词之一。它原本不是 AI 专属词。</p>
+<p>在 Agent 领域，它大致可以理解为：围绕 LLM 的一整套软件运行框架，让模型能够稳定地使用工具、管理上下文、保存状态、执行任务、处理错误和受到安全控制。</p>
+<p>Google Cloud 对 Agent Harness 的定义也强调，它位于模型外围，为模型提供工具调用、记忆、多步骤任务执行，以及数据检索、工具执行和结果反馈等基础设施。</p>
+<p>近期行业里常见的一种概括是：Agent = Model + Harness ，这一点就可以与我们前面那一部分结合起来了。但这不是一个严格统一的学术公式，而是一种很实用的工程视角。</p>
+<p>Harness 不是一个简单的 SDK。更准确地说，它是让模型变成可工作的 Agent的<strong>运行环境和软件脚手架</strong>。</p>
+<p>2026 年围绕 Agent Harness 的讨论已经明显增多，行业定义大多都围绕模型外围的软件基础设施展开，包括工具、上下文、记忆、状态、安全和任务执行等能力。</p>
+</section>
+<section id="guardrails为什么-agent-越强安全越重要" class="level3">
+<h3 class="anchored" data-anchor-id="guardrails为什么-agent-越强安全越重要">Guardrails：为什么 Agent 越强，安全越重要？</h3>
+<p>如果一个普通 LLM 犯错：“写错了一段代码。”常问题不算严重。</p>
+<p>但是Agent如果能够部署服务器，修改生产代码等管理到重要内容的权力，那么错误的代价会非常大。所以 Agent 必须有：Guardrails（护栏/安全控制）</p>
+<p>例如：</p>
+<ol type="1">
+<li>读取文件 -&gt; 自动执行</li>
+<li>发送邮件 -&gt; 需要确认</li>
+<li>删除数据库 -&gt; 禁止</li>
+<li>支付10000元 -&gt; 人工审批</li>
+<li>修改Production -&gt; 人工批准</li>
+</ol>
+<p>OpenAI 的 Agent 指南也明确强调，多层 Guardrails、权限控制以及高风险动作的人类介入，是生产 Agent 的重要组成部分</p>
+</section>
+<section id="observabilityai-系统也需要监控" class="level3">
+<h3 class="anchored" data-anchor-id="observabilityai-系统也需要监控">Observability：AI 系统也需要监控</h3>
+<p>传统软件我们会看：CPU， Memory等</p>
+<p>Agent系统还要看，LLM 调用了几次？Token 用了多少？哪个 Tool 最慢？为什么一直重复调用工具？等等。所以现代 Agent 工程里：Tracing / Logging / Observability / Evaluation会越来越重要。</p>
+<p>AI 工程正在逐渐从“Prompt Engineering”走向“Evaluation Engineering”。</p>
+<blockquote class="blockquote">
+<p>今天的大多数 AI 应用，本质上是在模型外面不断增加能力。</p>
+</blockquote>
+</section>
+<section id="额外补充skill" class="level3">
+<h3 class="anchored" data-anchor-id="额外补充skill">额外补充：Skill</h3>
+<p>Skill ≠ Tool。</p>
+<p>Tool 是能力，一个 Tool 通常是一个具体动作。</p>
+<p>而Skill 是做事情的方法，不是一个单独的 Tool。而是：一套让 Agent 知道“如何完成某类工作的知识、流程、规则和最佳实践”。</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

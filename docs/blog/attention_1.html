@@ -308,9 +308,9 @@ window.Quarto = {
 <p>下面我们将以一个经典案例来解释这两个提示，想象一下，在你面前的桌子上有五个物品，一份报纸，一篇研究论文，一杯咖啡，一本笔记本和一本书，其中除了咖啡杯是红色以外，其他物品都是黑白颜色的。</p>
 <ol type="1">
 <li><p><strong>非自主提示</strong>是基于环境中物品本身的突出性与易见性。在上面这个案例中，显然红色的咖啡杯是最显眼的，不自主的引起人们的注意力，所以我们会把我们的注意力放到咖啡杯上。<br>
-<img src="./imgs/24.svg" class="img-fluid"></p></li>
+<img src="./imgs/24.svg" class="img-fluid" loading="lazy" decoding="async"></p></li>
 <li><p>当我们喝完咖啡以后，可能想要开始读书了，这时候我们就选择把我们的注意力放到书本上了，此时选择书是受到了认知和意识的影响，因此注意力是在基于<strong>自主性提示</strong>去辅助我们的选择。<br>
-<img src="./imgs/25.svg" class="img-fluid"></p></li>
+<img src="./imgs/25.svg" class="img-fluid" loading="lazy" decoding="async"></p></li>
 </ol>
 <p>其实，我们可以用一个非常简单的例子来建立对注意力机制的直观认识。</p>
 <p>假如现在有 5 个数字：<span class="math inline">[0.1,\ 0.2,\ 10,\ 0.3,\ 0.4]</span></p>
@@ -326,7 +326,7 @@ window.Quarto = {
 <p>下面我们将讲解一下,是如何基于人类的注意力系统,用深度学习来设计注意力机制的框架.</p>
 <p>之前学习的卷积、全连接、池化层都只考虑“不随意线索”.</p>
 <p>注意力机制则考虑“随意线索”，随意线索被称之为查询(query)，也就是当前需要处理的任务（如翻译中的目标词）。每个输入是一个值(value)和不随意线索(key)的对，通过注意力池化层来有偏向性的选择选择某些输入。而key就代表输入数据的特征表示（如源语言词的编码），Value通常与Key相同，是实际用于生成输出的信息。注意力权重通过Query和Key的相似度计算，然后加权求和Value得到输出。<br>
-<img src="./imgs/26.svg" class="img-fluid"></p>
+<img src="./imgs/26.svg" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>如何理解QKV呢?</p>
 首先,我们假设我们有3个key-value对:
 <div data-align="center">
@@ -342,7 +342,7 @@ window.Quarto = {
 </div>
 <p>其中的<span class="math inline">\sum_{i=1}^3\alpha(q, k_i)=1</span> ,我们可以把此处的求解<span class="math inline">f(57)</span>的过程,理解为我们上一部分结尾的举例.</p>
 <p>通过这种方式我们就可以得到体重的估计值,这也就是注意力机制.</p>
-<p>如果出现更高维的情况呢?如下图: <img src="./imgs/29.png" class="img-fluid"></p>
+<p>如果出现更高维的情况呢?如下图: <img src="./imgs/29.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>根据我们前面提到的<span class="math inline">\alpha(q, k_i)=softmax (a(q, k_i))</span>,其中的<span class="math inline">\alpha(q, k_i)</span>为注意力权重,而<span class="math inline">a(q, k_i)</span>是注意力分数,我们想要求得前者,就必须先求得后者,我们前面提过一种高斯核的方式,下面我们会介绍更常见的一些方式:</p>
 <table class="caption-top table">
 <thead>
@@ -367,7 +367,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>我们以点积模型为例: <span class="math display">\alpha(q_1, k_1)=softmax(q_1k_1^T)</span> 后面的也是一致,我们就不再赘述</p>
-<p>为了方便,我们可以用如下的矩阵来表示: <img src="./imgs/30.png" class="img-fluid"></p>
+<p>为了方便,我们可以用如下的矩阵来表示: <img src="./imgs/30.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>这个被称为缩放点积注意力模型</p>
 <p>假设有很多个query，即<span class="math inline">Q \in R^{n_q\times d}</span>，多个key，即<span class="math inline">K \in R^{n_k\times d}</span>，多个value，即<span class="math inline">V \in R^{n_k\times d_v}</span></p>
 <p>可以看出来，<span class="math inline">Q</span>与<span class="math inline">K</span>的特征维度是一致长度的，<span class="math inline">K</span>与<span class="math inline">V</span>的样本长度是一样的长度。</p>
@@ -468,7 +468,7 @@ window.Quarto = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-3-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -521,7 +521,7 @@ window.Quarto = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-7-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-7-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -545,7 +545,7 @@ window.Quarto = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-8-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-8-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -564,7 +564,7 @@ window.Quarto = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-9-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -684,7 +684,7 @@ window.Quarto = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-15-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-15-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -724,7 +724,7 @@ tensor([[0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103],
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-16-output-2.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-16-output-2.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -742,7 +742,7 @@ tensor([[0.8012, 0.8719, 1.1558,  ..., 1.1200, 1.4650, 1.7103],
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-17-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-17-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -933,7 +933,7 @@ tensor([13.8725], requires_grad=True)</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-25-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-25-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -994,7 +994,7 @@ tensor([13.8725], requires_grad=True)</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_1_files/figure-html/cell-28-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_1_files/figure-html/cell-28-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>

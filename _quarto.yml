@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: docs
 
+filters:
+  - filters/lazy-images.lua
+
 website:
   title: "N1ngYan"
 

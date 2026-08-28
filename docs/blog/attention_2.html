@@ -320,11 +320,11 @@ window.Quarto = {
 </ol>
 <p>因为Embedding层只是告诉我们，文本里有什么，但是并不能告诉模型，这个词出现在什么上下文中，例如以苹果为例，我们说的”苹果很好吃”与”苹果发布了新的产品”，这两个苹果显然不是一个性质的，但是他们可能拥有相同的初始embedding，所以我们需要让每一个词与其前面的上下文发生联系，这就是循环层要做的事情，例如<span class="math inline">RNN, LSTM, GRU</span>这类模型，此处我们使用<span class="math inline">RNN</span>模型，因为它最简单</p>
 <ol start="3" type="1">
-<li>Encoder到底怎么处理的？ <img src="./imgs/35.png" class="img-fluid"> Attention使用的并不是只有<span class="math inline">h_n</span>，是所有的Encoder hidden states，此处乘以n，就代表有n层隐藏层</li>
+<li>Encoder到底怎么处理的？ <img src="./imgs/35.png" class="img-fluid" loading="lazy" decoding="async"> Attention使用的并不是只有<span class="math inline">h_n</span>，是所有的Encoder hidden states，此处乘以n，就代表有n层隐藏层</li>
 </ol>
 <p>剩下的知识点我们可以直接写出了，因为前面都提到过一部分。</p>
 <p>首先可以确认的一点，对于attention部分，其中的<span class="math inline">Q</span>应当是<span class="math inline">s_{t-1}</span>,而<span class="math inline">V</span>与<span class="math inline">K</span>应该相同，都为<span class="math inline">H</span></p>
-<p>下面我们会写出一个完整的过程。 <img src="./imgs/36.png" class="img-fluid"></p>
+<p>下面我们会写出一个完整的过程。 <img src="./imgs/36.png" class="img-fluid" loading="lazy" decoding="async"></p>
 <p>常见的情况是<span class="math inline">s_0</span>直接用<span class="math inline">h_n</span>，这是一种经典的初始化方法。</p>
 </section>
 </section>
@@ -668,7 +668,7 @@ torch.Size([4, 7, 16]) 2 torch.Size([2, 4, 16])</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_2_files/figure-html/cell-13-output-2.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_2_files/figure-html/cell-13-output-2.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>
@@ -718,7 +718,7 @@ i'm home . =&gt; je suis chez moi .,  bleu 1.000</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="attention_2_files/figure-html/cell-16-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="attention_2_files/figure-html/cell-16-output-1.svg" class="img-fluid figure-img" loading="lazy" decoding="async"></p>
 </figure>
 </div>
 </div>

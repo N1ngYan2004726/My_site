@@ -236,7 +236,7 @@ window.Quarto = {
 <p>当我们想要变动其中的一个参数<span class="math inline">w_i</span>，而其他参数保持不变的时候，损失函数的变化与<strong>单变量微积分</strong>中的情形并无本质区别。 <span class="math display">L(w_1, w_2,···, w_i+\epsilon_i,···, w_N)=L(w_1, w_2,···, w_N)+\epsilon_i \frac{\partial L}{\partial w_i}</span></p>
 <p>这里的<span class="math inline">\frac{\partial L}{\partial w_i}</span>称为<span class="math inline">L</span>对<span class="math inline">w_i</span>的<strong>偏导数</strong>，计算的时候，只需要把别的参数都当作常数，对<span class="math inline">w_i</span>求导即可。</p>
 <p>实例：设<span class="math inline">L(x, y)=x^2+3xy+y^2</span>，则 <span class="math display">\frac{\partial L}{\partial x}=2x+3y, \frac{\partial L}{\partial y}=2y+3x</span></p>
-<p>当你变化同时变化两个参数的时候，如下图： <img src="./imgs/17.png" class="img-fluid"> 式子的最后一部分，因为他是两个无穷小量相乘，我们直接省略。</p>
+<p>当你变化同时变化两个参数的时候，如下图： <img src="./imgs/17.png" class="img-fluid" loading="lazy" decoding="async"> 式子的最后一部分，因为他是两个无穷小量相乘，我们直接省略。</p>
 <p>我们通过这个例子可以得出，当我们同时改变多个参数时，设增量向量为$ =(_1, _2,…, _N)^T$,则损失函数的一阶近似为： <span class="math display">L(\pmb{w}+\pmb{\varepsilon})≈L(\pmb{w})+\sum_{i=1}^{N}\varepsilon_i\frac{\partial L}{\partial w_i}</span></p>
 <p>将所有的偏导数也组织成一个列向量，即<strong>梯度向量</strong>(Gradient): <span class="math display">\nabla_{\pmb{w}}L=[\frac{\partial L}{\partial w_1}, \frac{\partial L}{\partial w_2},...,\frac{\partial L}{\partial w_n}]^T</span></p>
 <p>于是上述展开式可以简洁的写为向量点积形式： <span class="math display">L(\pmb{w}+\pmb{\varepsilon})≈L(\pmb{w})+\pmb{\varepsilon}^T\nabla_{\pmb{w}}L</span></p>
