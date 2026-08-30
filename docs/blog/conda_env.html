@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="从 Conda 安装开始，完整介绍 CUDA、cuDNN、Python、PyTorch 的安装与版本匹配，并附 CUDA 与 NVIDIA 显卡及 PyTorch 版本对照说明。">
 
-<title>Blog – N1ngYan</title>
+<title>Conda、CUDA、cuDNN、Python 与 PyTorch 环境配置完整指南 – N1ngYan</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -35,8 +71,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -74,80 +108,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "搜索"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -170,7 +132,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../blog/index.html" aria-current="page"> 
+    <a class="nav-link" href="../blog/index.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
@@ -213,21 +175,57 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">分类</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">全部 <span class="quarto-category-count">(15)</span></div><div class="category" data-category="QUk=">AI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="YXR0ZW50aW9u">attention <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Q2FsY3VsdXM=">Calculus <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Y29kZQ==">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVlcCUyMExlYXJuaW5n">Deep Learning <span class="quarto-category-count">(4)</span></div><div class="category" data-category="RWlnZW4lMjBkZWNvbXBvc2l0aW9u">Eigen decomposition <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RW52aXJvbm1lbnQlMjBTZXR1cA==">Environment Setup <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZXNzYXk=">essay <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2l0">git <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SGFybmVzcw==">Harness <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGluZWFyLWFsZ2VicmE=">linear-algebra <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWF0aGVtYXRpY3M=">mathematics <span class="quarto-category-count">(7)</span></div><div class="category" data-category="bnVtcHk=">numpy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VHV0b3JpYWw=">Tutorial <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#conda-安装与使用" id="toc-conda-安装与使用" class="nav-link active" data-scroll-target="#conda-安装与使用">Conda 安装与使用</a>
+  <ul class="collapse">
+  <li><a href="#什么是-conda" id="toc-什么是-conda" class="nav-link" data-scroll-target="#什么是-conda">什么是 Conda？</a></li>
+  <li><a href="#下载" id="toc-下载" class="nav-link" data-scroll-target="#下载">下载</a></li>
+  <li><a href="#使用" id="toc-使用" class="nav-link" data-scroll-target="#使用">使用</a></li>
+  <li><a href="#在vscode或者pycharm中使用conda环境" id="toc-在vscode或者pycharm中使用conda环境" class="nav-link" data-scroll-target="#在vscode或者pycharm中使用conda环境">在VSCode或者Pycharm中使用Conda环境</a></li>
+  </ul></li>
+  <li><a href="#cuda与cudnn-安装与验证" id="toc-cuda与cudnn-安装与验证" class="nav-link" data-scroll-target="#cuda与cudnn-安装与验证">CUDA与cuDNN 安装与验证</a>
+  <ul class="collapse">
+  <li><a href="#准备工作与环境检查" id="toc-准备工作与环境检查" class="nav-link" data-scroll-target="#准备工作与环境检查">准备工作与环境检查</a></li>
+  <li><a href="#安装cuda-toolkit" id="toc-安装cuda-toolkit" class="nav-link" data-scroll-target="#安装cuda-toolkit">安装CUDA Toolkit</a></li>
+  <li><a href="#安装cudnn库" id="toc-安装cudnn库" class="nav-link" data-scroll-target="#安装cudnn库">安装cuDNN库</a></li>
+  <li><a href="#验证安装" id="toc-验证安装" class="nav-link" data-scroll-target="#验证安装">验证安装</a></li>
+  </ul></li>
+  <li><a href="#pytorch" id="toc-pytorch" class="nav-link" data-scroll-target="#pytorch">Pytorch</a></li>
+  <li><a href="#pythonpytorchcuda-与显卡版本对应关系速查表" id="toc-pythonpytorchcuda-与显卡版本对应关系速查表" class="nav-link" data-scroll-target="#pythonpytorchcuda-与显卡版本对应关系速查表">Python、PyTorch、CUDA 与显卡版本对应关系速查表</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
+<h1 class="title">Conda、CUDA、cuDNN、Python 与 PyTorch 环境配置完整指南</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Deep Learning</div>
+    <div class="quarto-category">Environment Setup</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    从 Conda 安装开始，完整介绍 CUDA、cuDNN、Python、PyTorch 的安装与版本匹配，并附 CUDA 与 NVIDIA 显卡及 PyTorch 版本对照说明。
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月30日</p>
+    </div>
+  </div>
   
     
   </div>
@@ -237,376 +235,246 @@ window.Quarto = {
 </header>
 
 
-<p>这部分是我的一些笔记与教程。</p>
+<blockquote class="blockquote">
+<p>此部分是结合各个攻略总和而来的教程，帮助新手快速上手安装。</p>
+</blockquote>
+<section id="conda-安装与使用" class="level2">
+<h2 class="anchored" data-anchor-id="conda-安装与使用">Conda 安装与使用</h2>
+<section id="什么是-conda" class="level3">
+<h3 class="anchored" data-anchor-id="什么是-conda">什么是 Conda？</h3>
+<p>Anaconda 是专门为了方便使用 Python 进行数据科学研究而建立的一组 软件包，涵盖了数据科学领域常见的 Python 库，并且自带了专门用来解决软件环境依赖问题的 conda 包管理系统。主要是提供了包管理与环境管理的功能，可以很方便地解决多版本python并存、切换以及各种第三方包安装问题。Anaconda利用工具/命令conda来进行package和environment的管理，并且已经包含了Python和相关的配套工具。</p>
+<p>conda可以理解为一个工具，也是一个可执行命令，其核心功能是包管理与环境管理。包管理与pip的使用类似，环境管理则允许用户方便地安装不同版本的python并可以快速切换。</p>
+<p>Anaconda则是一个打包的集合，里面预装好了conda、某个版本的python、众多packages 、科学计算工具等等，所以也称为Python的一种发行版。其实还有Miniconda，它只包含最基本的内容——python与conda，以及相关的必须依赖项，对于空间要求严格的用户，Miniconda是一种选择。</p>
+<p>conda将几乎所有的工具、第三方包都当做package对待，甚至包括python和conda自身！因此，conda打破了包管理与环境管理的约束，能非常方便地安装各种版本python、各种package并方便地切换。</p>
+</section>
+<section id="下载" class="level3">
+<h3 class="anchored" data-anchor-id="下载">下载</h3>
+<p>我们可以前往<a href="https://www.anaconda.com/download" target="_blank">Anconda官方</a>下载。</p>
+<p><img src="conda_env_files/figure-html/7c2b4801-5-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>可以跳过注册，我们直接进入下载界面。</p>
+<p><img src="conda_env_files/figure-html/7c2b4801-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>可以看到，此处我们可以下载Anconda或者Miniconda，请你按照自己的需求下载。</p>
+<p>运行安装包执行文件，依次点击下一步即可，可以自定义安装的路径，中间的安装设置按照默认的来即可。</p>
+<p>如果你有任何问题，可以前往<a href="https://www.anaconda.com/docs/getting-started/installation" target="_blank">Anconda安装指南</a>，选择你的对应选项，既可以获得详细的安装教程。例如下图这样。</p>
+<p><img src="conda_env_files/figure-html/7c2b4801-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>我们点击箭头处按钮就可以获得对应的安装指南。</p>
+<p>完场上述步骤之后，需要再检查下 <code>conda</code> 是否能够正常使用。在电脑左下角搜索找到 <code>Anaconda Prompt</code>，点击打开后，在控制台中输入 <code>conda --version</code>，回车如果返回了 <code>conda</code> 版本信息则说明安装成功。</p>
+<p><img src="conda_env_files/figure-html/7c2b4801-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p><img src="conda_env_files/figure-html/7c2b4801-4-image-5.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>如图，就代表我们安装成功了。</p>
+<p>在窗口中输入 <code>conda list</code>，会返回<strong>当前环境</strong>下已经安装好的包，如果出现该列表则说明 conda 已经正确安装。其中，包含了对应的解释器 python。</p>
+<p><img src="conda_env_files/figure-html/a3d30967-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>一般来说，我们是不会处理我们的<code>base</code>环境的。接下来我们会介绍一些Conda的常见操作。学会这些就已经差不多。</p>
+</section>
+<section id="使用" class="level3">
+<h3 class="anchored" data-anchor-id="使用">使用</h3>
+<p>至此完成了 conda 包和环境管理工具的安装，此时我们可以进行一些简单的配置并尝试创建 conda 环境，安装需要的库和运行简单的 python 程序。</p>
+<section id="配置下载源" class="level4">
+<h4 class="anchored" data-anchor-id="配置下载源">配置下载源</h4>
+<p>Conda 包管理器下载各类库的来源是国外的服务器，常常会面临下载速度慢的问题。可以为 conda 添加 软件包通道 （channel），以清华源为例，在打开的 <code>Anaconda prompt</code> 控制台窗口中，输入如下命令可以将清华源的两个地址添加到通道。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--add</span> channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--add</span> channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>为了在查看 conda 软件包通道的下载链接时能显示我们手动配置的通道地址，可以通过如下命令进行设置：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--set</span> show_channel_urls yes</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>如果不配置下载源，conda 会使用默认的软件包通道，即从官方 Anaconda 仓库获取软件包。具体的软件包通道情况可以通过 <code>conda config --show</code> 命令查看，返回的信息不仅能看到下载源的地址信息，还能看到创建的 conda 环境所在的文件夹。如果想要重置下载源的信息，可以用 <code>conda config --remove-key channels</code> 命令实现。</p>
+<p>此部分仅仅介绍到此即可，只要只要学会，可以使用国内的地址来下载各类库即可，如果有别的想添加的通道，可以询问AI，并让他提供conda的指令即可。</p>
+</section>
+<section id="环境管理" class="level4">
+<h4 class="anchored" data-anchor-id="环境管理">环境管理</h4>
+<p>现在来到 conda 的另一大功能，就是环境管理，它可以创建、管理和切换不同的环境，这些环境之间是相互独立的，每个环境当中的 Python 版本和软件包版本可以不相同，使得我们可以把依赖版本不同的项目放在同一台设备上的不同 conda 环境中运行。</p>
+<section id="创建删除环境" class="level5">
+<h5 class="anchored" data-anchor-id="创建删除环境">创建（删除）环境</h5>
+<p>要创建一个新的 conda 环境，可以使用 <code>conda create</code> 命令，指定该环境下所需的 Python 版本和要安装的软件包。例如：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> myenv python=3.8 numpy==1.24.0 matplotlib</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>其中<code>myenv</code>是我们的环境名，可以随意取，但是最好是针对你环境工作情况来取，这样你可以更简单的管理你的环境。</p>
+<p>并在其中安装 <code>Python 3.8</code>、<code>NumPy 1.24.0</code> 和 <code>Matplotlib</code>。在创建环境时，会有软件包列表的提示。输入 y 确认后即等待环境创建即可。此处注意版本，如果你没有像<code>numpy</code>一样写好版本，他就会像<code>matplotlib</code>一样直接安装最新版。</p>
+<p>如果不想要一个环境了，例如我们要把 myenv 这个名字的环境删除，可以通过如下命令进行删除：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> remove <span class="at">-n</span> myenv <span class="at">--all</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>此时我们就可以使用<code>conda env list</code>来查看我们现在有几个环境，如图：</p>
+<p><img src="conda_env_files/figure-html/f48099b1-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+</section>
+<section id="激活切换环境" class="level5">
+<h5 class="anchored" data-anchor-id="激活切换环境">激活（切换）环境</h5>
+<p>但是此时我们根据如下位置判断我们所在的 conda 环境仍然是名为 base 的环境，因此我们要激活并切换到 myenv 环境中。</p>
+<p><img src="conda_env_files/figure-html/a8e3741b-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>通过如下命令可实现激活并切换环境的功能，不同系统上的命令有所区别。</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># windows</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate myenv</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Linux/Unix</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> activate myenv</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="conda_env_files/figure-html/a8e3741b-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>如果不切换环境，而只是退出当前环境，可以用 <code>conda deactivate</code> 退出当前的 conda 环境。</p>
+</section>
+<section id="下载卸载库" class="level5">
+<h5 class="anchored" data-anchor-id="下载卸载库">下载（卸载）库</h5>
+<p>当我们要在不同环境下安装库时，需要先切换到指定环境当中，例如我们要下载或者卸载 <code>scipy</code>，可以执行如下命令进行：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 下载安装</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install scipy</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 卸载</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> remove scipy</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>至于版本选择，与我们前面的环境创建的规则是一致的。</p>
+</section>
+<section id="导出导入环境" class="level5">
+<h5 class="anchored" data-anchor-id="导出导入环境">导出（导入）环境</h5>
+<p>当我们想要保存某个环境的配置信息，例如下载源信息、环境的Python版本信息、安装的包的版本信息等，可以先切换到指定环境下，通过以下命令将这些配置信息导出：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env export <span class="op">&gt;</span> environment.yml</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>该命令会将当前的环境配置信息导出到为 <code>environment.yml</code> 配置信息文件，文件导出地址默认为当前工作目录（也可以指定输出的绝对地址）。</p>
+<p>这时候，我们将配置文件传到另一台电脑，想基于该配置文件创建 conda 环境，可以通过以下命令：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> environment.yml</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="试运行-py-文件" class="level4">
+<h4 class="anchored" data-anchor-id="试运行-py-文件">试运行 py 文件</h4>
+<p>这里我们写一个名为 <code>test.py</code> 的简单的 python 脚本，但用到需要额外安装的 <code>numpy</code> 库，代码如下：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>array <span class="op">=</span> np.random.rand(<span class="dv">10</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> np.mean(array)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>将该脚本文件放到控制台的工作目录下（或者把控制台工作目录切换到脚本文件的位置），输入如下命令：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> test.py</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="conda_env_files/figure-html/37dd0ce6-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+</section>
+</section>
+<section id="在vscode或者pycharm中使用conda环境" class="level3">
+<h3 class="anchored" data-anchor-id="在vscode或者pycharm中使用conda环境">在VSCode或者Pycharm中使用Conda环境</h3>
+<p>此部分比较基础，可以前往这个<a href="https://www.cnblogs.com/haima/p/17441000.html" target="_blank">链接</a>的第六第七部分学习。</p>
+<p>如果还是不懂的话可以自己多试试:)，我就不写了，实在不是因为不想再下一次Pycharm</p>
+</section>
+</section>
+<section id="cuda与cudnn-安装与验证" class="level2">
+<h2 class="anchored" data-anchor-id="cuda与cudnn-安装与验证">CUDA与cuDNN 安装与验证</h2>
+<p>如果你已经开始准备进行深度学习，使用GPU加速是必要的，所以我们会用到<code>CUDA</code>，此处会有详细的使用方法，但是<strong>请你先别急着跟着下载</strong>，先看完以后，在与下一部分的版本对照下载:)</p>
+<section id="准备工作与环境检查" class="level3">
+<h3 class="anchored" data-anchor-id="准备工作与环境检查">准备工作与环境检查</h3>
+<p>在安装前，需要先确保你的电脑硬件和软件环境满足要求。</p>
+<p>你需要一块来自NVIDIA的独立 显卡。可以访问<a href="https://developer.nvidia.com/cuda/gpus" target="_blank">NVIDIA官网的CUDA GPU列表</a>查询你的显卡型号是否支持CUDA。</p>
+<p>接下来，我们可以按下<code>Win+R</code>打开我们的运行界面，再输入<code>cmd</code>，打开命令提示符。输入 <code>nvidia-smi</code> 并回车。</p>
+<p><img src="conda_env_files/figure-html/277ea994-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>“CUDA Version” 字段则代表当前驱动最高能支持的CUDA版本，不是你已安装的CUDA，我们这边就说明我们最高可以安装<code>CUDA 13.3</code>的版本。如果不够的话，就更新自己的英伟达驱动即可。</p>
+<p>如果你还没有下载NVIDIA驱动，请你前往<a href="https://www.nvidia.cn/geforce/drivers/" target="_blank">驱动下载页面下载并安装最新的显卡驱动。</a>NVIDIA</p>
+</section>
+<section id="安装cuda-toolkit" class="level3">
+<h3 class="anchored" data-anchor-id="安装cuda-toolkit">安装CUDA Toolkit</h3>
+<p>CUDA 是NVIDIA推出的并行计算平台和编程模型 ，是GPU加速的基础。</p>
+<p>我们可以前往<a href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank">CUDA Toolkit下载页面</a>。</p>
+<p>且等我们选择好我们的CUDA版本以后，安装对应的CUDA Toolkit即可。例如我们想安装13.0版本，我们就可以安装下图红框的版本，但是我们最好还是装其中的最新版。</p>
+<p><img src="conda_env_files/figure-html/61902bff-7-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>推荐下载local版本：</p>
+<p><img src="conda_env_files/figure-html/61902bff-6-image-7.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>下面为安装过程。</p>
+<p><img src="conda_env_files/figure-html/61902bff-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p><img src="conda_env_files/figure-html/61902bff-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p><img src="conda_env_files/figure-html/61902bff-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>这其中的组件分别有以下作用：</p>
+<p><img src="conda_env_files/figure-html/61902bff-4-image-5.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p><img src="conda_env_files/figure-html/61902bff-5-image-6.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>安装完成重启电脑。我们再进行下一步操作。</p>
+<p>此处我们补充一个点,如果你安装的版本非常低,例如11.8等等,可能安装前,CUDA在安装过程中会有两个选择路径的时候。</p>
+<p>第一次选择的时候,是刚刚开始安装的时候:(此处由于我没有下载低版本,我就使用CSDN中的图片了)</p>
+<p><img src="conda_env_files/figure-html/d089b0ae-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>此时的地址为临时安装的地址,可以就默认,因为后期安装完成后,这个文件夹会被自动删除.</p>
+<p>第二次是在选择组件以后的选择路径:</p>
+<p><img src="conda_env_files/figure-html/d089b0ae-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>如图,这时候的路径是会保存下来的,可以自定义</p>
+<p>一定要注意这两个图片中的路径不要设置成同一个路径，因为cuda安装完会自动删除一开始的临时安装文件，设置成一样的，cuda也会被同时删除</p>
+<p>安装程序通常会自动添加系统环境变量。为保险起见，建议手动检查：</p>
+<p>右键点击“此电脑” -&gt; “属性” -&gt; “高级系统设置” -&gt; “环境变量”。</p>
+<p><img src="conda_env_files/figure-html/fb92bb5f-4-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>在“系统变量”中找到并选中Path，点击“编辑”。</p>
+<p><img src="conda_env_files/figure-html/fb92bb5f-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>注意,如果以下路径已经有了就不要动了,我们这边只是保险起见:</p>
+<p><img src="conda_env_files/figure-html/fb92bb5f-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>再先查看系统环境变量是否有添加以下2个环境变量，没有则手动添加，确保其中包含以下两条CUDA的路径:</p>
+<p><img src="conda_env_files/figure-html/fb92bb5f-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>其中的V后面的是你的版本,如果你是13.0,就变成V13_0即可</p>
+<p>如果没有，请点击“新建”手动添加。</p>
+</section>
+<section id="安装cudnn库" class="level3">
+<h3 class="anchored" data-anchor-id="安装cudnn库">安装cuDNN库</h3>
+<p>cuDNN是NVIDIA针对深度神经网络 优化的GPU加速库。<strong>安装cuDNN前，必须确保CUDA已成功安装</strong>。</p>
+<p>我们可以前往<a href="https://developer.nvidia.com/rdp/cudnn-archive" target="_blank">cuDNN下载页面。</a></p>
+<p><img src="conda_env_files/figure-html/6ff33f0b-4-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>这是最重要的一步：你必须下载与你的CUDA版本严格匹配的cuDNN版本。例如，如果你安装了<code>CUDA 12.8</code>，就必须下载对应<code>CUDA 12.x</code>系列的cuDNN。</p>
+<p><img src="conda_env_files/figure-html/6ff33f0b-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>cuDNN的安装本质上就是将文件复制到CUDA的目录中。</p>
+<p>下载的文件是一个压缩包（如.zip格式），将其解压，你会看到 bin、include、lib 三个文件夹。</p>
+<p><img src="conda_env_files/figure-html/6ff33f0b-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>打开你的CUDA安装目录（第二步中记住的路径，例如 C:FilesGPU Computing Toolkit2.8）。</p>
+<p>将解压后 bin、include、lib 文件夹中的所有内容，分别复制（或拖放）到CUDA目录下对应的同名文件夹里。如果提示需要管理员权限或文件覆盖，选择同意即可。需要注意：<strong>之后重启电脑</strong></p>
+<p><img src="conda_env_files/figure-html/6ff33f0b-3-image-4.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<blockquote class="blockquote">
+<p>请注意：一个常见的错误是将cuDNN文件复制到了错误的子目录（如 compute-sanitizer），这会导致安装失败。请确保文件被复制到了CUDA根目录下的 bin、include、lib 文件夹。</p>
+</blockquote>
+</section>
+<section id="验证安装" class="level3">
+<h3 class="anchored" data-anchor-id="验证安装">验证安装</h3>
+<section id="验证cuda" class="level4">
+<h4 class="anchored" data-anchor-id="验证cuda">验证CUDA</h4>
+<p>完成以上步骤后，请重启电脑，然后通过以下方法验证是否安装成功。</p>
+<p>打开新的命令提示符，输入 nvcc –version 并回车。</p>
+<p>如果成功安装，该命令将显示你安装的CUDA编译器（nvcc）的版本信息:</p>
+<p><img src="conda_env_files/figure-html/a51cecbf-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+</section>
+<section id="验证cudnn通过pythonpytorch不是开发的可以不用验证这一步" class="level4">
+<h4 class="anchored" data-anchor-id="验证cudnn通过pythonpytorch不是开发的可以不用验证这一步">验证cuDNN（通过Python/PyTorch）（不是开发的可以不用验证这一步）</h4>
+<p>这是验证整个环境（CUDA + cuDNN）是否可用的最佳方式。</p>
+<p>打开命令提示符，运行以下命令：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> “import torch<span class="kw">;</span> <span class="ex">print</span><span class="er">(</span><span class="fu">torch.cuda.is_available()</span><span class="kw">)</span><span class="ex">”</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>如果输出为 True，则恭喜你，你的PyTorch已经可以成功调用GPU进行加速了,但是注意要先安装Pytorch,不然的话肯定用不了。</p>
+</section>
+</section>
+</section>
+<section id="pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="pytorch">Pytorch</h2>
+<p>我们前往<a href="https://pytorch.org/" target="_blank">Pytorch官网</a></p>
+<p><img src="conda_env_files/figure-html/786479c9-3-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>选择我们想要的版本,复制下方的指令到我们想要安装Pytorch的Conda环境,就可以成功安装了</p>
+<p><img src="conda_env_files/figure-html/786479c9-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>如果你的CUDA版本不在这个表格里,可以前往红框处下载历史版本.</p>
+<p><img src="conda_env_files/figure-html/786479c9-2-image-3.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>如图我们就展示了,如果我们要下载<code>Pytorch v2.10.0</code>的CUDA 12.6版本. 直接复制下一行的指令即可,安装方法同上.</p>
+</section>
+<section id="pythonpytorchcuda-与显卡版本对应关系速查表" class="level2">
+<h2 class="anchored" data-anchor-id="pythonpytorchcuda-与显卡版本对应关系速查表">Python、PyTorch、CUDA 与显卡版本对应关系速查表</h2>
+<p>这部分是我之前在CSDN中看到的一篇文章.</p>
+<p>本文提供一份保姆级的版本对应关系速查表，涵盖从 RTX 50 系列 (Blackwell) 到经典老卡的软硬件兼容信息。建议收藏保存，每次配环境前查一下，能省下大量的排坑时间！</p>
+<p>在看表格前，先理清显卡架构的代际关系与 CUDA 版本的强绑定逻辑。</p>
+<p><img src="conda_env_files/figure-html/e2bb266d-2-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>PyTorch 是目前兼容性最好的框架，只要 CUDA 驱动版本 足高，通常都能向下兼容。对于使用最新硬件（如 RTX 50 系）的用户，请务必使用 2.4 或更高版本。</p>
+<p><img src="conda_env_files/figure-html/e2bb266d-1-image-2.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>如果你使用的是 Blackwell 架构 (RTX 50系) 或 Ada 架构 (RTX 40系)，建议优先使用 CUDA 12.x 的 PyTorch 包.</p>
+<p>显卡架构决定了你的算力上限 (Compute Capability) 和 CUDA 版本的下限。<strong>新卡不能装太旧的 CUDA，老卡通常可以使用新 CUDA</strong>。</p>
+<p><img src="conda_env_files/figure-html/3889610b-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+<p>可以选择一个靠近你的显卡版本,我使用下来没有出错过.这样我们就可以选择出来我们配置下,比较合适的CUDA,Pytorch与Python的对应版本.</p>
+<p>最后给大家总结几套不想动脑子的“黄金配置”，请根据自己的硬件对号入座：</p>
+<ol type="1">
+<li><p>前沿性能组 (RTX 50/40系)：</p>
+<ul>
+<li>搭配：Python 3.11 + PyTorch 2.5/2.6 + CUDA 12.4+</li>
+<li>理由：发挥新架构 (FP8 等) 极致性能，必须拥抱 CUDA 12。</li>
+</ul></li>
+<li><p>主流稳定组 (RTX 30/40系)：</p>
+<ul>
+<li>搭配：Python 3.10 + PyTorch 2.3/2.4 + CUDA 12.1</li>
+<li>理由：市面上绝大多数开源项目都能跑，兼容性最佳。</li>
+</ul></li>
+<li><p>经典兼容组 (RTX 20/30系)：</p>
+<ul>
+<li>搭配：Python 3.9/3.10 + PyTorch 2.0 + CUDA 11.8</li>
+<li>理由：CUDA 11.8 是过去几年的统一度量衡，极其稳定。</li>
+</ul></li>
+<li><p>古董收藏组 (GTX 10系)：</p>
+<ul>
+<li>搭配：Python 3.8 + PyTorch 1.12 + CUDA 11.3</li>
+<li>理由：老卡就别追新了，能跑起来就是胜利。</li>
+</ul></li>
+</ol>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="RGVlcCUyMExlYXJuaW5nJTJDRW52aXJvbm1lbnQlMjBTZXR1cA==" data-listing-date-sort="1788019200000" data-listing-file-modified-sort="1788107391913" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="365">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/conda_env.html" class="no-external">Conda、CUDA、cuDNN、Python 与 PyTorch 环境配置完整指南</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW52aXJvbm1lbnQlMjBTZXR1cA=='); return false;">Environment Setup</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/conda_env.html" class="no-external">
-<p>从 Conda 安装开始，完整介绍 CUDA、cuDNN、Python、PyTorch 的安装与版本匹配，并附 CUDA 与 NVIDIA 显卡及 PyTorch 版本对照说明。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/conda_env.html" class="no-external">
-<div class="listing-date">
-2026年8月30日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="QUklMkNlc3NheQ==" data-listing-date-sort="1787760000000" data-listing-file-modified-sort="1787987446881" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="823">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/ai_map.html" class="no-external">AI是什么</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QUk='); return false;">AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZXNzYXk='); return false;">essay</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/ai_map.html" class="no-external">
-<p>本文讲解了截止至2026年,AI时代出现的一些概念</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/ai_map.html" class="no-external">
-<div class="listing-date">
-2026年8月27日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Z2l0JTJDVHV0b3JpYWw=" data-listing-date-sort="1787587200000" data-listing-file-modified-sort="1787761483696" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2896">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/git.html" class="no-external">Git&amp;Github的初学者教程</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Z2l0'); return false;">git</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('VHV0b3JpYWw='); return false;">Tutorial</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/git.html" class="no-external">
-<p>本文是我在学习廖雪峰的Git教程的一些笔记与个人理解</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/git.html" class="no-external">
-<div class="listing-date">
-2026年8月25日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="YXR0ZW50aW9uJTJDRGVlcCUyMExlYXJuaW5n" data-listing-date-sort="1787155200000" data-listing-file-modified-sort="1787231664447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="528">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/attention_3.html" class="no-external">注意力机制(3)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YXR0ZW50aW9u'); return false;">attention</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/attention_3.html" class="no-external">
-<p>本文是基于李沐的动手学深度学习课程的一些笔记与个人见解</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/attention_3.html" class="no-external">
-<div class="listing-date">
-2026年8月20日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="YXR0ZW50aW9uJTJDRGVlcCUyMExlYXJuaW5n" data-listing-date-sort="1787068800000" data-listing-file-modified-sort="1787132646554" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="436">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/attention_1.html" class="no-external">注意力机制(1)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YXR0ZW50aW9u'); return false;">attention</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/attention_1.html" class="no-external">
-<p>本文是基于李沐的动手学深度学习课程的一些笔记与个人见解</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/attention_1.html" class="no-external">
-<div class="listing-date">
-2026年8月19日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="YXR0ZW50aW9uJTJDRGVlcCUyMExlYXJuaW5n" data-listing-date-sort="1787068800000" data-listing-file-modified-sort="1787155457522" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="300">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/attention_2.html" class="no-external">注意力机制(2)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YXR0ZW50aW9u'); return false;">attention</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/attention_2.html" class="no-external">
-<p>本文是基于李沐的动手学深度学习课程的一些笔记与个人见解</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/attention_2.html" class="no-external">
-<div class="listing-date">
-2026年8月19日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787066751005" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="675">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Integration.html" class="no-external">积分微分学</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Integration.html" class="no-external">
-<p>本部分介绍了常见的积分方式，重点还有换元法的使用</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Integration.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787040538600" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="86">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Multivariable_Calculus_1.html" class="no-external">多元微积分(1)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Multivariable_Calculus_1.html" class="no-external">
-<p>介绍了偏微分，以及详细讲解了梯度下降法与数学优化上的一些说明</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Multivariable_Calculus_1.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787060276822" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="419">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Multivariable_Calculus_2.html" class="no-external">多元微积分(2)</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Multivariable_Calculus_2.html" class="no-external">
-<p>介绍了多变量情形下的链式法则，Hessian矩阵的详细介绍以及矩阵求导的方法。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Multivariable_Calculus_2.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="bWF0aGVtYXRpY3MlMkNDYWxjdWx1cw==" data-listing-date-sort="1786982400000" data-listing-file-modified-sort="1787027357259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Single_Variable_Calculus.html" class="no-external">单变量微积分</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q2FsY3VsdXM='); return false;">Calculus</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Single_Variable_Calculus.html" class="no-external">
-<p>简单介绍了微分学的作用，以及一些基础的运算规则，并介绍了高阶导数与泰勒展开公式</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Single_Variable_Calculus.html" class="no-external">
-<div class="listing-date">
-2026年8月18日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="10" data-categories="SGFybmVzcw==" data-listing-date-sort="1786809600000" data-listing-file-modified-sort="1787021194889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="230">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Deepseek_Harness.html" class="no-external">Deepseek Harness 安装教程</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('SGFybmVzcw=='); return false;">Harness</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Deepseek_Harness.html" class="no-external">
-<p>Deepseek Harness 安装教程 + 插件安装方法</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Deepseek_Harness.html" class="no-external">
-<div class="listing-date">
-2026年8月16日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="11" data-categories="bWF0aGVtYXRpY3MlMkNFaWdlbiUyMGRlY29tcG9zaXRpb24=" data-listing-date-sort="1786723200000" data-listing-file-modified-sort="1786882539092" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="384">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Eigen decomposition.html" class="no-external">特征分解</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RWlnZW4lMjBkZWNvbXBvc2l0aW9u'); return false;">Eigen decomposition</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Eigen decomposition.html" class="no-external">
-<p>进行了特征向量与特征值的介绍，简单讲解了特征分解与SVD</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Eigen decomposition.html" class="no-external">
-<div class="listing-date">
-2026年8月15日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="12" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782136368" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="77">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">(1)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<p>线性代数与几何的基础概念，包括向量、矩阵、线性变换等。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_1.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="13" data-categories="bWF0aGVtYXRpY3MlMkNsaW5lYXItYWxnZWJyYQ==" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786782148330" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="184">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">(2)几何与线性代数</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aGVtYXRpY3M='); return false;">mathematics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGluZWFyLWFsZ2VicmE='); return false;">linear-algebra</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<p>线性代数与几何的进阶内容。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Linear_algebra_and_geometry_2.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="14" data-categories="Y29kZSUyQ251bXB5JTJDcHl0aG9u" data-listing-date-sort="1786636800000" data-listing-file-modified-sort="1786780561762" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../blog/Numpy_learning.html" class="no-external">NumPy学习笔记</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('Y29kZQ=='); return false;">code</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bnVtcHk='); return false;">numpy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-</div>
-<div class="delink listing-description"><a href="../blog/Numpy_learning.html" class="no-external">
-<p>NumPy基础操作、数组运算、广播机制等核心功能的学习记录。</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../blog/Numpy_learning.html" class="no-external">
-<div class="listing-date">
-2026年8月14日
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">无匹配项</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script>
 // 主题切换逻辑
 (function() {
@@ -1474,6 +1342,57 @@ window.Quarto = {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
