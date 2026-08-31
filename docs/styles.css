@@ -1306,3 +1306,214 @@ html.dark #quarto-margin-sidebar .toc a:hover {
   color: var(--accent);
   background: var(--accent-soft);
 }
+
+
+/* =========================================================
+   Quarto Live / Pyodide 编辑器
+   ========================================================= */
+
+.card.exercise-editor {
+  --exercise-font-size: 0.92rem;
+
+  margin: 1.4rem 0 1.8rem 0;
+
+  border: 1px solid var(--bs-border-color, #dee2e6);
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  background: var(--bs-body-bg, #ffffff);
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+
+/* -------------------------
+   顶部工具栏
+   ------------------------- */
+
+.card.exercise-editor .card-header {
+  padding: 0.55rem 0.8rem;
+
+  background: var(--bs-tertiary-bg, #f8f9fa);
+
+  border-bottom:
+    1px solid var(--bs-border-color, #dee2e6);
+}
+
+
+/* Python Code 标题 */
+
+.card.exercise-editor .card-header {
+  font-size: 0.9rem;
+}
+
+
+/* -------------------------
+   按钮
+   ------------------------- */
+
+.card.exercise-editor .card-header .btn {
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+
+  padding: 0.28rem 0.7rem;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+
+.card.exercise-editor .card-header .btn:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+
+/* -------------------------
+   CodeMirror 编辑区域
+   ------------------------- */
+
+.card.exercise-editor .cm-editor {
+  font-family:
+    "Cascadia Code",
+    "JetBrains Mono",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 0.92rem;
+
+  line-height: 1.6;
+}
+
+
+/* 编辑区域上下留白 */
+
+.card.exercise-editor .cm-scroller {
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
+
+
+/* 每一行代码与行号之间留一点距离 */
+
+.card.exercise-editor .cm-line {
+  padding-left: 0.65rem;
+}
+
+
+/* -------------------------
+   行号区域
+   ------------------------- */
+
+.card.exercise-editor .cm-gutters {
+  border-right:
+    1px solid var(--bs-border-color, #dee2e6);
+
+  background:
+    var(--bs-tertiary-bg, #f8f9fa);
+}
+
+
+.card.exercise-editor .cm-gutterElement {
+  padding-left: 0.55rem;
+  padding-right: 0.55rem;
+}
+
+
+/* -------------------------
+   当前代码行
+   ------------------------- */
+
+.card.exercise-editor .cm-activeLine {
+  background:
+    rgba(var(--bs-primary-rgb, 13, 110, 253), 0.045);
+}
+
+
+.card.exercise-editor .cm-activeLineGutter {
+  background:
+    rgba(var(--bs-primary-rgb, 13, 110, 253), 0.08);
+}
+
+
+/* -------------------------
+   手机和平板
+   ------------------------- */
+
+@media (max-width: 768px) {
+
+  .card.exercise-editor {
+    border-radius: 9px;
+  }
+
+  .card.exercise-editor .cm-editor {
+    font-size: 0.86rem;
+  }
+
+  .card.exercise-editor .card-header {
+    padding:
+      0.45rem 0.55rem;
+  }
+}
+
+/* ===== 统一代码字体 ===== */
+
+pre,
+code,
+kbd,
+samp,
+.card.exercise-editor .cm-editor {
+  font-family:
+    "JetBrains Mono",
+    "Cascadia Code",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    Menlo,
+    monospace;
+}
+
+/* Quarto Live 编辑器 */
+.card.exercise-editor .cm-editor {
+  font-size: 0.95rem;
+  line-height: 1.65;
+
+  font-variant-ligatures: contextual;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* 行号也统一 */
+.card.exercise-editor .cm-gutters {
+  font-family:
+    "JetBrains Mono",
+    "Cascadia Code",
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+
+  font-size: 0.88rem;
+}
+
+.card.exercise-editor .btn-primary {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+  border-radius: 999px;
+  box-shadow: none !important;
+}
+
+.card.exercise-editor .btn-primary:hover {
+  background-color: #f3f3f3 !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}

@@ -1,0 +1,29 @@
+format:
+  live-html:
+    lang: zh-CN
+
+    theme: cosmo
+    css: ../../styles.css
+
+    toc: true
+    toc-depth: 3
+
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    code-overflow: wrap
+
+    smooth-scroll: true
+    html-math-method: katex
+
+    page-layout: article
+
+    grid:
+      body-width: 900px
+      margin-width: 250px
+      gutter-width: 1.5rem
+
+    include-after-body:
+      - ../../assets/theme-toggle.html
+      - ../../assets/listing-year-group.js
+      - ../../assets/image-lightbox.js
