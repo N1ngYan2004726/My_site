@@ -1,0 +1,34 @@
+[
+  {
+    "listing": "/talks/index.html",
+    "items": []
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/code/Python_1.html",
+      "/blog/code/Python_2.html",
+      "/blog/code/Python_3.html",
+      "/blog/code/Python_4.html",
+      "/blog/conda_env.html",
+      "/blog/ai_map.html",
+      "/blog/git.html",
+      "/blog/attention_3.html",
+      "/blog/attention_1.html",
+      "/blog/attention_2.html",
+      "/blog/Integration.html",
+      "/blog/Multivariable_Calculus_1.html",
+      "/blog/Multivariable_Calculus_2.html",
+      "/blog/Single_Variable_Calculus.html",
+      "/blog/Deepseek_Harness.html",
+      "/blog/Eigen decomposition.html",
+      "/blog/Linear_algebra_and_geometry_1.html",
+      "/blog/Linear_algebra_and_geometry_2.html",
+      "/blog/Numpy_learning.html"
+    ]
+  },
+  {
+    "listing": "/publications/index.html",
+    "items": []
+  }
+]

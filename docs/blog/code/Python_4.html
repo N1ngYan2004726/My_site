@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="本内容面向的读者是没有编程经验的纯编程小白，可以帮助你学习 Python 基础">
+
+<title>Python 基础入门(4) – N1ngYan</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8c5a10f834a699473ba6bab725f6b19e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">N1ngYan</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog/index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks/index.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications/index.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cv/index.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../news/index.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/N1ngYan2004726"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../#"> <i class="bi bi-circle-half" role="img" aria-label="切换主题">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul>
+  <li><a href="#常用数据结构" id="toc-常用数据结构" class="nav-link active" data-scroll-target="#常用数据结构">常用数据结构</a>
+  <ul class="collapse">
+  <li><a href="#列表-list" id="toc-列表-list" class="nav-link" data-scroll-target="#列表-list">列表 list</a></li>
+  </ul></li>
+  <li><a href="#元组-tuple" id="toc-元组-tuple" class="nav-link" data-scroll-target="#元组-tuple">元组 tuple</a>
+  <ul class="collapse">
+  <li><a href="#字符串-str" id="toc-字符串-str" class="nav-link" data-scroll-target="#字符串-str">字符串 str</a></li>
+  <li><a href="#字典-dict" id="toc-字典-dict" class="nav-link" data-scroll-target="#字典-dict">字典 dict</a></li>
+  <li><a href="#集合-set" id="toc-集合-set" class="nav-link" data-scroll-target="#集合-set">集合 set</a></li>
+  <li><a href="#栈list-模拟" id="toc-栈list-模拟" class="nav-link" data-scroll-target="#栈list-模拟">栈（list 模拟）</a></li>
+  <li><a href="#队列deque" id="toc-队列deque" class="nav-link" data-scroll-target="#队列deque">队列（deque）</a></li>
+  <li><a href="#小结" id="toc-小结" class="nav-link" data-scroll-target="#小结">小结</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Python 基础入门(4)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">Code</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    本内容面向的读者是没有编程经验的纯编程小白，可以帮助你学习 Python 基础
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">发布于</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2026年8月31日</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="常用数据结构" class="level2">
+<h2 class="anchored" data-anchor-id="常用数据结构">常用数据结构</h2>
+<p>上一篇我们学了函数、lambda、列表推导式等语法糖。这篇是整个 Python 教程中最重要的一篇——我们要系统学习 Python 中刷算法题最常用的数据结构。</p>
+<p>算法题的本质就是对数据结构进行操作，如果你不熟悉这些数据结构的基本用法，看算法代码就会一头雾水。好消息是，Python 的数据结构用起来非常简洁直观，你不需要记住所有 API，只需要掌握最常用的那几个操作就够了。用多了自然就记住了，忘了随时可以回来查。</p>
+<section id="列表-list" class="level3">
+<h3 class="anchored" data-anchor-id="列表-list">列表 list</h3>
+<p>列表是 Python 中最基础、最常用的数据结构，你可以把它理解为”可变长度的数组”。几乎所有算法题都离不开它。</p>
+<section id="创建与初始化" class="level4">
+<h4 class="anchored" data-anchor-id="创建与初始化">创建与初始化</h4>
+<div>
+<div id="pyodide-1" class="exercise-cell">
+
+</div>
+<script type="pyodide-1-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLliJfooajnmoTliJvlu7rkuI7liJ3lp4vljJYiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6IiMg5pa55byP5LiA77ya55u05o6l55So5pa55ous5Y+35Yib5bu6XG5udW1zID0gWzEsIDIsIDMsIDQsIDVdXG4jIOi+k+WHuu+8mlsxLCAyLCAzLCA0LCA1XVxucHJpbnQobnVtcylcblxuIyDmlrnlvI/kuozvvJrliJvlu7rnqbrliJfooahcbmVtcHR5ID0gW11cbiMg6L6T5Ye677yaW11cbnByaW50KGVtcHR5KVxuXG4jIOaWueW8j+S4ie+8mueUqCAqIOW/q+mAn+WIm+W7uuaMh+WumumVv+W6pueahOWIl+ihqFxuIyDliJvlu7rplb/luqbkuLogNSDnmoTliJfooajvvIzliJ3lp4vlgLzpg73mmK8gMFxuemVyb3MgPSBbMF0gKiA1XG4jIOi+k+WHuu+8mlswLCAwLCAwLCAwLCAwXVxucHJpbnQoemVyb3MpXG5cbiMg5pa55byP5Zub77ya5YiX6KGo5o6o5a+85byP5Yib5bu65LqM57u05YiX6KGo77yI5pyA6YeN6KaB77yB77yJXG4jIOWIm+W7uiAzIOihjCA0IOWIl+eahOS6jOe7tOWIl+ihqO+8jOWIneWni+WAvOS4uiAwXG5yb3dzLCBjb2xzID0gMywgNFxuZ3JpZCA9IFtbMF0gKiBjb2xzIGZvciBfIGluIHJhbmdlKHJvd3MpXVxuIyDovpPlh7rvvJpbWzAsIDAsIDAsIDBdLCBbMCwgMCwgMCwgMF0sIFswLCAwLCAwLCAwXV1cbnByaW50KGdyaWQpXG5cbiMg5L+u5pS55p+Q5Liq5YWD57Sg6aqM6K+B54us56uL5oCnXG5ncmlkWzFdWzJdID0gOTlcbiMg6L6T5Ye677yaW1swLCAwLCAwLCAwXSwgWzAsIDAsIDk5LCAwXSwgWzAsIDAsIDAsIDBdXVxuIyDlj6rmnIkgZ3JpZFsxXSDlj5jkuobvvIzlhbbku5booYzkuI3lj5flvbHlk41cbnByaW50KGdyaWQpIn0=
+</script>
+</div>
+</section>
+<section id="常用操作" class="level4">
+<h4 class="anchored" data-anchor-id="常用操作">常用操作</h4>
+<div>
+<div id="pyodide-2" class="exercise-cell">
+
+</div>
+<script type="pyodide-2-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLliJfooajnmoTlop7liKDmk43kvZwiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6Im51bXMgPSBbMSwgMiwgM11cblxuIyBhcHBlbmTvvJrlnKjmnKvlsL7ov73liqDlhYPntKDvvIjmnIDluLjnlKjvvIlcbm51bXMuYXBwZW5kKDQpXG5udW1zLmFwcGVuZCg1KVxuIyDovpPlh7rvvJpbMSwgMiwgMywgNCwgNV1cbnByaW50KG51bXMpXG5cbiMgcG9w77ya5Yig6Zmk5bm26L+U5Zue5pyr5bC+5YWD57SgXG5sYXN0ID0gbnVtcy5wb3AoKVxuIyDovpPlh7rvvJo1XG5wcmludChsYXN0KVxuIyDovpPlh7rvvJpbMSwgMiwgMywgNF1cbnByaW50KG51bXMpXG5cbiMgcG9wKGkp77ya5Yig6Zmk5bm26L+U5Zue57Si5byVIGkg5aSE55qE5YWD57SgXG5zZWNvbmQgPSBudW1zLnBvcCgxKVxuIyDovpPlh7rvvJoyXG5wcmludChzZWNvbmQpXG4jIOi+k+WHuu+8mlsxLCAzLCA0XVxucHJpbnQobnVtcylcblxuIyBpbnNlcnQoaSwgeCnvvJrlnKjntKLlvJUgaSDlpITmj5LlhaXlhYPntKAgeFxubnVtcy5pbnNlcnQoMSwgOTkpXG4jIOi+k+WHuu+8mlsxLCA5OSwgMywgNF1cbnByaW50KG51bXMpXG5cbiMgZGVs77ya5Yig6Zmk5oyH5a6a57Si5byV55qE5YWD57SgXG5kZWwgbnVtc1sxXVxuIyDovpPlh7rvvJpbMSwgMywgNF1cbnByaW50KG51bXMpXG5cbiMgbGVu77ya6I635Y+W5YiX6KGo6ZW/5bqmXG4jIOi+k+WHuu+8mjNcbnByaW50KGxlbihudW1zKSkifQ==
+</script>
+</div>
+<p><code>append</code> 和 <code>pop</code> 是刷题时用得最多的两个操作，它们操作的都是列表末尾，时间复杂度 O(1)。而 <code>pop(i)</code>、<code>insert(i, x)</code>、<code>del</code> 操作的是中间位置，需要移动元素，时间复杂度 O(n)。</p>
+</section>
+<section id="切片操作" class="level4">
+<h4 class="anchored" data-anchor-id="切片操作">切片操作</h4>
+<p>切片是 Python 的一大特色，能非常灵活地截取列表的一部分：</p>
+<div>
+<div id="pyodide-3" class="exercise-cell">
+
+</div>
+<script type="pyodide-3-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLliIfniYfmk43kvZwiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6Im51bXMgPSBbMCwgMSwgMiwgMywgNCwgNSwgNiwgNywgOCwgOV1cblxuIyDln7rmnKzor63ms5XvvJpudW1zW3N0YXJ0OmVuZF3vvIzljIXlkKsgc3RhcnTvvIzkuI3ljIXlkKsgZW5kXG4jIOi+k+WHuu+8mlsyLCAzLCA0XVxucHJpbnQobnVtc1syOjVdKVxuXG4jIOecgeeVpSBzdGFydCDooajnpLrku47lpLTlvIDlp4tcbiMg6L6T5Ye677yaWzAsIDEsIDJdXG5wcmludChudW1zWzozXSlcblxuIyDnnIHnlaUgZW5kIOihqOekuuWIsOacq+WwvlxuIyDovpPlh7rvvJpbNywgOCwgOV1cbnByaW50KG51bXNbNzpdKVxuXG4jIOW4puatpemVv++8mm51bXNbc3RhcnQ6ZW5kOnN0ZXBdXG4jIOavj+malOS4gOS4quWPluS4gOS4qlxuIyDovpPlh7rvvJpbMCwgMiwgNCwgNiwgOF1cbnByaW50KG51bXNbOjoyXSlcblxuIyDotJ/ntKLlvJXvvJotMSDooajnpLrmnIDlkI7kuIDkuKrlhYPntKBcbiMg6L6T5Ye677yaOVxucHJpbnQobnVtc1stMV0pXG4jIOi+k+WHuu+8mls3LCA4LCA5XVxucHJpbnQobnVtc1stMzpdKVxuXG4jIOWPjei9rOWIl+ihqO+8muatpemVv+S4uiAtMVxuIyDovpPlh7rvvJpbOSwgOCwgNywgNiwgNSwgNCwgMywgMiwgMSwgMF1cbnByaW50KG51bXNbOjotMV0pIn0=
+</script>
+</div>
+<p>切片用得最多的场景：<code>nums[:i] + nums[i+1:]</code> 跳过索引 <code>i</code> 的元素，<code>nums[::-1]</code> 反转列表。这些在刷题时非常常见。</p>
+</section>
+<section id="遍历列表" class="level4">
+<h4 class="anchored" data-anchor-id="遍历列表">遍历列表</h4>
+<div>
+<div id="pyodide-4" class="exercise-cell">
+
+</div>
+<script type="pyodide-4-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLpgY3ljobliJfooagiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6ImZydWl0cyA9IFtcImFwcGxlXCIsIFwiYmFuYW5hXCIsIFwiY2hlcnJ5XCJdXG5cbiMg5pa55byP5LiA77ya55u05o6l6YGN5Y6G5YWD57SgXG5mb3IgZnJ1aXQgaW4gZnJ1aXRzOlxuICAgIHByaW50KGZydWl0LCBlbmQ9XCIgXCIpXG4jIOi+k+WHuu+8mmFwcGxlIGJhbmFuYSBjaGVycnlcbnByaW50KClcblxuIyDmlrnlvI/kuozvvJrnlKggZW51bWVyYXRlIOWQjOaXtuiOt+WPlue0ouW8leWSjOWFg+e0oO+8iOaOqOiNkO+8ge+8iVxuZm9yIGksIGZydWl0IGluIGVudW1lcmF0ZShmcnVpdHMpOlxuICAgIHByaW50KGZcIue0ouW8lSB7aX06IHtmcnVpdH1cIilcbiMg6L6T5Ye677yaXG4jIOe0ouW8lSAwOiBhcHBsZVxuIyDntKLlvJUgMTogYmFuYW5hXG4jIOe0ouW8lSAyOiBjaGVycnlcblxuIyDmlrnlvI/kuInvvJrnlKggcmFuZ2UobGVuKCkpIOmBjeWOhue0ouW8lVxuZm9yIGkgaW4gcmFuZ2UobGVuKGZydWl0cykpOlxuICAgIHByaW50KGZcIntpfToge2ZydWl0c1tpXX1cIiwgZW5kPVwiICBcIilcbiMg6L6T5Ye677yaMDogYXBwbGUgIDE6IGJhbmFuYSAgMjogY2hlcnJ5XG5wcmludCgpIn0=
+</script>
+</div>
+<p>推荐用 <code>enumerate</code>，因为大部分时候你既需要索引又需要元素值。直接写 <code>for i, val in enumerate(nums)</code> 就行，比 <code>for i in range(len(nums))</code> 然后再 <code>nums[i]</code> 取值要简洁得多。</p>
+</section>
+</section>
+</section>
+<section id="元组-tuple" class="level2">
+<h2 class="anchored" data-anchor-id="元组-tuple">元组 tuple</h2>
+<p>元组和列表长得很像，但有一个关键区别：<strong>元组创建后不能修改</strong>。</p>
+<div>
+<div id="pyodide-5" class="exercise-cell">
+
+</div>
+<script type="pyodide-5-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLlhYPnu4Tln7rnoYAiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6IiMg5Yib5bu65YWD57uE77yM55So5bCP5ous5Y+3XG50ID0gKDEsIDIsIDMpXG4jIOi+k+WHuu+8migxLCAyLCAzKVxucHJpbnQodClcblxuIyDorr/pl67lhYPntKDvvIjlkozliJfooajkuIDmoLfnlKjkuIvmoIfvvIlcbiMg6L6T5Ye677yaMVxucHJpbnQodFswXSlcblxuIyDplb/luqZcbiMg6L6T5Ye677yaM1xucHJpbnQobGVuKHQpKVxuXG4jIOWFg+e7hOS4jeiDveS/ruaUue+8geS4i+mdoueahOWGmeazleS8muaKpemUme+8mlxuIyB0WzBdID0gOTkgICMgVHlwZUVycm9yIVxuXG4jIOWFg+e7hOaLhuWMhe+8muaKiuWFg+e7hOeahOWAvOWIhuWIq+i1i+e7meWkmuS4quWPmOmHj1xuYSwgYiwgYyA9ICgxMCwgMjAsIDMwKVxuIyDovpPlh7rvvJoxMCAyMCAzMFxucHJpbnQoYSwgYiwgYylcblxuIyDkuqTmjaLkuKTkuKrlj5jph4/nmoTlgLzvvIjmnKzotKjlsLHmmK/lhYPnu4Tmi4bljIXvvIlcbngsIHkgPSAxLCAyXG54LCB5ID0geSwgeFxuIyDovpPlh7rvvJoyIDFcbnByaW50KHgsIHkpIn0=
+</script>
+</div>
+<p>你可能会问：既然元组不能修改，那为什么还要用它？元组在刷题中主要有三个用途：</p>
+<ol type="1">
+<li><strong>多返回值</strong>：函数返回多个值时，实际上返回的是元组，用拆包接收</li>
+<li><strong>字典的键</strong>：列表不能当字典的键（因为可变），但元组可以</li>
+<li><strong>排序的 key</strong>：用元组做排序的 key 可以实现多级排序，比如 <code>key=lambda x: (x[1], x[0])</code></li>
+</ol>
+<div>
+<div id="pyodide-6" class="exercise-cell">
+
+</div>
+<script type="pyodide-6-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLlhYPnu4TnmoTlrp7pmYXnlKjpgJQiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6IiMg55So6YCU5LiA77ya5aSa6L+U5Zue5YC877yI5LiK5LiA56+H6K6y6L+H77yJXG5kZWYgbWluX21heChudW1zKTpcbiAgICByZXR1cm4gbWluKG51bXMpLCBtYXgobnVtcylcblxubG8sIGhpID0gbWluX21heChbMywgMSwgNCwgMSwgNSwgOV0pXG4jIOi+k+WHuu+8muacgOWwj+WAvCA9IDEsIOacgOWkp+WAvCA9IDlcbnByaW50KGZcIuacgOWwj+WAvCA9IHtsb30sIOacgOWkp+WAvCA9IHtoaX1cIilcblxuIyDnlKjpgJTkuozvvJrlhYPnu4Tlj6/ku6XlvZPlrZflhbjnmoTplK5cbiMg5q+U5aaC55SoICjooYwsIOWIlykg5Z2Q5qCH5L2c5Li6IGtleVxudmlzaXRlZCA9IHt9XG52aXNpdGVkWygwLCAwKV0gPSBUcnVlXG52aXNpdGVkWygxLCAyKV0gPSBUcnVlXG4jIOi+k+WHuu+8mlRydWVcbnByaW50KCgwLCAwKSBpbiB2aXNpdGVkKVxuXG4jIOeUqOmAlOS4ie+8muWkmue6p+aOkuW6j1xuIyDlhYjmjInmiJDnu6npmY3luo/vvIzmiJDnu6nnm7jlkIzmjInlp5PlkI3ljYfluo9cbnN0dWRlbnRzID0gWyhcIkFsaWNlXCIsIDg4KSwgKFwiQm9iXCIsIDk1KSwgKFwiQ2hhcmxpZVwiLCA4OCksIChcIkRpYW5hXCIsIDk1KV1cbnN0dWRlbnRzLnNvcnQoa2V5PWxhbWJkYSB4OiAoLXhbMV0sIHhbMF0pKVxuIyDovpPlh7rvvJpbKCdCb2InLCA5NSksICgnRGlhbmEnLCA5NSksICgnQWxpY2UnLCA4OCksICgnQ2hhcmxpZScsIDg4KV1cbnByaW50KHN0dWRlbnRzKSJ9
+</script>
+</div>
+<p>多级排序这个技巧非常实用：元组在比较时会先比第一个元素，相等再比第二个，以此类推。想要降序就取负号。</p>
+<section id="字符串-str" class="level3">
+<h3 class="anchored" data-anchor-id="字符串-str">字符串 str</h3>
+<p>Python 的字符串也是不可变的——你不能修改字符串中的某个字符，想修改就只能创建新字符串。</p>
+<section id="基本操作" class="level4">
+<h4 class="anchored" data-anchor-id="基本操作">基本操作</h4>
+<div>
+<div id="pyodide-7" class="exercise-cell">
+
+</div>
+<script type="pyodide-7-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLlrZfnrKbkuLLln7rmnKzmk43kvZwiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6InMgPSBcIkhlbGxvLCBQeXRob24hXCJcblxuIyDplb/luqZcbiMg6L6T5Ye677yaMTRcbnByaW50KGxlbihzKSlcblxuIyDkuIvmoIforr/pl65cbiMg6L6T5Ye677yaSFxucHJpbnQoc1swXSlcbiMg6L6T5Ye677yaIVxucHJpbnQoc1stMV0pXG5cbiMg5YiH54mH77yI5ZKM5YiX6KGo5YiH54mH5a6M5YWo5LiA5qC377yJXG4jIOi+k+WHuu+8mkhlbGxvXG5wcmludChzWzA6NV0pXG4jIOi+k+WHuu+8mlB5dGhvbiFcbnByaW50KHNbNzpdKVxuXG4jIOWtl+espuS4suWPjei9rFxuIyDovpPlh7rvvJohbm9odHlQICxvbGxlSFxucHJpbnQoc1s6Oi0xXSlcblxuIyDlrZfnrKbkuLLmi7zmjqXnlKggK1xuZ3JlZXRpbmcgPSBcIkhlbGxvXCIgKyBcIiBcIiArIFwiV29ybGRcIlxuIyDovpPlh7rvvJpIZWxsbyBXb3JsZFxucHJpbnQoZ3JlZXRpbmcpXG5cbiMg5a2X56ym5Liy5LiN5Y+v5Y+Y77yB5LiL6Z2i5Lya5oql6ZSZ77yaXG4jIHNbMF0gPSAnaCcgICMgVHlwZUVycm9yIVxuXG4jIOaDs+S/ruaUue+8n+i9rOaIkOWIl+ihqOWGjei9rOWbnuadpVxuY2hhcnMgPSBsaXN0KHMpXG5jaGFyc1swXSA9ICdoJ1xuc19uZXcgPSBcIlwiLmpvaW4oY2hhcnMpXG4jIOi+k+WHuu+8mmhlbGxvLCBQeXRob24hXG5wcmludChzX25ldylcblxuIyBpbiDliKTmlq3vvJrmo4Dmn6XlrZDkuLLmmK/lkKblrZjlnKhcbiMg6L6T5Ye677yaVHJ1ZVxucHJpbnQoXCJQeXRob25cIiBpbiBzKVxuIyDovpPlh7rvvJpGYWxzZVxucHJpbnQoXCJXb3JsZFwiIGluIHMpIn0=
+</script>
+</div>
+<p>字符串不可变这个特点很重要：每次用 <code>+</code> 拼接字符串，实际上都会创建一个新的字符串对象。如果在循环里频繁拼接，效率会很低。后面会讲更高效的做法。</p>
+</section>
+<section id="常用方法" class="level4">
+<h4 class="anchored" data-anchor-id="常用方法">常用方法</h4>
+<div>
+<div id="pyodide-8" class="exercise-cell">
+
+</div>
+<script type="pyodide-8-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLluLjnlKjmlrnms5UiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6InMgPSBcIiAgSGVsbG8sIFdvcmxkISAgXCJcblxuIyBzdHJpcO+8muWOu+mZpOS4pOerr+epuueZveWtl+esplxuIyDovpPlh7rvvJonSGVsbG8sIFdvcmxkISdcbnByaW50KHMuc3RyaXAoKSlcblxuIyBzcGxpdO+8muaMieWIhumalOespuWIh+WIhu+8jOi/lOWbnuWIl+ihqFxuY3N2ID0gXCJhcHBsZSxiYW5hbmEsY2hlcnJ5XCJcbiMg6L6T5Ye677yaWydhcHBsZScsICdiYW5hbmEnLCAnY2hlcnJ5J11cbnByaW50KGNzdi5zcGxpdChcIixcIikpXG5cbiMg5LiN5Lyg5Y+C5pWw6buY6K6k5oyJ56m655m95a2X56ym5YiH5YiG77yI56m65qC844CB5o2i6KGM562J77yJXG50ZXh0ID0gXCJoZWxsbyAgd29ybGQgICBweXRob25cIlxuIyDovpPlh7rvvJpbJ2hlbGxvJywgJ3dvcmxkJywgJ3B5dGhvbiddXG5wcmludCh0ZXh0LnNwbGl0KCkpXG5cbiMgam9pbu+8muaKiuWIl+ihqOeUqOWIhumalOespui/nuaOpeaIkOWtl+espuS4slxud29yZHMgPSBbXCJJXCIsIFwibG92ZVwiLCBcIlB5dGhvblwiXVxuIyDovpPlh7rvvJpJIGxvdmUgUHl0aG9uXG5wcmludChcIiBcIi5qb2luKHdvcmRzKSlcblxuIyBmaW5k77ya5p+l5om+5a2Q5Liy5L2N572u77yM5om+5LiN5Yiw6L+U5ZueIC0xXG5zMiA9IFwiaGVsbG8gd29ybGRcIlxuIyDovpPlh7rvvJo2XG5wcmludChzMi5maW5kKFwid29ybGRcIikpXG4jIOi+k+WHuu+8mi0xXG5wcmludChzMi5maW5kKFwicHl0aG9uXCIpKVxuXG4jIHJlcGxhY2XvvJrmm7/mjaLlrZDkuLJcbiMg6L6T5Ye677yaaGVsbG8gcHl0aG9uXG5wcmludChzMi5yZXBsYWNlKFwid29ybGRcIiwgXCJweXRob25cIikpXG5cbiMgc3RhcnRzd2l0aCAvIGVuZHN3aXRoXG4jIOi+k+WHuu+8mlRydWVcbnByaW50KHMyLnN0YXJ0c3dpdGgoXCJoZWxsb1wiKSlcbiMg6L6T5Ye677yaVHJ1ZVxucHJpbnQoczIuZW5kc3dpdGgoXCJ3b3JsZFwiKSlcblxuIyBsb3dlciAvIHVwcGVy77ya5aSn5bCP5YaZ6L2s5o2iXG4jIOi+k+WHuu+8mmhlbGxvIHdvcmxkXG5wcmludChcIkhlbGxvIFdvcmxkXCIubG93ZXIoKSlcbiMg6L6T5Ye677yaSEVMTE8gV09STERcbnByaW50KFwiSGVsbG8gV29ybGRcIi51cHBlcigpKSJ9
+</script>
+</div>
+<p>刷题时最常用的字符串方法：<code>split</code> 用于解析输入，<code>join</code> 用于拼接输出，<code>find</code> 用于查找子串，<code>strip</code> 用于去除多余空白。</p>
+</section>
+<section id="字符与-ascii" class="level4">
+<h4 class="anchored" data-anchor-id="字符与-ascii">字符与 ASCII</h4>
+<p>算法题中经常需要操作单个字符和 ASCII 码，Python 用 <code>ord()</code> 和 <code>chr()</code> 来转换：</p>
+<div>
+<div id="pyodide-9" class="exercise-cell">
+
+</div>
+<script type="pyodide-9-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLlrZfnrKbkuI4gQVNDSUkiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6IiMgb3Jk77ya5a2X56ymIC0+IEFTQ0lJIOeggVxuIyDovpPlh7rvvJo5N1xucHJpbnQob3JkKCdhJykpXG4jIOi+k+WHuu+8mjY1XG5wcmludChvcmQoJ0EnKSlcbiMg6L6T5Ye677yaNDhcbnByaW50KG9yZCgnMCcpKVxuXG4jIGNocu+8mkFTQ0lJIOeggSAtPiDlrZfnrKZcbiMg6L6T5Ye677yaYVxucHJpbnQoY2hyKDk3KSlcbiMg6L6T5Ye677yaWlxucHJpbnQoY2hyKDkwKSlcblxuIyDluLjop4HnlKjms5XvvJrliKTmlq3lrZfnrKbnsbvlnotcbmNoID0gJ2MnXG4jIOWIpOaWreaYr+WQpuaYr+Wwj+WGmeWtl+avjVxuIyDovpPlh7rvvJpUcnVlXG5wcmludCgnYScgPD0gY2ggPD0gJ3onKVxuXG4jIOiuoeeul+Wtl+avjeWcqOWtl+avjeihqOS4reeahOS9jee9ru+8iDAtYmFzZWTvvIlcbiMg6L6T5Ye677yaMu+8iGMg5piv56ysIDMg5Liq5a2X5q+N77yM57Si5byV5LuOIDAg5byA5aeL77yJXG5wcmludChvcmQoY2gpIC0gb3JkKCdhJykpXG5cbiMg57uP5YW455So5rOV77ya55So5pWw57uE57uf6K6h5a2X5q+N6aKR546HXG50ZXh0ID0gXCJhYnJhY2FkYWJyYVwiXG5mcmVxID0gWzBdICogMjZcbmZvciBjaCBpbiB0ZXh0OlxuICAgIGZyZXFbb3JkKGNoKSAtIG9yZCgnYScpXSArPSAxXG5cbiMg6L6T5Ye65q+P5Liq5Ye6546w6L+H55qE5a2X5q+N5Y+K5YW26aKR546HXG5mb3IgaSBpbiByYW5nZSgyNik6XG4gICAgaWYgZnJlcVtpXSA+IDA6XG4gICAgICAgIHByaW50KGZcIntjaHIoaSArIG9yZCgnYScpKX06IHtmcmVxW2ldfVwiLCBlbmQ9XCIgIFwiKVxuIyDovpPlh7rvvJphOiA1ICBiOiAyICBjOiAxICBkOiAxICByOiAyXG5wcmludCgpIn0=
+</script>
+</div>
+<p><code>ord(ch) - ord('a')</code>这个技巧把小写字母映射到 0~25，非常适合用数组代替哈希表来统计字母频率。刷题时很常用。</p>
+</section>
+</section>
+<section id="字典-dict" class="level3">
+<h3 class="anchored" data-anchor-id="字典-dict">字典 dict</h3>
+<p>字典是 Python 中的哈希表实现，存储键值对，增删查改都很快（平均 O(1)）。这里只讲用法</p>
+<section id="常用操作-1" class="level4">
+<h4 class="anchored" data-anchor-id="常用操作-1">常用操作</h4>
+<div>
+<div id="pyodide-10" class="exercise-cell">
+
+</div>
+<script type="pyodide-10-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLluLjnlKjmk43kvZwiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6IiMg5Yib5bu65a2X5YW4XG5kID0ge1wiYXBwbGVcIjogMywgXCJiYW5hbmFcIjogNSwgXCJjaGVycnlcIjogMn1cblxuIyDlj5blgLxcbiMg6L6T5Ye677yaM1xucHJpbnQoZFtcImFwcGxlXCJdKVxuXG4jIOi1i+WAvO+8iGtleSDlrZjlnKjlsLHkv67mlLnvvIzkuI3lrZjlnKjlsLHmlrDlop7vvIlcbmRbXCJhcHBsZVwiXSA9IDEwXG5kW1wiZ3JhcGVcIl0gPSA3XG4jIOi+k+WHuu+8mnsnYXBwbGUnOiAxMCwgJ2JhbmFuYSc6IDUsICdjaGVycnknOiAyLCAnZ3JhcGUnOiA3fVxucHJpbnQoZClcblxuIyBpbiDliKTmlq0ga2V5IOaYr+WQpuWtmOWcqFxuIyDovpPlh7rvvJpUcnVlXG5wcmludChcImJhbmFuYVwiIGluIGQpXG4jIOi+k+WHuu+8mkZhbHNlXG5wcmludChcIm1hbmdvXCIgaW4gZClcblxuIyBkZWwg5Yig6Zmk6ZSu5YC85a+5XG5kZWwgZFtcImNoZXJyeVwiXVxuIyDovpPlh7rvvJp7J2FwcGxlJzogMTAsICdiYW5hbmEnOiA1LCAnZ3JhcGUnOiA3fVxucHJpbnQoZClcblxuIyBsZW4g6I635Y+W6ZSu5YC85a+55pWw6YePXG4jIOi+k+WHuu+8mjNcbnByaW50KGxlbihkKSlcblxuIyDpgY3ljobmlrnlvI9cbiMg6YGN5Y6GIGtleVxuZm9yIGtleSBpbiBkOlxuICAgIHByaW50KGtleSwgZW5kPVwiIFwiKVxuIyDovpPlh7rvvJphcHBsZSBiYW5hbmEgZ3JhcGVcbnByaW50KClcblxuIyDpgY3ljoYga2V5LXZhbHVlIOWvue+8iOacgOW4uOeUqO+8iVxuZm9yIGtleSwgdmFsdWUgaW4gZC5pdGVtcygpOlxuICAgIHByaW50KGZcIntrZXl9OiB7dmFsdWV9XCIsIGVuZD1cIiAgXCIpXG4jIOi+k+WHuu+8mmFwcGxlOiAxMCAgYmFuYW5hOiA1ICBncmFwZTogN1xucHJpbnQoKVxuXG4jIOWPqumBjeWOhiB2YWx1ZXNcbiMg6L6T5Ye677yaMjJcbnByaW50KHN1bShkLnZhbHVlcygpKSkifQ==
+</script>
+</div>
+</section>
+<section id="get-方法与默认值" class="level4">
+<h4 class="anchored" data-anchor-id="get-方法与默认值">get 方法与默认值</h4>
+<p>直接用 <code>d[key]</code> 取值时，如果 <code>key</code> 不存在会报 <code>KeyError</code>。用 get 方法可以避免这个问题：</p>
+<div>
+<div id="pyodide-11" class="exercise-cell">
+
+</div>
+<script type="pyodide-11-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiJnZXQg5pa55rOV5LiO6buY6K6k5YC8IiwiZWRpdCI6dHJ1ZSwiZXZhbCI6dHJ1ZX0sImNvZGUiOiJkID0ge1wiYXBwbGVcIjogMywgXCJiYW5hbmFcIjogNX1cblxuIyBnZXQoa2V5LCBkZWZhdWx0Ke+8mmtleSDkuI3lrZjlnKjml7bov5Tlm57pu5jorqTlgLzvvIzkuI3kvJrmiqXplJlcbiMg6L6T5Ye677yaM1xucHJpbnQoZC5nZXQoXCJhcHBsZVwiLCAwKSlcbiMg6L6T5Ye677yaMO+8iGtleSDkuI3lrZjlnKjvvIzov5Tlm57pu5jorqTlgLwgMO+8iVxucHJpbnQoZC5nZXQoXCJtYW5nb1wiLCAwKSlcblxuIyDpopHnjofnu5/orqHnmoTnu4/lhbjlhpnms5VcbnRleHQgPSBcImhlbGxvIHdvcmxkXCJcbmZyZXEgPSB7fVxuZm9yIGNoIGluIHRleHQ6XG4gICAgIyDlpoLmnpwgY2gg5LiN5Zyo5a2X5YW45Lit77yMZ2V0IOi/lOWbniAw77yM5YqgIDEg5ZCO5bCx5pivIDFcbiAgICBmcmVxW2NoXSA9IGZyZXEuZ2V0KGNoLCAwKSArIDFcblxuIyDovpPlh7rvvJp7J2gnOiAxLCAnZSc6IDEsICdsJzogMywgJ28nOiAyLCAnICc6IDEsICd3JzogMSwgJ3InOiAxLCAnZCc6IDF9XG5wcmludChmcmVxKVxuXG4jIOaJvuWHuuWHuueOsOasoeaVsOacgOWkmueahOWtl+esplxubWF4X2NoYXIgPSBtYXgoZnJlcSwga2V5PWxhbWJkYSBjaDogZnJlcVtjaF0pXG4jIOi+k+WHuu+8muWHuueOsOacgOWkmueahOWtl+espu+8mmzvvIzlh7rnjrDkuoYgMyDmrKFcbnByaW50KGZcIuWHuueOsOacgOWkmueahOWtl+espu+8mnttYXhfY2hhcn3vvIzlh7rnjrDkuoYge2ZyZXFbbWF4X2NoYXJdfSDmrKFcIikifQ==
+</script>
+</div>
+<p><code>freq[ch] = freq.get(ch, 0) + 1</code> 这是 Python 中频率统计的经典写法，一行搞定，不需要提前判断 key 是否存在。几乎每道跟”计数”相关的算法题都会用到这个套路。</p>
+</section>
+</section>
+<section id="集合-set" class="level3">
+<h3 class="anchored" data-anchor-id="集合-set">集合 set</h3>
+<p>集合是一个不包含重复元素的无序容器，底层也是用哈希表实现的。它最大的特点是 <code>in</code> 判断非常快（O(1)），比列表的 <code>in</code>（O(n)）快得多。</p>
+<div>
+<div id="pyodide-12" class="exercise-cell">
+
+</div>
+<script type="pyodide-12-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLluLjnlKjmk43kvZwiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6IiMg5Yib5bu66ZuG5ZCIXG5zID0gezEsIDIsIDMsIDQsIDV9XG4jIOi+k+WHuu+8mnsxLCAyLCAzLCA0LCA1fVxucHJpbnQocylcblxuIyDku47liJfooajliJvlu7rpm4blkIjvvIjoh6rliqjljrvph43vvIlcbm51bXMgPSBbMSwgMiwgMiwgMywgMywgM11cbnMyID0gc2V0KG51bXMpXG4jIOi+k+WHuu+8mnsxLCAyLCAzfVxucHJpbnQoczIpXG5cbiMgYWRk77ya5re75Yqg5YWD57SgXG5zLmFkZCg2KVxucy5hZGQoMykgICMg5bey5a2Y5Zyo77yM5LiN5Lya6YeN5aSN5re75YqgXG4jIOi+k+WHuu+8mnsxLCAyLCAzLCA0LCA1LCA2fVxucHJpbnQocylcblxuIyBkaXNjYXJk77ya5Yig6Zmk5YWD57Sg77yI5LiN5a2Y5Zyo5Lmf5LiN5Lya5oql6ZSZ77yJXG5zLmRpc2NhcmQoMylcbnMuZGlzY2FyZCg5OSkgICMg5LiN5a2Y5Zyo77yM5LiN5oql6ZSZXG4jIOi+k+WHuu+8mnsxLCAyLCA0LCA1LCA2fVxucHJpbnQocylcblxuIyBpbiDliKTmlq3vvIhPKDEp77yM6Z2e5bi45b+r77yJXG4jIOi+k+WHuu+8mlRydWVcbnByaW50KDQgaW4gcylcbiMg6L6T5Ye677yaRmFsc2VcbnByaW50KDk5IGluIHMpXG5cbiMgbGVu77ya6ZuG5ZCI5aSn5bCPXG4jIOi+k+WHuu+8mjVcbnByaW50KGxlbihzKSlcblxuIyDpm4blkIjov5DnrpdcbmEgPSB7MSwgMiwgMywgNH1cbmIgPSB7MywgNCwgNSwgNn1cblxuIyDkuqTpm4YgJlxuIyDovpPlh7rvvJp7MywgNH1cbnByaW50KGEgJiBiKVxuXG4jIOW5tumbhiB8XG4jIOi+k+WHuu+8mnsxLCAyLCAzLCA0LCA1LCA2fVxucHJpbnQoYSB8IGIpXG5cbiMg5beu6ZuGIC3vvIjlnKggYSDkuK3kvYbkuI3lnKggYiDkuK3vvIlcbiMg6L6T5Ye677yaezEsIDJ9XG5wcmludChhIC0gYikifQ==
+</script>
+</div>
+<p>什么时候用集合而不是列表？当你需要频繁判断”某个元素是否存在”的时候，一定要用集合。比如 BFS 中记录已访问的节点、两数之和中查找补数等场景，用集合比用列表效率高得多。</p>
+</section>
+<section id="栈list-模拟" class="level3">
+<h3 class="anchored" data-anchor-id="栈list-模拟">栈（list 模拟）</h3>
+<p>栈是”后进先出”（LIFO）的数据结构。Python 没有专门的栈类型，直接用列表就能模拟——<code>append</code> 入栈，<code>pop</code> 出栈，<code>[-1]</code> 看栈顶。</p>
+<div>
+<div id="pyodide-13" class="exercise-cell">
+
+</div>
+<script type="pyodide-13-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLmoIjvvIhsaXN0IOaooeaLn++8iSIsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic3RhY2sgPSBbXVxuXG4jIOWFpeagiFxuc3RhY2suYXBwZW5kKDEpXG5zdGFjay5hcHBlbmQoMilcbnN0YWNrLmFwcGVuZCgzKVxuIyDovpPlh7rvvJpbMSwgMiwgM13vvIgzIOWcqOagiOmhtu+8iVxucHJpbnQoc3RhY2spXG5cbiMg5p+l55yL5qCI6aG25YWD57Sg77yI5LiN5Yig6Zmk77yJXG4jIOi+k+WHuu+8mjNcbnByaW50KHN0YWNrWy0xXSlcblxuIyDlh7rmoIjvvIjliKDpmaTlubbov5Tlm57moIjpobblhYPntKDvvIlcbnRvcCA9IHN0YWNrLnBvcCgpXG4jIOi+k+WHuu+8mjNcbnByaW50KHRvcClcbiMg6L6T5Ye677yaWzEsIDJdXG5wcmludChzdGFjaylcblxuIyDliKTnqbpcbiMg6L6T5Ye677yaRmFsc2VcbnByaW50KGxlbihzdGFjaykgPT0gMClcblxuIyDlhajpg6jlh7rmoIhcbnN0YWNrLnBvcCgpXG5zdGFjay5wb3AoKVxuIyDovpPlh7rvvJpUcnVlXG5wcmludChsZW4oc3RhY2spID09IDApIn0=
+</script>
+</div>
+<p>栈的操作总结：</p>
+<ul>
+<li>入栈：<code>stack.append(x)</code></li>
+<li>栈顶：<code>stack[-1]</code></li>
+<li>出栈：<code>stack.pop()</code></li>
+<li>判空：<code>len(stack) == 0</code></li>
+</ul>
+<p>这四个操作在括号匹配、单调栈等算法题中用得非常多。来看一个经典例子——括号匹配：</p>
+<div>
+<div id="pyodide-14" class="exercise-cell">
+
+</div>
+<script type="pyodide-14-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiLmi6zlj7fljLnphY0iLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6ImRlZiBpc192YWxpZChzKTpcbiAgICBzdGFjayA9IFtdXG4gICAgIyDnlKjlrZflhbjlrZjlgqjmi6zlj7fnmoTlr7nlupTlhbPns7tcbiAgICBwYWlycyA9IHsnKSc6ICcoJywgJ10nOiAnWycsICd9JzogJ3snfVxuXG4gICAgZm9yIGNoIGluIHM6XG4gICAgICAgIGlmIGNoIGluICcoW3snOlxuICAgICAgICAgICAgIyDlt6bmi6zlj7flhaXmoIhcbiAgICAgICAgICAgIHN0YWNrLmFwcGVuZChjaClcbiAgICAgICAgZWxzZTpcbiAgICAgICAgICAgICMg5Y+z5ous5Y+377ya5qOA5p+l5piv5ZCm5LiO5qCI6aG25Yy56YWNXG4gICAgICAgICAgICBpZiBub3Qgc3RhY2sgb3Igc3RhY2tbLTFdICE9IHBhaXJzW2NoXTpcbiAgICAgICAgICAgICAgICByZXR1cm4gRmFsc2VcbiAgICAgICAgICAgIHN0YWNrLnBvcCgpXG5cbiAgICAjIOacgOWQjuagiOW/hemhu+S4uuepulxuICAgIHJldHVybiBsZW4oc3RhY2spID09IDBcblxuIyDovpPlh7rvvJpUcnVlXG5wcmludChpc192YWxpZChcIigpW117fVwiKSlcbiMg6L6T5Ye677yaVHJ1ZVxucHJpbnQoaXNfdmFsaWQoXCJ7WygpXX1cIikpXG4jIOi+k+WHuu+8mkZhbHNlXG5wcmludChpc192YWxpZChcIihdXCIpKVxuIyDovpPlh7rvvJpGYWxzZVxucHJpbnQoaXNfdmFsaWQoXCIoWyldXCIpKVxuIyDovpPlh7rvvJpGYWxzZVxucHJpbnQoaXNfdmFsaWQoXCIoXCIpKSJ9
+</script>
+</div>
+</section>
+<section id="队列deque" class="level3">
+<h3 class="anchored" data-anchor-id="队列deque">队列（deque）</h3>
+<p>队列是”先进先出”（FIFO）的数据结构，在 BFS（广度优先搜索）中必用。Python 用 <code>collections.deque</code>（双端队列）来实现高效的队列操作。</p>
+<p>你可能会想：用列表不行吗？用列表的 <code>pop(0)</code> 也能实现出队，但 <code>pop(0)</code> 需要把后面所有元素往前移一位，时间复杂度 O(n)。而 <code>deque</code> 的 <code>popleft</code> 是 O(1) 的，效率高得多。</p>
+<div>
+<div id="pyodide-15" class="exercise-cell">
+
+</div>
+<script type="pyodide-15-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiJkZXF1ZSIsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZnJvbSBjb2xsZWN0aW9ucyBpbXBvcnQgZGVxdWVcblxucXVldWUgPSBkZXF1ZSgpXG5cbiMg5YWl6Zif77ya5LuO5Y+z56uv5re75YqgXG5xdWV1ZS5hcHBlbmQoMSlcbnF1ZXVlLmFwcGVuZCgyKVxucXVldWUuYXBwZW5kKDMpXG4jIOi+k+WHuu+8mmRlcXVlKFsxLCAyLCAzXSlcbnByaW50KHF1ZXVlKVxuXG4jIOafpeeci+mYn+WktOWFg+e0oFxuIyDovpPlh7rvvJoxXG5wcmludChxdWV1ZVswXSlcblxuIyDlh7rpmJ/vvJrku47lt6bnq6/lvLnlh7pcbmZyb250ID0gcXVldWUucG9wbGVmdCgpXG4jIOi+k+WHuu+8mjFcbnByaW50KGZyb250KVxuIyDovpPlh7rvvJpkZXF1ZShbMiwgM10pXG5wcmludChxdWV1ZSlcblxuIyDpmJ/liJfplb/luqZcbiMg6L6T5Ye677yaMlxucHJpbnQobGVuKHF1ZXVlKSlcblxuIyDliKTnqbpcbiMg6L6T5Ye677yaRmFsc2VcbnByaW50KGxlbihxdWV1ZSkgPT0gMCkifQ==
+</script>
+</div>
+<p>队列的操作总结：</p>
+<ul>
+<li>入队：queue.append(x)</li>
+<li>队头：queue[0]</li>
+<li>出队：queue.popleft()</li>
+<li>判空：len(queue) == 0</li>
+</ul>
+<p>deque 其实是双端队列，两端都能高效地添加和删除。除了 <code>append</code> 和 <code>popleft</code>，还有 <code>appendleft</code>（从左端添加）和 <code>pop</code>（从右端弹出），但刷题时主要用前面两个就够了。</p>
+<p>来看一个 BFS 的例子：</p>
+<div>
+<div id="pyodide-16" class="exercise-cell">
+
+</div>
+<script type="pyodide-16-contents">
+eyJhdHRyIjp7ImNhcHRpb24iOiJCRlMiLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlfSwiY29kZSI6ImZyb20gY29sbGVjdGlvbnMgaW1wb3J0IGRlcXVlXG5cbiMg55So6YK75o6l6KGo6KGo56S65LiA5Liq5Zu+XG4jIDAgLT4gMSwgMlxuIyAxIC0+IDNcbiMgMiAtPiAzLCA0XG5ncmFwaCA9IHtcbiAgICAwOiBbMSwgMl0sXG4gICAgMTogWzNdLFxuICAgIDI6IFszLCA0XSxcbiAgICAzOiBbXSxcbiAgICA0OiBbXSxcbn1cblxuIyBCRlMg5LuO6IqC54K5IDAg5byA5aeLXG52aXNpdGVkID0gc2V0KClcbnF1ZXVlID0gZGVxdWUoKVxucXVldWUuYXBwZW5kKDApXG52aXNpdGVkLmFkZCgwKVxuXG5yZXN1bHQgPSBbXVxud2hpbGUgcXVldWU6XG4gICAgbm9kZSA9IHF1ZXVlLnBvcGxlZnQoKVxuICAgIHJlc3VsdC5hcHBlbmQobm9kZSlcblxuICAgIGZvciBuZWlnaGJvciBpbiBncmFwaFtub2RlXTpcbiAgICAgICAgaWYgbmVpZ2hib3Igbm90IGluIHZpc2l0ZWQ6XG4gICAgICAgICAgICB2aXNpdGVkLmFkZChuZWlnaGJvcilcbiAgICAgICAgICAgIHF1ZXVlLmFwcGVuZChuZWlnaGJvcilcblxuIyDovpPlh7rvvJpCRlMg6YGN5Y6G6aG65bqPOiBbMCwgMSwgMiwgMywgNF1cbnByaW50KFwiQkZTIOmBjeWOhumhuuW6jzpcIiwgcmVzdWx0KSJ9
+</script>
+</div>
+<p>注意这里用 <code>set</code> 来记录已访问节点，用 <code>deque</code> 当队列，这是 BFS 的标准模板。</p>
+</section>
+<section id="小结" class="level3">
+<h3 class="anchored" data-anchor-id="小结">小结</h3>
+<p>把这篇的数据结构和核心操作汇总一下：</p>
+<p><img src="Python_4_files/figure-html/29bf0325-1-image.png" class="img-fluid" loading="lazy" decoding="async"></p>
+
+
+<script type="pyodide-data">
+eyJvcHRpb25zIjp7ImVudiI6eyJQTE9UTFlfUkVOREVSRVIiOiJwbG90bHlfbWltZXR5cGUifSwiaW5kZXhVUkwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvcHlvZGlkZS92MC4yOC4xL2Z1bGwvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsicHlvZGlkZV9odHRwIiwibWljcm9waXAiLCJpcHl0aG9uIl19fQ==
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJweW9kaWRlLTE2IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTYgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE2LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTYtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE1IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTUgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE1LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE0IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTQgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE0LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTQtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEzIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTMgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEzLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTMtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEyIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTIgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEyLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTExIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTEgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTExLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTEtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEwIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTAgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEwLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTAtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTkiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl85ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzkgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl84ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS04LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzggPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl83ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS03LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzcgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTYiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl82ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzYgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS01LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzUgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS00LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzQgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8zID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzMgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0yLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzIgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8xID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzEgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJweW9kaWRlT2pzID0ge1xuICBjb25zdCB7XG4gICAgUHlvZGlkZUV2YWx1YXRvcixcbiAgICBQeW9kaWRlRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUHl0aG9uLFxuICAgIHN0YXJ0UHlvZGlkZVdvcmtlcixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoLFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gUHlvZGlkZSBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICBsZXQgcHlvZGlkZVByb21pc2UgPSAoYXN5bmMgKCkgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgUHlvZGlkZWA7XG4gICAgY29uc3QgcHlvZGlkZSA9IGF3YWl0IHN0YXJ0UHlvZGlkZVdvcmtlcihkYXRhLm9wdGlvbnMpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiBtaWNyb3BpcGA7XG4gICAgYXdhaXQgcHlvZGlkZS5sb2FkUGFja2FnZShcIm1pY3JvcGlwXCIpO1xuICAgIGNvbnN0IG1pY3JvcGlwID0gYXdhaXQgcHlvZGlkZS5weWltcG9ydChcIm1pY3JvcGlwXCIpO1xuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIG1pY3JvcGlwLmluc3RhbGwocGtnKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcbiAgICBhd2FpdCBtaWNyb3BpcC5kZXN0cm95KCk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgdHJ5IHtcbiAgICAgICAgICBhd2FpdCBweW9kaWRlLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgaWYgKGUubmFtZSAhPT0gXCJFcnJub0Vycm9yXCIpIHRocm93IGU7XG4gICAgICAgICAgaWYgKGUuZXJybm8gIT09IDIwKSB7XG4gICAgICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICAgICAgY29uc3QgZXJyb3JUZXh0ID0gYXdhaXQgcHlvZGlkZS5fbW9kdWxlLlVURjhUb1N0cmluZyhlcnJvclRleHRQdHIpO1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yICR7ZS5lcnJub30gXCIke2Vycm9yVGV4dH1cIi5gKTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHRyeSB7XG4gICAgICAgIHJldHVybiBhd2FpdCBweW9kaWRlLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgIGlmIChlLm5hbWUgIT09IFwiRXJybm9FcnJvclwiKSB0aHJvdyBlO1xuICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICBjb25zdCBlcnJvclRleHQgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuVVRGOFRvU3RyaW5nKGVycm9yVGV4dFB0cik7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgRmlsZXN5c3RlbSBFcnJvciAke2UuZXJybm99IFwiJHtlcnJvclRleHR9XCIuYCk7XG4gICAgICB9XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFB5b2RpZGUgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUHl0aG9uKHB5b2RpZGUpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHB5b2RpZGU7XG4gIH0pKCkuY2F0Y2goKGVycikgPT4ge1xuICAgIHN0YXR1c1RleHQuc3R5bGUuY29sb3IgPSBcInZhcigtLWV4ZXJjaXNlLWVkaXRvci1obC1lciwgI0FEMDAwMClcIjtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gZXJyLm1lc3NhZ2U7XG4gICAgLy9pbmRpY2F0b3JDb250YWluZXIucXVlcnlTZWxlY3RvcihcIi5zcGlubmVyLWdyb3dcIikuY2xhc3NMaXN0LmFkZChcImQtbm9uZVwiKTtcbiAgICB0aHJvdyBlcnI7XG4gIH0pO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCBweW9kaWRlID0gYXdhaXQgcHlvZGlkZVByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFB5b2RpZGVFdmFsdWF0b3IocHlvZGlkZSwgY29udGV4dCk7XG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHlvZGlkZVByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gICAgcHJvY2VzcyxcbiAgfTtcbn1cbiJ9XX0=
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+// 主题切换逻辑
+(function() {
+  'use strict';
+  
+  const STORAGE_KEY = 'site-theme';
+  
+  function getStoredTheme() {
+    return localStorage.getItem(STORAGE_KEY);
+  }
+  
+  function setStoredTheme(theme) {
+    localStorage.setItem(STORAGE_KEY, theme);
+  }
+  
+  function getPreferredTheme() {
+    const stored = getStoredTheme();
+    if (stored) return stored;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+      document.body.classList.add('quarto-dark');
+      document.body.classList.remove('quarto-light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-bs-theme', 'light');
+      document.body.classList.remove('quarto-dark');
+      document.body.classList.add('quarto-light');
+    }
+  }
+  
+  // 查找主题切换按钮的多种方式
+  function findToggleButton() {
+    // 方式1: 通过图标类名查找
+    const icon = document.querySelector('i.bi-circle-half, .bi-circle-half');
+    if (icon) {
+      const btn = icon.closest('a');
+      if (btn) return btn;
+    }
+    
+    // 方式2: 通过 aria-label 查找
+    const btnByLabel = document.querySelector('[aria-label="切换主题"], [aria-label="Toggle theme"]');
+    if (btnByLabel) return btnByLabel;
+    
+    // 方式3: 通过 data-theme-toggle 属性查找
+    const btnByAttr = document.querySelector('[data-theme-toggle]');
+    if (btnByAttr) return btnByAttr;
+    
+    // 方式4: 查找导航栏中包含 circle-half 图标的链接
+    const navLinks = document.querySelectorAll('.navbar a.nav-link');
+    for (const link of navLinks) {
+      if (link.querySelector('.bi-circle-half') || link.querySelector('i[class*="circle"]')) {
+        return link;
+      }
+    }
+    
+    return null;
+  }
+  
+  // 绑定点击事件
+  function bindToggleButton() {
+    const toggleBtn = findToggleButton();
+    if (toggleBtn) {
+      toggleBtn.id = 'theme-toggle';
+      // 移除可能的默认行为
+      toggleBtn.setAttribute('href', '#');
+      
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const isDark = document.documentElement.classList.contains('dark');
+        const newTheme = isDark ? 'light' : 'dark';
+        applyTheme(newTheme);
+        setStoredTheme(newTheme);
+        // 触发自定义事件以便其他组件响应
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
+      });
+      
+      return true;
+    }
+    return false;
+  }
+  
+  // 初始化主题
+  const initialTheme = getPreferredTheme();
+  applyTheme(initialTheme);
+  setStoredTheme(initialTheme);
+  
+  // 立即尝试绑定
+  if (!bindToggleButton()) {
+    // 如果立即绑定失败，等待DOM加载完成后重试
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindToggleButton);
+    } else {
+      // 延迟一点时间后重试
+      setTimeout(bindToggleButton, 100);
+    }
+  }
+  
+  // 监听系统主题变化
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    if (!getStoredTheme()) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+})();
+</script>
+<script>
+
+// Listing 年份分组：将 Quarto listing 文章按年份分组，并在侧边栏添加年份导航
+
+(function() {
+
+  'use strict';
+
+
+
+  function groupListingByYear() {
+
+    var listing = document.querySelector('.quarto-listing');
+
+    if (!listing) return;
+
+
+
+    var posts = listing.querySelectorAll('.quarto-post');
+
+    if (posts.length === 0) return;
+
+
+
+    // 收集每个文章的年份
+
+    var yearGroups = {};
+
+    var postArray = Array.prototype.slice.call(posts);
+
+
+
+    postArray.forEach(function(post) {
+
+      var dateEl = post.querySelector('.listing-date, .date');
+
+      var dateText = dateEl ? dateEl.textContent.trim() : '';
+
+      var year = '';
+
+
+
+      // 尝试从日期文本中提取年份
+
+      var match = dateText.match(/(\d{4})/);
+
+      if (match) {
+
+        year = match[1];
+
+      } else {
+
+        // 尝试从 metadata 属性中获取
+
+        var meta = post.querySelector('.metadata');
+
+        if (meta) {
+
+          var metaMatch = meta.textContent.match(/(\d{4})/);
+
+          if (metaMatch) year = metaMatch[1];
+
+        }
+
+      }
+
+
+
+      if (!year) year = '其他';
+
+
+
+      if (!yearGroups[year]) {
+
+        yearGroups[year] = [];
+
+      }
+
+      yearGroups[year].push(post);
+
+    });
+
+
+
+    // 按年份降序排序
+
+    var sortedYears = Object.keys(yearGroups).sort(function(a, b) {
+
+      return parseInt(b) - parseInt(a);
+
+    });
+
+
+
+    if (sortedYears.length <= 1 && sortedYears[0] === '其他') return;
+
+
+
+    // 创建年份分组
+
+    var listingContainer = posts[0].parentElement;
+
+
+
+    sortedYears.forEach(function(year) {
+
+      var yearHeader = document.createElement('h2');
+
+      yearHeader.className = 'listing-year-header';
+
+      yearHeader.id = 'year-' + year;
+
+      yearHeader.textContent = year;
+
+      yearHeader.style.cssText = 'font-size:1.4rem;font-weight:600;color:var(--text);margin-top:2rem;margin-bottom:0.5rem;padding-bottom:0.3rem;border-bottom:2px solid var(--accent-soft);';
+
+
+
+      // 在该年份的第一个文章前插入标题
+
+      var firstPost = yearGroups[year][0];
+
+      listingContainer.insertBefore(yearHeader, firstPost);
+
+
+
+      // 为该年份的所有文章添加 data-year 属性
+
+      yearGroups[year].forEach(function(post) {
+
+        post.setAttribute('data-year', year);
+
+      });
+
+    });
+
+
+
+    // 在侧边栏添加年份导航
+
+    var sidebar = document.querySelector('#quarto-margin-sidebar, .margin-sidebar');
+
+    if (sidebar) {
+
+      var yearNav = document.createElement('nav');
+
+      yearNav.className = 'listing-year-nav';
+
+      yearNav.innerHTML = '<h3 class="listing-year-title" style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:0.4rem;margin-bottom:0.6rem;">Years</h3>';
+
+
+
+      var yearList = document.createElement('ul');
+
+      yearList.style.cssText = 'list-style:none;padding-left:0;';
+
+
+
+      sortedYears.forEach(function(year) {
+
+        var li = document.createElement('li');
+
+        var a = document.createElement('a');
+
+        a.href = '#year-' + year;
+
+        a.textContent = year;
+
+        a.style.cssText = 'color:var(--muted);text-decoration:none;font-size:0.85rem;display:block;padding:0.2rem 0.5rem;border-radius:4px;transition:all 0.2s ease;';
+
+        a.addEventListener('mouseenter', function() {
+
+          a.style.color = 'var(--accent)';
+
+          a.style.background = 'var(--accent-soft)';
+
+        });
+
+        a.addEventListener('mouseleave', function() {
+
+          a.style.color = 'var(--muted)';
+
+          a.style.background = 'transparent';
+
+        });
+
+        li.appendChild(a);
+
+        yearList.appendChild(li);
+
+      });
+
+
+
+      yearNav.appendChild(yearList);
+
+
+
+      // 插入到侧边栏顶部（在分类筛选之前）
+
+      var firstChild = sidebar.firstElementChild;
+
+      if (firstChild) {
+
+        sidebar.insertBefore(yearNav, firstChild);
+
+      } else {
+
+        sidebar.appendChild(yearNav);
+
+      }
+
+    }
+
+  }
+
+
+
+  // 等待 Quarto listing 渲染完成后执行
+
+  function init() {
+
+    // 立即尝试
+
+    if (document.querySelector('.quarto-post')) {
+
+      groupListingByYear();
+
+      return;
+
+    }
+
+
+
+    // 使用 MutationObserver 等待 listing 渲染
+
+    var observer = new MutationObserver(function(mutations, obs) {
+
+      if (document.querySelector('.quarto-post')) {
+
+        groupListingByYear();
+
+        obs.disconnect();
+
+      }
+
+    });
+
+
+
+    observer.observe(document.body, {
+
+      childList: true,
+
+      subtree: true
+
+    });
+
+
+
+    // 超时后停止观察
+
+    setTimeout(function() {
+
+      observer.disconnect();
+
+      if (document.querySelector('.quarto-post') && !document.querySelector('.listing-year-header')) {
+
+        groupListingByYear();
+
+      }
+
+    }, 5000);
+
+  }
+
+
+
+  if (document.readyState === 'loading') {
+
+    document.addEventListener('DOMContentLoaded', init);
+
+  } else {
+
+    init();
+
+  }
+
+})();
+
+</script>
+
+<script>
+/**
+ * Image Lightbox v2.0
+ * Features:
+ *   - Click any image in main.content to zoom
+ *   - Wheel/pinch zoom, drag pan, double-tap toggle
+ *   - Swipe gestures, keyboard nav, ESC close
+ *   - Loading spinner, zoom indicator, image counter
+ */
+(function() {
+  'use strict';
+
+  var modal = null;
+  var modalImg = null;
+  var overlay = null;
+  var closeBtn = null;
+  var zoomIndicator = null;
+  var counter = null;
+  var loadingSpinner = null;
+
+  var images = [];
+  var currentIndex = 0;
+  var scale = 1;
+  var translateX = 0;
+  var translateY = 0;
+  var isDragging = false;
+  var dragStartX = 0;
+  var dragStartY = 0;
+  var dragStartTranslateX = 0;
+  var dragStartTranslateY = 0;
+  var initialPinchDistance = 0;
+  var initialScale = 1;
+  var animFrame = null;
+
+  function init() {
+    images = Array.prototype.slice.call(
+      document.querySelectorAll('main.content img')
+    ).filter(function(img) {
+      return !img.closest('.no-lightbox') && img.src;
+    });
+
+    if (images.length === 0) return;
+
+    buildModal();
+    bindEvents();
+  }
+
+  function buildModal() {
+    modal = document.createElement('div');
+    modal.className = 'lightbox-modal';
+    modal.innerHTML =
+      '<div class="lb-overlay"></div>' +
+      '<div class="lb-container">' +
+        '<img class="lb-image" alt="">' +
+      '</div>' +
+      '<div class="lb-loading"></div>' +
+      '<button class="lb-close" aria-label="关闭">&times;</button>' +
+      '<div class="lb-controls">' +
+        '<span class="lb-zoom-indicator">100%</span>' +
+        '<span class="lb-counter"></span>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+    overlay = modal.querySelector('.lb-overlay');
+    modalImg = modal.querySelector('.lb-image');
+    closeBtn = modal.querySelector('.lb-close');
+    zoomIndicator = modal.querySelector('.lb-zoom-indicator');
+    counter = modal.querySelector('.lb-counter');
+    loadingSpinner = modal.querySelector('.lb-loading');
+  }
+
+  function bindEvents() {
+    images.forEach(function(img, index) {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        open(index);
+      });
+    });
+
+    overlay.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
+    modalImg.addEventListener('dblclick', onDoubleClick);
+    modalImg.addEventListener('wheel', onWheel, { passive: false });
+
+    modalImg.addEventListener('touchstart', onTouchStart, { passive: false });
+    modalImg.addEventListener('touchmove', onTouchMove, { passive: false });
+    modalImg.addEventListener('touchend', onTouchEnd);
+
+    modalImg.addEventListener('mousedown', onDragStart);
+    window.addEventListener('mousemove', onDragMove);
+    window.addEventListener('mouseup', onDragEnd);
+
+    document.addEventListener('keydown', onKeyDown);
+
+    modal.addEventListener('transitionend', function(e) {
+      if (e.target === modal && modal.classList.contains('visible')) {
+        modal.style.opacity = '1';
+      }
+    });
+  }
+
+  function open(index) {
+    currentIndex = index;
+    var img = images[index];
+
+    modalImg.src = img.src;
+    modalImg.alt = img.alt || '';
+    modalImg.style.transform = '';
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+
+    updateZoomIndicator();
+    updateCounter();
+    showLoading(true);
+
+    modal.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+
+    modalImg.addEventListener('load', function onLoad() {
+      showLoading(false);
+      modalImg.removeEventListener('load', onLoad);
+    });
+  }
+
+  function close() {
+    modal.classList.remove('visible');
+    modalImg.style.transform = '';
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+    document.body.style.overflow = '';
+  }
+
+  function onDoubleClick() {
+    if (scale === 1) {
+      setScale(2);
+    } else {
+      setScale(1);
+    }
+  }
+
+  function onWheel(e) {
+    e.preventDefault();
+    var delta = e.deltaY > 0 ? -0.15 : 0.15;
+    var newScale = Math.max(0.5, Math.min(5, scale + delta));
+    setScale(newScale);
+  }
+
+  function setScale(newScale) {
+    scale = Math.round(newScale * 100) / 100;
+    applyTransform();
+    updateZoomIndicator();
+  }
+
+  function applyTransform() {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    animFrame = requestAnimationFrame(function() {
+      modalImg.style.transform =
+        'translate(' + translateX + 'px, ' + translateY + 'px) ' +
+        'scale(' + scale + ')';
+    });
+  }
+
+  function updateZoomIndicator() {
+    if (zoomIndicator) {
+      zoomIndicator.textContent = Math.round(scale * 100) + '%';
+      zoomIndicator.style.opacity = scale === 1 ? '0.5' : '1';
+    }
+  }
+
+  function updateCounter() {
+    if (counter && images.length > 1) {
+      counter.textContent = (currentIndex + 1) + ' / ' + images.length;
+      counter.style.display = 'inline';
+    } else if (counter) {
+      counter.style.display = 'none';
+    }
+  }
+
+  function showLoading(show) {
+    if (!loadingSpinner) return;
+    if (show) {
+      loadingSpinner.style.display = 'block';
+    } else {
+      loadingSpinner.style.display = 'none';
+    }
+  }
+
+  function onDragStart(e) {
+    if (scale <= 1) return;
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragStartTranslateX = translateX;
+    dragStartTranslateY = translateY;
+    modalImg.style.transition = 'none';
+  }
+
+  function onDragMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    var deltaX = e.clientX - dragStartX;
+    var deltaY = e.clientY - dragStartY;
+    translateX = dragStartTranslateX + deltaX;
+    translateY = dragStartTranslateY + deltaY;
+    applyTransform();
+  }
+
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    modalImg.style.transition = '';
+  }
+
+  function onTouchStart(e) {
+    e.preventDefault();
+    if (e.touches.length === 2) {
+      var dist = getTouchDistance(e.touches[0], e.touches[1]);
+      initialPinchDistance = dist;
+      initialScale = scale;
+    } else if (e.touches.length === 1 && scale > 1) {
+      isDragging = true;
+      dragStartX = e.touches[0].clientX;
+      dragStartY = e.touches[0].clientY;
+      dragStartTranslateX = translateX;
+      dragStartTranslateY = translateY;
+      modalImg.style.transition = 'none';
+    }
+  }
+
+  function onTouchMove(e) {
+    e.preventDefault();
+    if (e.touches.length === 2) {
+      var dist = getTouchDistance(e.touches[0], e.touches[1]);
+      if (initialPinchDistance > 0) {
+        var ratio = dist / initialPinchDistance;
+        setScale(Math.max(0.5, Math.min(5, initialScale * ratio)));
+      }
+    } else if (e.touches.length === 1 && isDragging) {
+      var deltaX = e.touches[0].clientX - dragStartX;
+      var deltaY = e.touches[0].clientY - dragStartY;
+      translateX = dragStartTranslateX + deltaX;
+      translateY = dragStartTranslateY + deltaY;
+      applyTransform();
+    }
+  }
+
+  function onTouchEnd() {
+    isDragging = false;
+    initialPinchDistance = 0;
+    modalImg.style.transition = '';
+  }
+
+  function getTouchDistance(t1, t2) {
+    var dx = t1.clientX - t2.clientX;
+    var dy = t1.clientY - t2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function onKeyDown(e) {
+    if (!modal.classList.contains('visible')) return;
+
+    if (e.key === 'Escape') {
+      close();
+    } else if (e.key === 'ArrowRight') {
+      navigate(1);
+    } else if (e.key === 'ArrowLeft') {
+      navigate(-1);
+    } else if (e.key === '+' || e.key === '=') {
+      setScale(Math.min(5, scale + 0.25));
+    } else if (e.key === '-' || e.key === '_') {
+      setScale(Math.max(0.5, scale - 0.25));
+    } else if (e.key === '0') {
+      setScale(1);
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    }
+  }
+
+  function navigate(direction) {
+    if (images.length <= 1) return;
+    currentIndex = (currentIndex + direction + images.length) % images.length;
+    open(currentIndex);
+  }
+
+  function injectStyles() {
+    if (document.getElementById('lightbox-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'lightbox-styles';
+    style.textContent =
+      '.lightbox-modal{' +
+      'position:fixed;inset:0;z-index:9999;' +
+      'display:flex;align-items:center;justify-content:center;' +
+      'opacity:0;visibility:hidden;' +
+      'transition:opacity 0.35s cubic-bezier(0.2,0.8,0.2,1),visibility 0s 0.35s;' +
+      'user-select:none;-webkit-user-select:none;' +
+      '}' +
+      '.lightbox-modal.visible{' +
+      'opacity:1;visibility:visible;' +
+      'transition:opacity 0.35s cubic-bezier(0.2,0.8,0.2,1),visibility 0s 0s;' +
+      '}' +
+      '.lb-overlay{' +
+      'position:absolute;inset:0;' +
+      'background:rgba(0,0,0,0.88);' +
+      'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);' +
+      '}' +
+      '.lb-container{' +
+      'position:relative;max-width:92vw;max-height:85vh;' +
+      'display:flex;align-items:center;justify-content:center;' +
+      '}' +
+      '.lb-image{' +
+      'max-width:92vw;max-height:85vh;' +
+      'object-fit:contain;' +
+      'border-radius:8px;' +
+      'box-shadow:0 20px 60px rgba(0,0,0,0.5);' +
+      'transform-origin:center center;' +
+      'transition:transform 0.25s cubic-bezier(0.2,0.8,0.2,1);' +
+      'cursor:zoom-out;' +
+      '-webkit-user-drag:none;' +
+      '}' +
+      '.lb-image:not([src]),.lb-image[src=""]{display:none;}' +
+      '.lb-close{' +
+      'position:absolute;top:24px;right:24px;' +
+      'width:42px;height:42px;border-radius:50%;' +
+      'background:rgba(255,255,255,0.12);' +
+      'border:1px solid rgba(255,255,255,0.2);' +
+      'color:#ffffff;font-size:24px;font-weight:300;' +
+      'cursor:pointer;display:flex;align-items:center;justify-content:center;' +
+      'line-height:1;padding:0;' +
+      'transition:all 0.2s ease;' +
+      'z-index:10;' +
+      '}' +
+      '.lb-close:hover{' +
+      'background:rgba(255,255,255,0.22);' +
+      'transform:scale(1.06);' +
+      '}' +
+      '.lb-controls{' +
+      'position:absolute;bottom:28px;left:50%;' +
+      'transform:translateX(-50%);' +
+      'display:flex;gap:16px;align-items:center;' +
+      'z-index:10;' +
+      '}' +
+      '.lb-zoom-indicator,.lb-counter{' +
+      'background:rgba(255,255,255,0.1);' +
+      'border:1px solid rgba(255,255,255,0.15);' +
+      'color:#ffffff;font-size:13px;font-weight:500;' +
+      'padding:6px 12px;border-radius:9999px;' +
+      'letter-spacing:0.02em;' +
+      'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);' +
+      '}' +
+      '.lb-counter{display:none;}' +
+      '.lb-loading{' +
+      'display:none;' +
+      'position:absolute;top:50%;left:50%;' +
+      'transform:translate(-50%,-50%);' +
+      'width:32px;height:32px;' +
+      'border:3px solid rgba(255,255,255,0.15);' +
+      'border-top-color:#ffffff;' +
+      'border-radius:50%;' +
+      'animation:lb-spin 0.8s linear infinite;' +
+      'z-index:5;' +
+      '}' +
+      '@keyframes lb-spin{' +
+      'to{transform:translate(-50%,-50%) rotate(360deg);}' +
+      '}' +
+      '@media (max-width:600px){' +
+      '.lb-close{top:14px;right:14px;width:38px;height:38px;font-size:22px;}' +
+      '.lb-controls{bottom:18px;gap:10px;}' +
+      '.lb-zoom-indicator,.lb-counter{font-size:12px;padding:5px 10px;}' +
+      '}';
+    document.head.appendChild(style);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      injectStyles();
+      setTimeout(init, 150);
+    });
+  } else {
+    injectStyles();
+    setTimeout(init, 150);
+  }
+
+  document.addEventListener('page:navigate', function() {
+    if (modal && modal.classList.contains('visible')) {
+      close();
+    }
+    setTimeout(init, 300);
+  });
+})();
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../blog/code";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const cellDetails = window.document.querySelectorAll(".cell details.code-fold");
+        for (let i=0; i<cellDetails.length; i++) {
+          const details = cellDetails[i];
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell div.sourceCode.cell-code");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2024–2026 Ning Yan</p>
+</div>   
+    <div class="nav-footer-center">
+<p>个人学习笔记站点</p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
