@@ -7,10 +7,12 @@
     "listing": "/blog/index.html",
     "items": [
       "/blog/code/Python_5.html",
+      "/blog/code/Numpy.html",
       "/blog/code/Python_1.html",
       "/blog/code/Python_2.html",
       "/blog/code/Python_3.html",
       "/blog/code/Python_4.html",
+      "/blog/code/pandas.html",
       "/blog/conda_env.html",
       "/blog/ai_map.html",
       "/blog/git.html",
@@ -24,8 +26,7 @@
       "/blog/Deepseek_Harness.html",
       "/blog/Eigen decomposition.html",
       "/blog/Linear_algebra_and_geometry_1.html",
-      "/blog/Linear_algebra_and_geometry_2.html",
-      "/blog/Numpy_learning.html"
+      "/blog/Linear_algebra_and_geometry_2.html"
     ]
   },
   {
